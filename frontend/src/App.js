@@ -4,7 +4,6 @@ import './App.css';
 
 
 class Units extends React.Component{
-
   render(){
     return (
        <div>
@@ -13,47 +12,48 @@ class Units extends React.Component{
             <Unit heading={element.heading} shortDescription={element.shortDescription} longDescription={element.longDescription}></Unit>
           ))
          }
-      </div>
+       </div>
     );
   }
-
 }
 
-class Unit extends React.Component{
 
+class Unit extends React.Component{
   constructor(props){
       super(props);
       this.state={
-          modal_display: "none"
+          modalDisplay: "none"
       }
   }
   onClickHandler=(event)=>{
 
-    if(this.state.modal_display=="none")
+    if(this.state.modalDisplay=="none")
     {
           this.setState({
-            modal_display: "block" 
+            modalDisplay: "block" 
           });
     }
-    else if(this.state.modal_display=="block")
+    else if(this.state.modalDisplay=="block")
     {
           this.setState({
-            modal_display: "none"
+            modalDisplay: "none"
           });
     }
 
   }
 
   closeButtonHandler=()=>{
+      
       this.setState({
-            modal_display: "none" 
+            modalDisplay: "none" 
       });
 
   }
   render(){
-
-      let unit_modal_style={
-              "display": this.state.modal_display, /* Hidden by default */
+      //can define inline styles like this
+      let unitModalStyle={
+              //taken from w3 schools
+              "display": this.state.modalDisplay, /* Hidden by default */
               "position": "fixed", /* Stay in place */
               "z-index": "1", /* Sit on top */
               "padding-top": "100px", /* Location of the box */
@@ -65,14 +65,14 @@ class Unit extends React.Component{
               "background-color": "rgb(0,0,0)", /* Fallback color */
               "background-color": "rgba(0,0,0,0.4)" /* Black w/ opacity */          
       }
-      let unit_modal_content_style={
+      let unitModalContentStyle={
             "background-color": "#fefefe",
             "margin": "auto",
             "padding": "20px",
             "border": "1px solid #888",
             "width": "80%"
-
       }
+
 
       return (
         <div>
@@ -85,17 +85,15 @@ class Unit extends React.Component{
             </div>
           </div>
 
-          <div className="unitModal" style={unit_modal_style}>
-            <div className="unitModalContent" style={unit_modal_content_style}>
+          <div className="unitModal" style={unitModalStyle}>
+            <div className="unitModalContent" style={unitModalContentStyle}>
                 <h2>{this.props.heading}</h2>
                 <h5>{this.props.shortDescription}</h5>
                 <p>{this.props.longDescription}</p>
                 <br/>  
                 <span className="closeButton" onClick={this.closeButtonHandler}>CLOSE</span>
-            </div>
-            
+            </div> 
           </div>
-
         </div>
         );
   }
@@ -128,18 +126,18 @@ class Akc extends React.Component{
       )
     }
 
-    submitHandler=(event)=>{
-      event.preventDefault();
+    submitHandler=(event)=>
+    {
+       event.preventDefault();
        let formData={
           heading:event.target.heading.value,
           shortDescription:event.target.shortDescription.value,
           longDescription:event.target.longDescription.value,
           priority:event.target.priority.value 
-       }
-
-       // console.log(formData);
-      axios.post("http://localhost:5000/add_unit",formData)
-      this.fetchUnitsFromDb();
+        }
+      
+        axios.post("http://localhost:5000/add_unit",formData)
+        this.fetchUnitsFromDb();
     }
 
     render(){
@@ -158,8 +156,7 @@ class Akc extends React.Component{
           </form>
 
           <Units units={this.state.units}></Units>
-        </div>
-        );
+        </div>);
     }
 
 }
