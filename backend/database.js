@@ -5,7 +5,7 @@ const db=module.exports.dbUrl={
 	secret:'iamakc'
 };
 
-const dbUrl=db.database_connection_url;
+const dbUrl=db.databaseConnectionUrl;
 
 mongoose.connect(dbUrl,{ useNewUrlParser: true, useUnifiedTopology: true  });
 
