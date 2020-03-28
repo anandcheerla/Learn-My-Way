@@ -9,26 +9,46 @@ const dbUrl=db.databaseConnectionUrl;
 
 mongoose.connect(dbUrl,{ useNewUrlParser: true, useUnifiedTopology: true  });
 
+const unitSchema=mongoose.Schema({
+	heading: {type:String},
+	shortDescription: {type:String},
+	longDescription: {type:String},
+	audioFile: {type:String},
+	videoFile: {type:String},
+	isAudioFile: {type:Boolean,default: false},
+	isVideoFile: {type:Boolean,default: false},
+	priority: {type:String,default: '1'},
+	nextUnit: {type: mongoose.Schema.ObjectId},
+	nextOtherArticleUnit: {type: mongoose.Schema.ObjectId}
 
-// const userSchema=mongoose.Schema({},{collection:"user"});
-
-const unitSchema=mongoose.Schema(
-	{
-		heading: {type:String},
-		shortDescription: {type:String},
-		longDescription: {type:String},
-		audioFile: {type:String},
-		videoFile: {type:String},
-		isAudioFile: {type:Boolean,default: false},
-		isVideoFile: {type:Boolean,default: false},
-		priority: {type:String,default: '1'},
-
-	},
-	{collection:"unit"});
+},{collection:"unit"});
 
 
-var unitModel=mongoose.model('unitModel',unitSchema);
+const unitArraySchema=mongoose.Schema({
+	
+	units: [{unit: {type:unitSchema}}]
 
-module.exports.db_models={
-	unitModel: unitModel
+},{collection:"units"});
+
+const userSchema=mongoose.Schema({
+
+	firstName: {type: String},
+	lastName: {type: String},
+	username: {type: String},
+	password: {type: String},
+	email: {type: String},
+	mobileNumber: {type: String},
+	articles:[{type: unitArraySchema}],
+
+},{collection:"user"});
+
+
+
+
+const unitModel=mongoose.model('unitModel',unitSchema);
+const unitArrayModel=mongoose.model('unitArrayModel',unitArraySchema); 
+
+module.exports.dbModels={
+	unitModel: unitModel,
+	unitArrayModel: unitArrayModel
 }

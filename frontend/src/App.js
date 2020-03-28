@@ -4,9 +4,6 @@ import './App.css';
 
 import Units from './views/Units.js';
 
-
-
-
 class Akc extends React.Component{
     constructor(props){
       super(props);
@@ -43,7 +40,7 @@ class Akc extends React.Component{
           priority:event.target.priority.value 
         }
       
-        axios.post("http://localhost:5000/add_unit",formData)
+        axios.post("http://localhost:5000/add_unit",formData);
         this.fetchUnitsFromDb();
     }
 

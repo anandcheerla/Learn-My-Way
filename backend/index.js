@@ -4,8 +4,9 @@ const bodyParser=require("body-parser");
 const cors = require('cors')
 
 const db=require("./database.js");
-const db_models=db.db_models;
-const unitModel=db_models.unitModel;
+const dbModels=db.dbModels;
+const unitModel=dbModels.unitModel;
+const unitArrayModel=dbModels.unitArrayModel;
 
 
 //this is the express app object
@@ -23,9 +24,12 @@ app.use(cors());
 // });
 
 
+
+//------------------------------------routes--------------------------------------
+
 app.get('/units',function(req,res){
 
-	unitModel.find({},function(err,docs){
+	unitArrayModel.find({},function(err,docs){
 		if(err){
 			res.send(err);
 		}
@@ -35,6 +39,9 @@ app.get('/units',function(req,res){
 	});
 });
 
+
+
+let article=new unitArrayModel();
 
 
 app.post('/add_unit',function(req,res){
@@ -51,10 +58,17 @@ app.post('/add_unit',function(req,res){
 		if(err){
 			res.send(err);
 		}
+	});
+	article.units.push({unit: new_unit});
+	article.save(function(err){
+		if(err){
+			res.send(err);
+		}
 		else{
 			res.redirect('/units');
 		}
 	});
+
 
 });
 
