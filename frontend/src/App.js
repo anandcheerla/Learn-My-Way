@@ -8,14 +8,15 @@ class Akc extends React.Component{
     constructor(props){
       super(props);
       this.state={
-        units:[]
+        units:[],
+        newArticleId: "hey"
       };
        
       
     }
 
     componentDidMount(){
-       this.fetchUnitsFromDb();
+       // this.fetchUnitsFromDb();
     }
 
     fetchUnitsFromDb=()=>{
@@ -39,14 +40,31 @@ class Akc extends React.Component{
           longDescription:event.target.longDescription.value,
           priority:event.target.priority.value 
         }
-      
-        axios.post("http://localhost:5000/add_unit",formData);
-        this.fetchUnitsFromDb();
+        console.log("hey "+this.state.newArticleId);
+        axios.post("http://localhost:5000/"+this.state.newArticleId+"/add_unit",formData);
+        // this.fetchUnitsFromDb();
+    }
+
+    newButtonClickHandler=()=>{
+
+        axios.get("http://localhost:5000/new_article").then(res=>{
+          let createdArticleId=res.data._id;
+          console.log("this is "+this.state);
+          // this.setState({
+          //     units: [...this.state.units],
+          //     newArticleId: createdArticleId 
+          // });
+        
+        });
+          console.log("hii is "+this.state);  
     }
 
     render(){
         return (
         <div className="board">
+          <div> 
+            <button onClick={this.newButtonClickHandler}>New</button>
+          </div>
           <form onSubmit={this.submitHandler}>
             <label>Heading</label>
             <textarea name="heading"></textarea>

@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 
 import '.././App.css';
 
@@ -77,6 +77,7 @@ class Unit extends React.Component{
                 <h2>{this.props.heading}</h2>
                 <h5>{this.props.shortDescription}</h5>
                 <p>{this.props.longDescription}</p>
+                <p>{this.props.mid}</p>
                 <br/>  
                 <span className="closeButton" onClick={this.closeButtonHandler}>CLOSE</span>
             </div> 

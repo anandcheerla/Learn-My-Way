@@ -1,4 +1,5 @@
 const mongoose=require("mongoose");
+const passportLocalMongoose=require("passport-local-mongoose");
 
 const db=module.exports.dbUrl={
 	databaseConnectionUrl:'mongodb://127.0.0.1:27017/learntheakcwaydb',
@@ -26,7 +27,8 @@ const unitSchema=mongoose.Schema({
 
 const unitArraySchema=mongoose.Schema({
 	
-	units: [{unit: {type:unitSchema}}]
+	name: {type: String},
+	units: [{type: unitSchema}]
 
 },{collection:"units"});
 
@@ -40,15 +42,17 @@ const userSchema=mongoose.Schema({
 	mobileNumber: {type: String},
 	articles:[{type: unitArraySchema}],
 
-},{collection:"user"});
+},{collection:"users"});
+
+userSchema.plugin(passportLocalMongoose);
 
 
-
-
-const unitModel=mongoose.model('unitModel',unitSchema);
-const unitArrayModel=mongoose.model('unitArrayModel',unitArraySchema); 
+const unitModel= mongoose.model('unitModel',unitSchema);
+const unitArrayModel= mongoose.model('unitArrayModel',unitArraySchema);
+const userModel= mongoose.model('userModel',userSchema);
 
 module.exports.dbModels={
 	unitModel: unitModel,
-	unitArrayModel: unitArrayModel
+	unitArrayModel: unitArrayModel,
+	userModel: userModel
 }
