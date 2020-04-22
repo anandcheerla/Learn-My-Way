@@ -4,12 +4,12 @@ import React from 'react';
 import '.././App.css';
 import Unit from './Unit.js';
 
-class Units extends React.Component{
+class Article extends React.Component{
   render(){
     return (
        <div>
          {
-          this.props.units.map(element=>(
+          this.props.article.map(element=>(
             <Unit mid={element._id} heading={element.heading} shortDescription={element.shortDescription} longDescription={element.longDescription}></Unit>
           ))
          }
@@ -18,4 +18,4 @@ class Units extends React.Component{
   }
 }
 
-export default Units;
+export default Article;

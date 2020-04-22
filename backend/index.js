@@ -10,7 +10,7 @@ const passportLocalMongoose=require("passport-local-mongoose");
 const db=require("./database.js");
 const dbModels=db.dbModels;
 const unitModel=dbModels.unitModel;
-const unitArrayModel=dbModels.unitArrayModel;
+const articleModel=dbModels.articleModel;
 const userModel= dbModels.userModel;
 
 
@@ -66,11 +66,11 @@ app.post("/register",function(req,res){
 		firstName: req.body.firstName,
 		lastName: req.body.lastName,
 		email: req.body.email,
-		mobileNumber: req.body.mobileNumber
+		contactNumber: req.body.contactNumber
 	});
 	userModel.register(newUser,req.body.password,function(err,user){
 		if(err){
-			res.send(err.message);
+			//res.send(err.message);
 			return res.redirect("/register");
 		}
 		passport.authenticate("local")(req,res,function(){
@@ -81,10 +81,10 @@ app.post("/register",function(req,res){
 });
 
 app.get("/suc",function(req,res){
-	res.send("auth is success");
+	res.send("success");
 });
 app.get("/fail",function(req,res){
-	res.send("auth is failed");
+	res.send("fail");
 });
 
 //login routes
@@ -114,33 +114,40 @@ app.get("/logout",function(req,res){
 });
 
 
-
-app.get("/new_article",isLoggedIn,function(req,res){
+//creating a new article 
+//returns the article id which can be used to insert unit data
+app.post("/new-article",isLoggedIn,function(req,res){
 	let userFromSession=req.session.passport.user;
 	console.log(userFromSession);
 	userModel.findOne({username:userFromSession},function(err,userDocument){
-		let newArticle = new unitArrayModel();
-		newArticle.name=req.body.articleName;
+		let newArticle = new articleModel();
+		newArticle.heading=req.body.heading;
+		newArticle.description=req.body.description;
 		userDocument.articles.push(newArticle);
 		userDocument.save(function(err){
 			if(err)
 			{
-				return err;
+				res.send("fail");
+			}
+			else{
+				res.send("success");
 			}
 		});
 	
-		res.send(newArticle._id);
+	
 	});
 
 
 });
 
 
-app.post('/:article_id/add_unit',isLoggedIn,function(req,res){
+//add unit for particular articles
+app.post('/add-unit',isLoggedIn,function(req,res){
 	let userFromSession=req.session.passport.user;
 	userModel.findOne({"username":userFromSession},function(err,userDocument){
-		let article=userDocument.articles.id(req.params.article_id);
+		let article=userDocument.articles;
 		console.log(article);
+		return;
 
 		let new_unit=new unitModel();
 		new_unit.heading=req.body.heading;

@@ -25,9 +25,10 @@ const unitSchema=mongoose.Schema({
 },{collection:"unit"});
 
 
-const unitArraySchema=mongoose.Schema({
+const articleSchema=mongoose.Schema({
 	
-	name: {type: String},
+	heading: {type: String},
+	description: {type: String},
 	units: [{type: unitSchema}]
 
 },{collection:"units"});
@@ -39,8 +40,8 @@ const userSchema=mongoose.Schema({
 	username: {type: String},
 	password: {type: String},
 	email: {type: String},
-	mobileNumber: {type: String},
-	articles:[{type: unitArraySchema}],
+	contactNumber: {type: String},
+	articles:[{type: articleSchema}],
 
 },{collection:"users"});
 
@@ -48,11 +49,11 @@ userSchema.plugin(passportLocalMongoose);
 
 
 const unitModel= mongoose.model('unitModel',unitSchema);
-const unitArrayModel= mongoose.model('unitArrayModel',unitArraySchema);
+const articleModel= mongoose.model('articleModel',articleSchema);
 const userModel= mongoose.model('userModel',userSchema);
 
 module.exports.dbModels={
 	unitModel: unitModel,
-	unitArrayModel: unitArrayModel,
+	articleModel: articleModel,
 	userModel: userModel
 }
