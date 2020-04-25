@@ -114,11 +114,31 @@ app.get("/logout",function(req,res){
 });
 
 
+
+app.get("/articles",isLoggedIn,function(req,res){
+	let userFromSession=req.session.passport.user;
+
+	userModel.findOne({username:userFromSession},function(err,userDocument){
+		if(err)
+		{
+			res.send("error");	
+			return;
+		}
+
+		let articles=userDocument.articles;
+		res.send(articles);
+
+	});
+
+});
+
+
+
 //creating a new article 
 //returns the article id which can be used to insert unit data
 app.post("/new-article",isLoggedIn,function(req,res){
 	let userFromSession=req.session.passport.user;
-	console.log(userFromSession);
+	// console.log(userFromSession);
 	userModel.findOne({username:userFromSession},function(err,userDocument){
 		let newArticle = new articleModel();
 		newArticle.heading=req.body.heading;
@@ -142,13 +162,18 @@ app.post("/new-article",isLoggedIn,function(req,res){
 
 
 //add unit for particular articles
-app.post('/add-unit',isLoggedIn,function(req,res){
+app.post('/add-unit/:articleId',isLoggedIn,function(req,res){
 	let userFromSession=req.session.passport.user;
-	userModel.findOne({"username":userFromSession},function(err,userDocument){
-		let article=userDocument.articles;
-		console.log(article);
-		return;
+	let articleId=req.params.articleId;
 
+
+	let queryObject={
+		"username":userFromSession,
+	}
+	userModel.findOne(queryObject,function(err,userDocument){
+		let article=userDocument.articles.id(articleId);
+
+		// console.log(article.units[0].parent());
 		let new_unit=new unitModel();
 		new_unit.heading=req.body.heading;
 		new_unit.shortDescription=req.body.shortDescription;
@@ -162,7 +187,7 @@ app.post('/add-unit',isLoggedIn,function(req,res){
 			if(err){
 				console.log(err);
 			}
-			res.send("added");
+			res.send(new_unit);
 		});
 
 	});
