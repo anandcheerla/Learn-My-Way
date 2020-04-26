@@ -71,7 +71,6 @@ unitCreationForm=()=>{
 
 articleClickHandler=()=>{
   console.log("article click handler is called");
-
   this.setState({
     articleClicked: true
   });
@@ -79,46 +78,10 @@ articleClickHandler=()=>{
 }
 
 
-createArticle=(event)=>{
-    event.preventDefault();
-    let formData={
-      heading: event.target.heading.value,
-      description: event.target.description.value
-    }
-    axios.post("/new-article",formData).then(res=>{
-        if(res._id){
-          this.setState({
-            showArticleCreationForm:false,
-            showUnitCreationForm:true
-          });
-        }
-    });
-}
-
-
-articleCreationForm=()=>{
-
-    return (
-      <form name="createArticle" onSubmit={this.createArticle}>
-          <div className="form-group">
-            <label htmlFor="heading">Name</label>
-            <input type="text" className="form-control" id="articleHeading" name="heading" placeholder="heading"/>
-          </div>
-          <div className="form-group">
-            <label htmlFor="description">Description</label>
-            <textarea type="textarea" className="form-control" id="description" name="description" placeholder="description"/>
-          </div>
-          <button type="submit" className="btn btn-primary">Create</button>
-      </form>
-
-      );
-
-  }
-
-
 render(){
+
   return (
-     <div onClick={()=>this.articleClickHandler()}>
+     <div onClick={!this.state.articleClicked ? ()=>{this.articleClickHandler()} : null}>
 
         <div>
           <h1>{this.state.heading}</h1>
@@ -130,15 +93,18 @@ render(){
         </div>
         :
         null}
-        {this.state.showUnitCreationForm ? this.unitCreationForm() : null}
+        <div>
         {
-          this.state.articleClicked?
+          this.state.articleClicked
+          ?
           this.state.units.map(element=>(
             <Unit mid={element._id} heading={element.heading} shortDescription={element.shortDescription} longDescription={element.longDescription}></Unit>
           ))
           :
           null
         }
+        </div>
+        {this.state.showUnitCreationForm ? this.unitCreationForm() : null}
 
      </div>
     );

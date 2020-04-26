@@ -16,7 +16,8 @@ class Akc extends React.Component{
         articles:[],
         showRegisterForm: false,
         showLoginForm: false,
-        loginSuccess: false
+        loginSuccess: false,
+        fetchedArticlesFromDb: false
         
       };
     }
@@ -29,7 +30,8 @@ class Akc extends React.Component{
             // console.log(dbArticles);
 
             this.setState({
-              articles: [...res.data]
+              articles: [...res.data],
+              fetchedArticlesFromDb: true
             });
             // console.log(this.state.articles);
           }
@@ -59,9 +61,6 @@ class Akc extends React.Component{
             showLoginForm:false
            
           });
-
-          
-
 
         }
         else{
@@ -174,7 +173,7 @@ class Akc extends React.Component{
             {this.state.showLoginForm? this.userLoginForm():null}
             {this.state.showRegisterForm? this.userRegistrationForm():null}
 
-            {this.state.loginSuccess?this.myArticles():null}
+            {this.state.loginSuccess && this.state.fetchedArticlesFromDb ?this.myArticles():null}
 
           </div>
       );

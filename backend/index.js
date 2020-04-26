@@ -150,7 +150,7 @@ app.post("/new-article",isLoggedIn,function(req,res){
 				res.send("fail");
 			}
 			else{
-				res.send("success");
+				res.send(newArticle);
 			}
 		});
 	
