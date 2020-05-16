@@ -1,11 +1,12 @@
 import React from 'react';
 import axios from 'axios';
+import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import $ from 'jquery';
 // import Popper from 'popper.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
-import './App.css';
+
 
 import Articles from './views/Articles.js';
 
@@ -154,27 +155,29 @@ class Akc extends React.Component{
 
     render(){
       return (
-          <div className="board">
-            <nav className="navbar navbar-dark bg-dark">
-              <div> 
-                <button onClick={()=>this.setState({showLoginForm: true,showRegisterForm: false})} className="btn btn-primary">Login</button>
-              </div>
-              <div> 
-                <button onClick={()=>this.setState({showRegisterForm: true,showLoginForm:false})} className="btn btn-primary">Register</button>
-              </div>
-              <div> 
-                <button onClick={()=>this.fetchArticlesFromDb()} className="btn btn-primary">My Articles</button>
-              </div>
-            </nav>
+          <div className="mainScreen">
+            <div>
+              <nav className="navbar navbar-dark bg-dark">
+                <div> 
+                  <button onClick={()=>this.setState({showLoginForm: true,showRegisterForm: false})} className="btn btn-primary">Login</button>
+                </div>
+                <div> 
+                  <button onClick={()=>this.setState({showRegisterForm: true,showLoginForm:false})} className="btn btn-primary">Register</button>
+                </div>
+                <div> 
+                  <button onClick={()=>this.fetchArticlesFromDb()} className="btn btn-primary">My Articles</button>
+                </div>
+              </nav>
+            </div>
 
+            <div className="display">
+              {this.state.showArticleCreationForm? this.articleCreationForm():null}
+              {this.state.showUnitCreationForm? this.unitCreationForm():null}
+              {this.state.showLoginForm? this.userLoginForm():null}
+              {this.state.showRegisterForm? this.userRegistrationForm():null}
 
-            {this.state.showArticleCreationForm? this.articleCreationForm():null}
-            {this.state.showUnitCreationForm? this.unitCreationForm():null}
-            {this.state.showLoginForm? this.userLoginForm():null}
-            {this.state.showRegisterForm? this.userRegistrationForm():null}
-
-            {this.state.loginSuccess && this.state.fetchedArticlesFromDb ?this.myArticles():null}
-
+              {this.state.loginSuccess && this.state.fetchedArticlesFromDb ?this.myArticles():null}
+            </div>
           </div>
       );
     }

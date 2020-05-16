@@ -69,7 +69,7 @@ articleCreationForm=()=>{
 
     let articleStyle={
       "margin-bottom": "15px",
-      "border": "2px solid grey"
+      
     }
     return (
        <div>

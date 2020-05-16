@@ -58,10 +58,20 @@ class Unit extends React.Component{
       "width": "80%"
     }
 
+    let unitBorderColor={
+      "basic":"#cfc10a",
+      "easy":"#7dd943",
+      "medium":"#f07f1d",
+      "hard":"#f50525"
+    }
+    let unitStyle={
+        "border": "2px solid "+unitBorderColor[this.props.complexity]
+    }
+
 
     return (
       <div>
-        <div className="unit" onClick={this.onClickHandler}>
+        <div style={unitStyle} className="unit" onClick={this.onClickHandler}>
           <div className="unitHeading">
             <h3>{this.props.heading}</h3>
           </div>
@@ -75,7 +85,6 @@ class Unit extends React.Component{
               <h2>{this.props.heading}</h2>
               <h5>{this.props.shortDescription}</h5>
               <p>{this.props.longDescription}</p>
-              <p>{this.props.mid}</p>
               <br/>  
               <span className="closeButton" onClick={this.closeButtonHandler}>CLOSE</span>
           </div> 

@@ -30,17 +30,20 @@ class Article extends React.Component{
 createUnit=(event)=>
 {
      event.preventDefault();
+
      let formData={
         heading:event.target.heading.value,
         shortDescription:event.target.shortDescription.value,
         longDescription:event.target.longDescription.value,
-        priority:event.target.priority.value 
+        priority:event.target.priority.value,
+        complexity:event.target.complexity.value 
       }
       axios.post("/add-unit/"+this.state.dbId,formData).then(res=>{
           this.setState({
               units: [...this.state.units,res.data]
           });
       });
+      event.target.reset();
         // this.fetcharticleFromDb();
 }
 
@@ -48,21 +51,36 @@ unitCreationForm=()=>{
     return (
       <form name="createUnit" onSubmit={this.createUnit} >
             <div className="form-group">
-              <label htmlFor="heading">Heading</label>
+              <label htmlFor="heading"></label>
               <input type="text" className="form-control" id="heading" name="heading" placeholder="Heading"/>
             </div>
             <div className="form-group">
-              <label htmlFor="shortDescription">Short description</label>
+              <label htmlFor="shortDescription"></label>
               <textarea type="textarea" className="form-control" id="shortDescription" name="shortDescription" placeholder="Short description"/>
             </div>
             <div className="form-group">
-              <label htmlFor="longDescription">Long description</label>
+              <label htmlFor="longDescription"></label>
               <textarea type="text" className="form-control" id="longDescription" name="longDescription" placeholder="Long description"/>
             </div>
-             <div className="form-group">
-              <label htmlFor="priority">priority</label>
-              <input type="text" className="form-control" id="priority" name="priority" placeholder="priority"/>
-            </div>  
+            <div className="form-group">
+              <label htmlFor="priority"></label>
+              <select className="form-control" id="priority">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="complexity"></label>
+              <select className="form-control" id="complexity">
+                <option value="basic">Basic</option>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+              </select>
+            </div>
             <button type="submit" className="btn btn-primary">Submit</button>
         </form>
     );
@@ -98,14 +116,15 @@ render(){
           this.state.articleClicked
           ?
           this.state.units.map(element=>(
-            <Unit mid={element._id} heading={element.heading} shortDescription={element.shortDescription} longDescription={element.longDescription}></Unit>
+            <Unit mid={element._id} heading={element.heading} shortDescription={element.shortDescription} longDescription={element.longDescription} complexity={element.complexity}></Unit>
           ))
           :
           null
         }
         </div>
-        {this.state.showUnitCreationForm ? this.unitCreationForm() : null}
-
+        <div className="unitCreationForm">
+          {this.state.showUnitCreationForm ? this.unitCreationForm() : null}
+        </div>    
      </div>
     );
   }

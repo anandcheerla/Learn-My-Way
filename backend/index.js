@@ -178,9 +178,13 @@ app.post('/add-unit/:articleId',isLoggedIn,function(req,res){
 		new_unit.heading=req.body.heading;
 		new_unit.shortDescription=req.body.shortDescription;
 		new_unit.longDescription=req.body.longDescription;
+		new_unit.imageFile="";
 		new_unit.audioFile="";
 		new_unit.videoFile="";
 		new_unit.priority=req.body.priority;
+		console.log(req.body.complexity);
+		new_unit.complexity=req.body.complexity;
+
 
 		article.units.push(new_unit);
 		userDocument.save(function(err){

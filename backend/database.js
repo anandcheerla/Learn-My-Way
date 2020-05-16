@@ -11,16 +11,18 @@ const dbUrl=db.databaseConnectionUrl;
 mongoose.connect(dbUrl,{ useNewUrlParser: true, useUnifiedTopology: true  });
 
 const unitSchema=mongoose.Schema({
-	heading: {type:String},
-	shortDescription: {type:String},
-	longDescription: {type:String},
-	audioFile: {type:String},
-	videoFile: {type:String},
-	isAudioFile: {type:Boolean,default: false},
-	isVideoFile: {type:Boolean,default: false},
-	priority: {type:String,default: '1'},
-	nextUnit: {type: mongoose.Schema.ObjectId},
-	nextOtherArticleUnit: {type: mongoose.Schema.ObjectId}
+	heading: {type: String},
+	shortDescription: {type: String},
+	longDescription: {type: String},
+	imageFile: {type: String},
+	audioFile: {type: String},
+	videoFile: {type: String},
+	priority: {type: Number,default: 2},
+	complexity: {type: String},
+	timeStamp:{type: Date,default: Date.now}
+
+	//nextUnit: {type: mongoose.Schema.ObjectId},
+	//nextOtherArticleUnit: {type: mongoose.Schema.ObjectId}
 
 },{collection:"unit"});
 
@@ -29,7 +31,8 @@ const articleSchema=mongoose.Schema({
 	
 	heading: {type: String},
 	description: {type: String},
-	units: [{type: unitSchema}]
+	units: [{type: unitSchema}],
+	timeStamp:{type: Date,default: Date.now}
 
 },{collection:"units"});
 
@@ -42,6 +45,7 @@ const userSchema=mongoose.Schema({
 	email: {type: String},
 	contactNumber: {type: String},
 	articles:[{type: articleSchema}],
+	timeStamp:{type: Date,default: Date.now}
 
 },{collection:"users"});
 
