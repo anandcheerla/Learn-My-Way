@@ -182,7 +182,6 @@ app.post('/add-unit/:articleId',isLoggedIn,function(req,res){
 		new_unit.audioFile="";
 		new_unit.videoFile="";
 		new_unit.priority=req.body.priority;
-		console.log(req.body.complexity);
 		new_unit.complexity=req.body.complexity;
 
 

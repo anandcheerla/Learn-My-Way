@@ -12,7 +12,8 @@ class Articles extends React.Component{
     super(props);
     this.state={
       articles: [...this.props.articles],
-      showArticleCreationForm: false
+      showArticleCreationForm: false,
+      showCreateArticleButton: true
     };
   }
 
@@ -32,7 +33,8 @@ createArticle=(event)=>{
         if(res.data._id){
           this.setState({
             articles: [...this.state.articles,newlyCreatedArticle],
-            showArticleCreationForm: false
+            showArticleCreationForm: false,
+            showCreateArticleButton: true
           });
 
         }
@@ -59,6 +61,12 @@ articleCreationForm=()=>{
 
   }
 
+  createArticleButtonClickHandler=()=>{
+
+      this.setState({showArticleCreationForm:true,showCreateArticleButton:false});
+
+  }
+
 
   render(){
 
@@ -71,15 +79,31 @@ articleCreationForm=()=>{
       "margin-bottom": "15px",
       
     }
+
+    let float_right={
+        "float":"right",
+
+    }
+    let float_left={
+        "float":"left",
+
+    }
     return (
        <div>
-          <h2>My Articles</h2>
-         <div> 
-          <button onClick={()=>this.setState({showArticleCreationForm:true})} className="btn btn-primary">New Article</button>
-         </div>
+          <div>
+            <h2>My Articles</h2>
+            {
+
+              this.state.showCreateArticleButton ?
+              <button style={float_right} onClick={this.createArticleButtonClickHandler} className="btn btn-primary">New Article</button>
+              :
+              null
+            }
+          </div>
          {this.state.showArticleCreationForm ? this.articleCreationForm() : null}
           <ul className="list-group" style={reverseDirectionForArticlesArray}>
              {
+              !this.state.showArticleCreationForm &&
               this.state.articles.map(element=>(
                 <li className="list-group-item" style={articleStyle}><Article dbId={element._id} heading={element.heading} description={element.description} units={element.units}></Article></li>
               ))

@@ -89,43 +89,50 @@ unitCreationForm=()=>{
 
 articleClickHandler=()=>{
   console.log("article click handler is called");
-  this.setState({
-    articleClicked: true
-  });
+  if(this.state.articleClicked){
+    this.setState({articleClicked: false});
+  }
+  else{
+    this.setState({articleClicked: true});
+  }
 
 }
 
 
+
 render(){
 
-  return (
-     <div onClick={!this.state.articleClicked ? ()=>{this.articleClickHandler()} : null}>
 
+  return (
+     <div onClick={()=>{this.articleClickHandler()}}>
         <div>
           <h1>{this.state.heading}</h1>
           <h4>{this.state.description}</h4>
         </div>
-        {this.state.articleClicked?
-        <div> 
-            <button onClick={()=>this.setState({showUnitCreationForm:true})} className="btn btn-primary">New Unit</button>
-        </div>
-        :
-        null}
-        <div>
+        
         {
-          this.state.articleClicked
-          ?
-          this.state.units.map(element=>(
-            <Unit mid={element._id} heading={element.heading} shortDescription={element.shortDescription} longDescription={element.longDescription} complexity={element.complexity}></Unit>
-          ))
+          this.state.articleClicked?
+          <div> 
+              <button onClick={(e)=>{e.stopPropagation();this.setState({showUnitCreationForm:true});}} className="btn btn-primary">New Unit</button>
+          </div>
           :
-          null
+         null
         }
-        </div>
-        <div className="unitCreationForm">
-          {this.state.showUnitCreationForm ? this.unitCreationForm() : null}
-        </div>    
-     </div>
+
+        {
+          this.state.articleClicked &&
+              <div onClick={(e)=>e.stopPropagation()}>
+                {this.state.units.map(element=>(
+                  <Unit mid={element._id} heading={element.heading} shortDescription={element.shortDescription} longDescription={element.longDescription} complexity={element.complexity}></Unit>
+                ))
+                }
+              
+                <div className="unitCreationForm"/>
+                {this.state.showUnitCreationForm && this.unitCreationForm()}
+              </div>
+        }
+      
+      </div>
     );
   }
 }
