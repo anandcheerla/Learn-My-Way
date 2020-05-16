@@ -113,7 +113,7 @@ render(){
         {
           this.state.articleClicked?
           <div> 
-              <button onClick={(e)=>{e.stopPropagation();this.setState({showUnitCreationForm:true});}} className="btn btn-primary">New Unit</button>
+              <button onClick={(e)=>{e.stopPropagation();this.setState({showUnitCreationForm:true});}} className="btn btn-outline-primary">New Unit</button>
           </div>
           :
          null
@@ -127,8 +127,9 @@ render(){
                 ))
                 }
               
-                <div className="unitCreationForm"/>
+                <div className="unitCreationForm">
                 {this.state.showUnitCreationForm && this.unitCreationForm()}
+                </div>
               </div>
         }
       

@@ -80,13 +80,10 @@ articleCreationForm=()=>{
       
     }
 
-    let float_right={
-        "float":"right",
-
-    }
-    let float_left={
-        "float":"left",
-
+    let newArticleButtonStyle={
+        "position":"fixed",
+        "top":"30",
+        "right":"0"
     }
     return (
        <div>
@@ -95,7 +92,7 @@ articleCreationForm=()=>{
             {
 
               this.state.showCreateArticleButton ?
-              <button style={float_right} onClick={this.createArticleButtonClickHandler} className="btn btn-primary">New Article</button>
+              <button style={newArticleButtonStyle} onClick={this.createArticleButtonClickHandler} className="btn btn-outline-primary">New Article</button>
               :
               null
             }
