@@ -158,12 +158,22 @@ class Akc extends React.Component{
           <div className="mainScreen">
             <div>
               <nav className="navbar navbar-dark bg-dark">
-                <div> 
-                  <button onClick={()=>this.setState({showLoginForm: true,showRegisterForm: false})} className="btn btn-primary">Login</button>
-                </div>
-                <div> 
-                  <button onClick={()=>this.setState({showRegisterForm: true,showLoginForm:false})} className="btn btn-primary">Register</button>
-                </div>
+             
+              {
+                !this.state.loginSuccess &&
+                
+                  <div> 
+                    <button onClick={()=>this.setState({showLoginForm: true,showRegisterForm: false})} className="btn btn-primary">Login</button>
+                  </div>
+               }
+               {
+                 !this.state.loginSuccess &&
+                  <div> 
+                    <button onClick={()=>this.setState({showRegisterForm: true,showLoginForm:false})} className="btn btn-primary">Register</button>
+                  </div>
+                
+               }
+
                 <div> 
                   <button onClick={()=>this.fetchArticlesFromDb()} className="btn btn-primary">My Articles</button>
                 </div>
