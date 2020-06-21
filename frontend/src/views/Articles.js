@@ -41,7 +41,9 @@ createArticle=(event)=>{
     });
 }
 
-
+cancelButtonClickHandler=()=>{
+  this.setState({showArticleCreationForm:false,showCreateArticleButton:true});
+}
 articleCreationForm=()=>{
 
     return (
@@ -55,6 +57,7 @@ articleCreationForm=()=>{
             <textarea type="textarea" className="form-control" id="description" name="description" placeholder="description"/>
           </div>
           <button type="submit" className="btn btn-primary">Create</button>
+          <span> <button onClick={this.cancelButtonClickHandler} className="btn btn-primary">Cancel</button></span>
       </form>
 
       );
@@ -88,7 +91,10 @@ articleCreationForm=()=>{
     return (
        <div>
           <div>
-            <h2>My Articles</h2>
+            {
+              !this.state.showArticleCreationForm ?
+              <h2>My Articles</h2> : <h2>Create Article</h2>
+            }
             {
 
               this.state.showCreateArticleButton ?

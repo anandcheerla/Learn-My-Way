@@ -2,7 +2,7 @@
 
 
 
-__________________________________________________________________________________
+__________________________________________________________________________________________________________________
 
 Technology stack
 Node js
@@ -112,6 +112,9 @@ Articles should have more fields like likes comments and other things that are n
 some bootstraping or styling needs to be done
 
 add some modes,like problem solving mode, where you have a question as a unit and when you click it the modal appears which shows the answer,so make that model locked for few minutes,inorder to make the user think,it should be under some mode where user can turn on/off, other wise the people who wants an immediate answer gets annoyed.
+
+
+some mode whether anyone can add units to the same article,say,you create an article(say math techniques in programming) with that mode anyone can write a unit and add ,if the person created the article doesnot want to keep that he can remove that also..
 
 
 
