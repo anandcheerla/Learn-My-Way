@@ -2,17 +2,15 @@ import React from 'react';
 import axios from 'axios';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import $ from 'jquery';
-// import Popper from 'popper.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
-
-
+//user defined packages or files
 import Articles from './views/Articles.js';
 
 class Akc extends React.Component{
     constructor(props){
       super(props);
+      //initial state
       this.state={
         articles:[],
         showRegisterForm: false,
@@ -21,24 +19,19 @@ class Akc extends React.Component{
         fetchedArticlesFromDb: false
         
       };
-    }
+    }//constructor end
 
-
+    //this method is to fetch articles from DB and store it in the state property called articles and make fetchedArticlesFromDb true
     fetchArticlesFromDb=()=>{
-      console.log("i am getting called");
       axios.get("/articles").then(
           res=>{
-            // console.log(dbArticles);
-
             this.setState({
               articles: [...res.data],
               fetchedArticlesFromDb: true
             });
-            // console.log(this.state.articles);
           }
       )
-      // console.log(this.state.articles);
-    }
+    }//fetchArticlesFromDb method end
 
 
     componentDidMount(){
@@ -46,6 +39,7 @@ class Akc extends React.Component{
     }
    
 
+    //login api call to /login route with username and password
     userLogin=(event)=>{
       event.preventDefault();
       let formData={
@@ -54,23 +48,22 @@ class Akc extends React.Component{
       }
 
       axios.post("/login",formData).then((res)=>{
-        if(res.data=="success"){
-          
-         this.setState({
-            loginSuccess:true,
-            showRegisterForm:false,
-            showLoginForm:false
-           
+        if(res.data=="success"){  
+          this.setState({
+              loginSuccess:true,
+              showRegisterForm:false,
+              showLoginForm:false
           });
-
         }
         else{
           alert("Incorrect credentials");
         }
       });
 
-    }
+    }//userLogin method end
 
+
+    //registration api call to /register with the necessary details
     userRegistration=(event)=>{
       event.preventDefault();
       let formData={
@@ -87,11 +80,11 @@ class Akc extends React.Component{
           showRegisterForm:false,
           showLoginForm:true
         });
-
       });
-    }
+    }//userRegistration method end
 
 
+    //this method will return form for user registration,used as html
     userRegistrationForm=()=>{
       return (
         <form name="login" onSubmit={this.userRegistration}>
@@ -123,10 +116,9 @@ class Akc extends React.Component{
             </div>
             <button type="submit" className="btn btn-primary">Register</button>
         </form>
-
         );
+    }//userRegistrationForm method end
 
-    }
 
     userLoginForm=()=>{
       return (
@@ -141,9 +133,9 @@ class Akc extends React.Component{
             </div>
             <button type="submit" className="btn btn-primary">Login</button>
         </form>
+      );
+    }//userLoginForm method end
 
-        );
-    }
 
     myArticles=()=>{
       return (
@@ -151,17 +143,16 @@ class Akc extends React.Component{
               <Articles articles={this.state.articles}></Articles>
           </div>
       );
-    }
+    }//myArticles method end
+
 
     render(){
       return (
           <div className="mainScreen">
             <div>
               <nav className="navbar navbar-dark bg-dark">
-             
               {
                 !this.state.loginSuccess &&
-                
                   <div> 
                     <button onClick={()=>this.setState({showLoginForm: true,showRegisterForm: false})} className="btn btn-primary">Login</button>
                   </div>
@@ -171,9 +162,7 @@ class Akc extends React.Component{
                   <div> 
                     <button onClick={()=>this.setState({showRegisterForm: true,showLoginForm:false})} className="btn btn-primary">Register</button>
                   </div>
-                
                }
-
                 <div> 
                   <button onClick={()=>this.fetchArticlesFromDb()} className="btn btn-primary">My Articles</button>
                 </div>
@@ -190,9 +179,10 @@ class Akc extends React.Component{
             </div>
           </div>
       );
-    }
+    }//render method end
 
-}
+}//class Akc end 
+
 
 class App extends React.Component{
 
