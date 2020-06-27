@@ -1,4 +1,11 @@
 
+/*
+
+	Author: Anand Kumar Cheerla
+	Descripton: Database connection and schema declarations is defined in this file
+
+*/
+
 const mongoose=require("mongoose");
 const passportLocalMongoose=require("passport-local-mongoose");
 
@@ -20,7 +27,7 @@ const unitSchema=mongoose.Schema({
 	videoFile: {type: String},
 	priority: {type: Number,default: 2},
 	complexity: {type: String},
-	timeStamp:{type: Date,default: Date.now}
+	createdTime: {type: Date,default: Date.now}
 
 	//nextUnit: {type: mongoose.Schema.ObjectId},
 	//nextOtherArticleUnit: {type: mongoose.Schema.ObjectId}
@@ -33,7 +40,11 @@ const articleSchema=mongoose.Schema({
 	heading: {type: String},
 	description: {type: String},
 	units: [{type: unitSchema}],
-	timeStamp:{type: Date,default: Date.now}
+	imageFile: {type: String},
+	likes: {type:Number,default:0},
+	clicks: {type:Number,default:0},
+	lastUpdatedTime: {type: Date,default: Date.now},
+	createdTime: {type: Date,default: Date.now}
 
 },{collection:"units"});
 
