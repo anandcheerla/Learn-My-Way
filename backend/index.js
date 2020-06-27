@@ -206,6 +206,37 @@ app.post('/add-unit/:articleId',isLoggedIn,function(req,res){
 
 });
 
+app.put('/unit-update/:articleId/:unitId',isLoggedIn,function(req,res){
+	let userFromSession=req.session.passport.user;
+	let articleId=req.params.articleId;
+	let unitId=req.params.unitId;
+
+	let queryObject={
+		"username":userFromSession,
+	}
+
+	userModel.findOne(queryObject,function(err,userDocument){
+		
+		let article=userDocument.articles.id(articleId);
+		let unit=article.units.id(unitId);
+
+
+		//update others which are need,add necessary conditions if required
+		unit.heading=req.body.heading;
+		unit.shortDescription=req.body.shortDescription;
+
+		userDocument.save(function(err){
+			if(err){
+				console.log(err);
+			}
+		})
+		// let article_position = article.position;
+	});
+
+	res.send();
+
+});
+
 
 
 
