@@ -60,6 +60,8 @@ app.get("/register",function(req,res){
 
 });
 
+
+//route for register
 app.post("/register",function(req,res){
 	let newUser=new userModel({
 		username: req.body.username,
@@ -133,6 +135,11 @@ app.get("/articles",isLoggedIn,function(req,res){
 
 	});
 
+});
+
+
+app.get("/articles/all",isLoggedIn,function(req,res){
+	
 });
 
 
