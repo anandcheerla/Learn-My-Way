@@ -234,6 +234,36 @@ app.put('/unit-update/:articleId/:unitId',isLoggedIn,function(req,res){
 
 });
 
+
+app.delete("/article-delete/:articleId",isLoggedIn,function(req,res){
+	let userFromSession=req.session.passport.user;
+	let articleId=req.params.articleId;
+	let queryObject={
+		"username":userFromSession,
+	}
+	userModel.findOne(queryObject,function(err,userDocument){
+		
+		let article=userDocument.articles.id(articleId);
+		try{
+			article.remove();
+		}
+		catch(err){
+			console.log("error while removing article");
+		}
+
+		userDocument.save(function(err){
+			if(err){
+				console.log(err);
+			}
+		});
+
+	});
+
+	res.send();
+
+});
+// delete unit route
+
 app.delete("/unit-delete/:articleId/:unitId",isLoggedIn,function(req,res){
 	let userFromSession=req.session.passport.user;
 	let articleId=req.params.articleId;
@@ -246,7 +276,12 @@ app.delete("/unit-delete/:articleId/:unitId",isLoggedIn,function(req,res){
 		let article=userDocument.articles.id(articleId);
 		let unit=article.units.id(unitId);
 
-		unit.remove();
+		try{
+			unit.remove();
+		}
+		catch(err){
+			console.log("error while removing unit");
+		}
 
 		userDocument.save(function(err){
 			if(err){
@@ -257,7 +292,6 @@ app.delete("/unit-delete/:articleId/:unitId",isLoggedIn,function(req,res){
 	});
 
 	res.send();
-
 
 });
 
