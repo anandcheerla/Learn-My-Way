@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-
+import ls from 'local-storage';
 
 //user defined packages or files
 import '.././App.css';
@@ -13,14 +13,14 @@ class Articles extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      articles: [...this.props.articles],
+      articles: ls.get("articles") || [...this.props.articles],
       showArticleCreationForm: false,
       showCreateArticleButton: true
     };
   }//constructor end
 
   componentDidMount(){
-    console.log("articles component mounted");
+    // console.log("articles component mounted");
   }
 
 
@@ -33,20 +33,37 @@ class Articles extends React.Component{
       }
       axios.post("/new-article",formData).then(res=>{
           let newlyCreatedArticle={...res.data};
+          let articles_temp_var=[...this.state.articles,newlyCreatedArticle];
+
           if(res.data._id){
             this.setState({
-              articles: [...this.state.articles,newlyCreatedArticle],
+              articles: articles_temp_var,
               showArticleCreationForm: false,
               showCreateArticleButton: true
             });
+            ls.set("articles",articles_temp_var);
+            ls.set("showArticleCreationForm",false);
+            ls.set("showCreateArticleButton",true);
+
+            // console.log(ls.get("articles"));
           }
       });
   }//createArticle method end
 
   cancelButtonClickHandler=()=>{
     this.setState({showArticleCreationForm:false,showCreateArticleButton:true});
+    ls.set("showArticleCreationForm",false);
+    ls.set("showCreateArticleButton",true);
   }//cancelButtonClickHandler method end
 
+
+  unitsHandlerFromArticle=(units)=>{
+
+
+    // this.setState({});
+
+
+  }
 
   //this method is to create and return the article creation form
   articleCreationForm=()=>{
@@ -69,6 +86,7 @@ class Articles extends React.Component{
 
     createArticleButtonClickHandler=()=>{
         this.setState({showArticleCreationForm:true,showCreateArticleButton:false});
+
     }//createArticleButtonClickHandler method end
 
 
@@ -107,7 +125,7 @@ class Articles extends React.Component{
            {
             !this.state.showArticleCreationForm &&
             this.state.articles.map(element=>(
-              <li className="list-group-item" style={articleStyle}><Article dbId={element._id} heading={element.heading} description={element.description} units={element.units}></Article></li>
+              <li className="list-group-item" style={articleStyle}><Article dbId={element._id} heading={element.heading} description={element.description} units={element.units} unitAdd={this.unitsHandlerFromArticle}></Article></li>
             ))
            }
           </ul>

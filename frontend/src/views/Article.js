@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import ls from 'local-storage';
 
 //user defined packages or files
 import '.././App.css';
@@ -41,9 +42,14 @@ class Article extends React.Component{
     }
 
     axios.post("/add-unit/"+this.state.dbId,formData).then(res=>{
+        let units_temp_var=[...this.state.units,res.data];
         this.setState({
-            units: [...this.state.units,res.data]
+            units: units_temp_var
         });
+        // console.log()
+
+        // this.props.unitAdd(units_temp_var);
+       
     });
 
     //to reset the form

@@ -13,11 +13,11 @@ class Akc extends React.Component{
       super(props);
       //initial state
       this.state={
-        articles: ls.get("articles") || [],
+        articles: [],
         showRegisterForm: ls.get("showRegisterForm") || false,
         showLoginForm: ls.get("showLoginForm") || false,
         loginSuccess: ls.get("loginSuccess") || false,
-        fetchedArticlesFromDb: ls.get("fetchedArticlesFromDb") || false
+        fetchedArticlesFromDb: false
 
       };
     }//constructor end
@@ -40,6 +40,9 @@ class Akc extends React.Component{
 
 
     componentDidMount(){
+      // if(this.state.loginSuccess){
+      //   this.fetchArticlesFromDb();
+      // }
       // ls.clear();
     }
    

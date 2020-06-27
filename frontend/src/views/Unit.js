@@ -1,8 +1,7 @@
 import React from 'react';
-// import axios from 'axios';
 
+//user defined packages or files
 import '.././App.css';
-
 
 
 class Unit extends React.Component{
@@ -11,7 +10,9 @@ class Unit extends React.Component{
       this.state={
           modalDisplay: "none"
       }
-  }
+  }//constructor end
+
+
   onClickHandler=(event)=>{
     if(this.state.modalDisplay=="none")
     {
@@ -25,17 +26,19 @@ class Unit extends React.Component{
         modalDisplay: "none"
       });
     }
+  }//onClickHandler method end
 
-  }
 
   closeButtonHandler=()=>{  
     this.setState({
           modalDisplay: "none" 
     });
+  }//closeButtonHandler method end
 
-  }
+
   render(){
-    //can define inline styles like this
+
+    //inline styles in the form of variables
     let unitModalStyle={
       //taken from w3 schools
       "display": this.state.modalDisplay, /* Hidden by default */
@@ -68,30 +71,34 @@ class Unit extends React.Component{
         "border": "2px solid "+unitBorderColor[this.props.complexity]
     }
 
+    let wrap={
+      "white-space": "pre-wrap"
+    }
 
     return (
       <div>
         <div style={unitStyle} className="unit" onClick={this.onClickHandler}>
           <div className="unitHeading">
-            <h3>{this.props.heading}</h3>
+            <h3 style={wrap}>{this.props.heading}</h3>
           </div>
           <div className="unitShortDescription">
-            <p>{this.props.shortDescription}</p>
+            <p style={wrap}>{this.props.shortDescription}</p>
           </div>
         </div>
 
         <div className="unitModal" style={unitModalStyle}>
           <div className="unitModalContent" style={unitModalContentStyle}>
-              <h2>{this.props.heading}</h2>
-              <h5>{this.props.shortDescription}</h5>
-              <p>{this.props.longDescription}</p>
+              <h2 style={wrap}>{this.props.heading}</h2>
+              <h5 style={wrap}>{this.props.shortDescription}</h5>
+              <p style={wrap}>{this.props.longDescription}</p>
               <br/>  
               <span className="closeButton" onClick={this.closeButtonHandler}>CLOSE</span>
           </div> 
         </div>
       </div>
     );
-  }
-}
+  }//render method end
+}//class Unit end
+
 
 export default Unit;
