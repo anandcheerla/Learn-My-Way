@@ -149,7 +149,6 @@ app.post("/new-article",isLoggedIn,function(req,res){
 		let newArticle = new articleModel();
 		newArticle.heading=req.body.heading;
 		newArticle.description=req.body.description;
-		newArticle.position=size_of_articles;
 		userDocument.articles.push(newArticle);
 		userDocument.save(function(err){
 			if(err)
@@ -192,7 +191,6 @@ app.post('/add-unit/:articleId',isLoggedIn,function(req,res){
 		new_unit.videoFile="";
 		new_unit.priority=req.body.priority;
 		new_unit.complexity=req.body.complexity;
-		new_unit.position=size_of_units;
 
 		article.units.push(new_unit);
 		userDocument.save(function(err){
@@ -220,7 +218,6 @@ app.put('/unit-update/:articleId/:unitId',isLoggedIn,function(req,res){
 		let article=userDocument.articles.id(articleId);
 		let unit=article.units.id(unitId);
 
-
 		//update others which are need,add necessary conditions if required
 		unit.heading=req.body.heading;
 		unit.shortDescription=req.body.shortDescription;
@@ -234,6 +231,33 @@ app.put('/unit-update/:articleId/:unitId',isLoggedIn,function(req,res){
 	});
 
 	res.send();
+
+});
+
+app.delete("/unit-delete/:articleId/:unitId",isLoggedIn,function(req,res){
+	let userFromSession=req.session.passport.user;
+	let articleId=req.params.articleId;
+	let unitId=req.params.unitId;
+	let queryObject={
+		"username":userFromSession,
+	}
+	userModel.findOne(queryObject,function(err,userDocument){
+		
+		let article=userDocument.articles.id(articleId);
+		let unit=article.units.id(unitId);
+
+		unit.remove();
+
+		userDocument.save(function(err){
+			if(err){
+				console.log(err);
+			}
+		});
+
+	});
+
+	res.send();
+
 
 });
 

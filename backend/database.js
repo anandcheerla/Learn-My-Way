@@ -1,7 +1,4 @@
 
-//position field is for the purpose of faster lookup
-
-
 const mongoose=require("mongoose");
 const passportLocalMongoose=require("passport-local-mongoose");
 
@@ -23,7 +20,6 @@ const unitSchema=mongoose.Schema({
 	videoFile: {type: String},
 	priority: {type: Number,default: 2},
 	complexity: {type: String},
-	position:{type: Number},
 	timeStamp:{type: Date,default: Date.now}
 
 	//nextUnit: {type: mongoose.Schema.ObjectId},
@@ -37,7 +33,6 @@ const articleSchema=mongoose.Schema({
 	heading: {type: String},
 	description: {type: String},
 	units: [{type: unitSchema}],
-	position:{type: Number},
 	timeStamp:{type: Date,default: Date.now}
 
 },{collection:"units"});
