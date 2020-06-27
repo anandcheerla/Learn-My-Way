@@ -110,6 +110,7 @@ function isLoggedIn(req,res,next){
 
 //logout route
 app.get("/logout",function(req,res){
+	console.log("logout");
 	req.logout();	
 });
 
@@ -125,7 +126,9 @@ app.get("/articles",isLoggedIn,function(req,res){
 			return;
 		}
 
+
 		let articles=userDocument.articles;
+		console.log(articles[0]);
 		res.send(articles);
 
 	});
@@ -140,9 +143,13 @@ app.post("/new-article",isLoggedIn,function(req,res){
 	let userFromSession=req.session.passport.user;
 	// console.log(userFromSession);
 	userModel.findOne({username:userFromSession},function(err,userDocument){
+
+		let size_of_articles=userDocument.articles.length;
+
 		let newArticle = new articleModel();
 		newArticle.heading=req.body.heading;
 		newArticle.description=req.body.description;
+		newArticle.position=size_of_articles;
 		userDocument.articles.push(newArticle);
 		userDocument.save(function(err){
 			if(err)
@@ -173,6 +180,8 @@ app.post('/add-unit/:articleId',isLoggedIn,function(req,res){
 	userModel.findOne(queryObject,function(err,userDocument){
 		let article=userDocument.articles.id(articleId);
 
+
+		let size_of_units = article.units.length;
 		// console.log(article.units[0].parent());
 		let new_unit=new unitModel();
 		new_unit.heading=req.body.heading;
@@ -183,7 +192,7 @@ app.post('/add-unit/:articleId',isLoggedIn,function(req,res){
 		new_unit.videoFile="";
 		new_unit.priority=req.body.priority;
 		new_unit.complexity=req.body.complexity;
-
+		new_unit.position=size_of_units;
 
 		article.units.push(new_unit);
 		userDocument.save(function(err){
