@@ -1,3 +1,11 @@
+
+/*
+
+	Author: Anand Kumar Cheerla
+	Descripton: Backend code which consists of logic and API routes for certain tasks
+
+*/
+
 const express=require("express");
 const mongoose=require("mongoose");
 const bodyParser=require("body-parser");
@@ -12,7 +20,6 @@ const dbModels=db.dbModels;
 const unitModel=dbModels.unitModel;
 const articleModel=dbModels.articleModel;
 const userModel= dbModels.userModel;
-
 
 //this is the express app object
 const app=express();
@@ -41,25 +48,11 @@ passport.deserializeUser(userModel.deserializeUser());
 
 //------------------------------------routes--------------------------------------
 
-// app.get('/units',function(req,res){
-
-// 	unitModel.find({},function(err,docs){
-// 		if(err){
-// 			res.send(err);
-// 		}
-// 		else{
-// 			res.send(docs);
-// 		}
-// 	});
-// });
-
-
 //register routes
 
 app.get("/register",function(req,res){
 
 });
-
 
 //route for register
 app.post("/register",function(req,res){
@@ -89,8 +82,8 @@ app.get("/fail",function(req,res){
 	res.send("fail");
 });
 
-//login routes
 
+//login routes
 app.get("/login",function(req,res){
 	res.send("please login");
 });
@@ -100,7 +93,7 @@ app.post("/login",passport.authenticate("local",{successRedirect: "/suc",failure
 });
 
 
-//is logged in middleware
+//middleware to check whether the user is logged in
 function isLoggedIn(req,res,next){
 	if(req.isAuthenticated()){
 		next();
@@ -110,6 +103,8 @@ function isLoggedIn(req,res,next){
 	}
 }
 
+
+
 //logout route
 app.get("/logout",function(req,res){
 	console.log("logout");
@@ -118,6 +113,7 @@ app.get("/logout",function(req,res){
 
 
 
+//my_articles route
 app.get("/articles",isLoggedIn,function(req,res){
 	let userFromSession=req.session.passport.user;
 
@@ -128,7 +124,6 @@ app.get("/articles",isLoggedIn,function(req,res){
 			return;
 		}
 
-
 		let articles=userDocument.articles;
 		console.log(articles[0]);
 		res.send(articles);
@@ -138,10 +133,12 @@ app.get("/articles",isLoggedIn,function(req,res){
 });
 
 
-app.get("/articles/all",isLoggedIn,function(req,res){
-	
-});
 
+//meed to implement some sort of analytics inorder to show other articles to the user
+app.get("/articles/all",isLoggedIn,function(req,res){
+	let userFromSession=req.session.passport.user;
+	//yet to implement
+});
 
 
 //creating a new article 
@@ -150,7 +147,6 @@ app.post("/new-article",isLoggedIn,function(req,res){
 	let userFromSession=req.session.passport.user;
 	// console.log(userFromSession);
 	userModel.findOne({username:userFromSession},function(err,userDocument){
-
 		let size_of_articles=userDocument.articles.length;
 
 		let newArticle = new articleModel();
@@ -165,52 +161,12 @@ app.post("/new-article",isLoggedIn,function(req,res){
 			else{
 				res.send(newArticle);
 			}
-		});
-	
-	
-	});
-
-
-});
-
-
-//add unit for particular articles
-app.post('/add-unit/:articleId',isLoggedIn,function(req,res){
-	let userFromSession=req.session.passport.user;
-	let articleId=req.params.articleId;
-
-
-	let queryObject={
-		"username":userFromSession,
-	}
-	userModel.findOne(queryObject,function(err,userDocument){
-		let article=userDocument.articles.id(articleId);
-
-
-		let size_of_units = article.units.length;
-		// console.log(article.units[0].parent());
-		let new_unit=new unitModel();
-		new_unit.heading=req.body.heading;
-		new_unit.shortDescription=req.body.shortDescription;
-		new_unit.longDescription=req.body.longDescription;
-		new_unit.imageFile="";
-		new_unit.audioFile="";
-		new_unit.videoFile="";
-		new_unit.priority=req.body.priority;
-		new_unit.complexity=req.body.complexity;
-
-		article.units.push(new_unit);
-		userDocument.save(function(err){
-			if(err){
-				console.log(err);
-			}
-			res.send(new_unit);
-		});
-
+		});	
 	});
 
 });
 
+//update article route,accepts article id via route parameter
 app.put('/article-update/:articleId',isLoggedIn,function(req,res){
 	let userFromSession=req.session.passport.user;
 	let articleId=req.params.articleId;
@@ -219,15 +175,13 @@ app.put('/article-update/:articleId',isLoggedIn,function(req,res){
 		"username":userFromSession,
 	}
 
-	userModel.findOne(queryObject,function(err,userDocument){
-		
+	userModel.findOne(queryObject,function(err,userDocument){	
 		let article=userDocument.articles.id(articleId);
 
 		//update others which are need,add necessary conditions if required
 		article.heading=req.body.heading;
 		article.description=req.body.description;
 
-
 		userDocument.save(function(err){
 			if(err){
 				console.log(err);
@@ -235,49 +189,11 @@ app.put('/article-update/:articleId',isLoggedIn,function(req,res){
 		})
 		// let article_position = article.position;
 	});
-
 	res.send();
-
 });
 
 
-app.put('/unit-update/:articleId/:unitId',isLoggedIn,function(req,res){
-	let userFromSession=req.session.passport.user;
-	let articleId=req.params.articleId;
-	let unitId=req.params.unitId;
-
-	let queryObject={
-		"username":userFromSession,
-	}
-
-	userModel.findOne(queryObject,function(err,userDocument){
-		
-		let article=userDocument.articles.id(articleId);
-		let unit=article.units.id(unitId);
-
-		//update others which are need,add necessary conditions if required
-		unit.heading=req.body.heading;
-		unit.shortDescription=req.body.shortDescription;
-		unit.longDescription=req.body.longDescription;
-		// unit.imageFile="";
-		// unit.audioFile="";
-		// unit.videoFile="";
-		unit.priority=req.body.priority;
-		unit.complexity=req.body.complexity;
-
-		userDocument.save(function(err){
-			if(err){
-				console.log(err);
-			}
-		})
-		// let article_position = article.position;
-	});
-
-	res.send();
-
-});
-
-
+//delete article route,accepts article id via route parameter
 app.delete("/article-delete/:articleId",isLoggedIn,function(req,res){
 	let userFromSession=req.session.passport.user;
 	let articleId=req.params.articleId;
@@ -301,13 +217,81 @@ app.delete("/article-delete/:articleId",isLoggedIn,function(req,res){
 		});
 
 	});
-
 	res.send();
-
 });
 
-// delete unit route
 
+//add unit for particular articles
+app.post('/add-unit/:articleId',isLoggedIn,function(req,res){
+	let userFromSession=req.session.passport.user;
+	let articleId=req.params.articleId;
+
+	let queryObject={
+		"username":userFromSession,
+	}
+	userModel.findOne(queryObject,function(err,userDocument){
+		let article=userDocument.articles.id(articleId);
+
+		let size_of_units = article.units.length;
+		// console.log(article.units[0].parent());
+		let new_unit=new unitModel();
+		new_unit.heading=req.body.heading;
+		new_unit.shortDescription=req.body.shortDescription;
+		new_unit.longDescription=req.body.longDescription;
+		new_unit.imageFile="";
+		new_unit.audioFile="";
+		new_unit.videoFile="";
+		new_unit.priority=req.body.priority;
+		new_unit.complexity=req.body.complexity;
+
+		article.units.push(new_unit);
+		userDocument.save(function(err){
+			if(err){
+				console.log(err);
+			}
+			res.send(new_unit);
+		});
+
+	});
+});
+
+
+//update unit route
+app.put('/unit-update/:articleId/:unitId',isLoggedIn,function(req,res){
+	let userFromSession=req.session.passport.user;
+	let articleId=req.params.articleId;
+	let unitId=req.params.unitId;
+
+	let queryObject={
+		"username":userFromSession,
+	}
+
+	userModel.findOne(queryObject,function(err,userDocument){
+		let article=userDocument.articles.id(articleId);
+		let unit=article.units.id(unitId);
+
+		//update others which are need,add necessary conditions if required
+		unit.heading=req.body.heading;
+		unit.shortDescription=req.body.shortDescription;
+		unit.longDescription=req.body.longDescription;
+		// unit.imageFile="";
+		// unit.audioFile="";
+		// unit.videoFile="";
+		unit.priority=req.body.priority;
+		unit.complexity=req.body.complexity;
+
+		userDocument.save(function(err){
+			if(err){
+				console.log(err);
+			}
+		})
+		// let article_position = article.position;
+	});
+	res.send();
+});
+
+
+// delete unit route
 app.delete("/unit-delete/:articleId/:unitId",isLoggedIn,function(req,res){
 	let userFromSession=req.session.passport.user;
 	let articleId=req.params.articleId;
@@ -340,7 +324,10 @@ app.delete("/unit-delete/:articleId/:unitId",isLoggedIn,function(req,res){
 });
 
 
+//--------------------routes end--------------------------
 
+
+//--------------------------------------------------------
 
 const PORT= 5000 || process.env.PORT;
 
