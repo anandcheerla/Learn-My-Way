@@ -111,13 +111,13 @@ class Articles extends React.Component{
         <div>
           <div>
             {
-              this.props.name=="myArticles"
+              this.props.sectionName=="myArticles"
               &&
               (!this.state.showArticleCreationForm ?
               <h2>My Articles</h2> : <h2>Create Article</h2>)
             }
             {
-              this.props.name=="myArticles"
+              this.props.sectionName=="myArticles"
               &&
               (this.state.showCreateArticleButton ?
               <button style={newArticleButtonStyle} onClick={this.createArticleButtonClickHandler} className="btn btn-outline-primary">New Article</button>
@@ -130,7 +130,7 @@ class Articles extends React.Component{
            {
             !this.state.showArticleCreationForm &&
             this.state.articles.map(element=>(
-              <li className="list-group-item" style={articleStyle}><Article dbId={element._id} heading={element.heading} description={element.description} units={element.units} unitAdd={this.unitsHandlerFromArticle}></Article></li>
+              <li className="list-group-item" style={articleStyle}><Article dbId={element._id} heading={element.heading} description={element.description} units={element.units} unitAdd={this.unitsHandlerFromArticle} sectionName={this.props.sectionName}></Article></li>
             ))
            }
           </ul>

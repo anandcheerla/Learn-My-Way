@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 //user defined packages or files
 import '.././App.css';
@@ -8,7 +9,11 @@ class Unit extends React.Component{
   constructor(props){
       super(props);
       this.state={
-          modalDisplay: "none"
+          modalDisplay: "none",
+          heading: this.props.heading,
+          shortDescription: this.props.shortDescription,
+          longDescription: this.props.longDescription,
+          unitDeleted: false
       }
   }//constructor end
 
@@ -35,7 +40,13 @@ class Unit extends React.Component{
     });
   }//closeButtonHandler method end
 
+  deleteUnitButtonHandler=()=>{
 
+    axios.delete("/unit-delete/"+this.props.articleId+"/"+this.props.unitId).then(res=>{
+      console.log(res);
+      this.setState({modalDisplay: "none",unitDeleted: true});
+    });
+  }
   render(){
 
     //inline styles in the form of variables
@@ -76,25 +87,39 @@ class Unit extends React.Component{
     }
 
     return (
+      
       <div>
-        <div style={unitStyle} className="unit" onClick={this.onClickHandler}>
+        {
+        !this.state.unitDeleted
+        &&
+        (
+         <div> 
+          <div style={unitStyle} className="unit" onClick={this.onClickHandler}>
           <div className="unitHeading">
-            <h3 style={wrap}>{this.props.heading}</h3>
+            <h3 style={wrap}>{this.state.heading}</h3>
           </div>
           <div className="unitShortDescription">
-            <p style={wrap}>{this.props.shortDescription}</p>
+            <p style={wrap}>{this.state.shortDescription}</p>
           </div>
         </div>
 
         <div className="unitModal" style={unitModalStyle}>
           <div className="unitModalContent" style={unitModalContentStyle}>
-              <h2 style={wrap}>{this.props.heading}</h2>
-              <h5 style={wrap}>{this.props.shortDescription}</h5>
-              <p style={wrap}>{this.props.longDescription}</p>
-              <br/>  
+              <h2 style={wrap}>{this.state.heading}</h2>
+              <h5 style={wrap}>{this.state.shortDescription}</h5>
+              <p style={wrap}>{this.state.longDescription}</p>
+              <br/>
+              <br/>
+              <button onClick={()=>this.deleteUnitButtonHandler()} type="button" class="btn btn-danger">Delete</button>
+              <br/><br/>  
               <span className="closeButton" onClick={this.closeButtonHandler}>CLOSE</span>
           </div> 
         </div>
+        </div>
+        )
+
+      }
+
       </div>
     );
   }//render method end

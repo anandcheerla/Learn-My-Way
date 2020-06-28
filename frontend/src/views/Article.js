@@ -117,19 +117,21 @@ class Article extends React.Component{
           <h4>{this.state.description}</h4>
         </div>
         {
-          this.state.articleClicked?
+          this.props.sectionName=="myArticles"
+          &&
+          (this.state.articleClicked?
           <div> 
               <button onClick={(e)=>{e.stopPropagation();this.setState({showUnitCreationForm:true});}} className="btn btn-outline-primary">New Unit</button>
           </div>
           :
-         null
+         null)
         }
         {
           this.state.articleClicked &&
           <div onClick={(e)=>e.stopPropagation()}>
             {
               this.state.units.map(element=>(
-                <Unit mid={element._id} heading={element.heading} shortDescription={element.shortDescription} longDescription={element.longDescription} complexity={element.complexity}></Unit>
+                <Unit unitId={element._id} articleId={this.props.dbId} heading={element.heading} shortDescription={element.shortDescription} longDescription={element.longDescription} complexity={element.complexity}></Unit>
               ))
             }
             <div className="unitCreationForm">
