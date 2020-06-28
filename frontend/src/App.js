@@ -199,7 +199,7 @@ class Akc extends React.Component{
     myArticles=()=>{
       return (
          <div>
-              <Articles articles={this.state.articles}></Articles>
+              <Articles name="myArticles" articles={this.state.articles}></Articles>
           </div>
       );
     }//myArticles method end
@@ -209,7 +209,7 @@ class Akc extends React.Component{
 
           return (
             <div>
-              <Articles articles={this.state.homePageArticles}></Articles>
+              <Articles name="homePage" articles={this.state.homePageArticles}></Articles>
             </div>
           );
     }

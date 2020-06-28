@@ -111,14 +111,18 @@ class Articles extends React.Component{
         <div>
           <div>
             {
-              !this.state.showArticleCreationForm ?
-              <h2>My Articles</h2> : <h2>Create Article</h2>
+              this.props.name=="myArticles"
+              &&
+              (!this.state.showArticleCreationForm ?
+              <h2>My Articles</h2> : <h2>Create Article</h2>)
             }
             {
-              this.state.showCreateArticleButton ?
+              this.props.name=="myArticles"
+              &&
+              (this.state.showCreateArticleButton ?
               <button style={newArticleButtonStyle} onClick={this.createArticleButtonClickHandler} className="btn btn-outline-primary">New Article</button>
               :
-              null
+              null)
             }
           </div>
           {this.state.showArticleCreationForm ? this.articleCreationForm() : null}
