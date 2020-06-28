@@ -13,7 +13,8 @@ class Articles extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      articles: ls.get("articles") || [...this.props.articles],
+      // articles: ls.get("articles") || [...this.props.articles],
+      articles: [...this.props.articles],
       showArticleCreationForm: false,
       showCreateArticleButton: true
     };

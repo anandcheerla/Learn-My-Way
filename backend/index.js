@@ -125,7 +125,7 @@ app.get("/articles",isLoggedIn,function(req,res){
 		}
 
 		let articles=userDocument.articles;
-		console.log(articles[0]);
+		// console.log(articles[0]);
 		res.send(articles);
 
 	});
@@ -135,8 +135,22 @@ app.get("/articles",isLoggedIn,function(req,res){
 
 
 //meed to implement some sort of analytics inorder to show other articles to the user
-app.get("/articles/all",isLoggedIn,function(req,res){
+app.get("/articles/home",isLoggedIn,function(req,res){
+
+	// console.log("akc");
 	let userFromSession=req.session.passport.user;
+
+	let articles_out=[];
+	userModel.find({},function(err,userDocuments){
+		userDocuments.forEach(function(doc){
+			if(doc.articles.length>0){
+				articles_out.push(doc.articles[0]);
+			}
+		});
+		res.send(articles_out);
+	});
+	// console.log(articles_out);
+	// res.send(articles_out);
 	//yet to implement
 });
 
@@ -297,7 +311,7 @@ app.delete("/unit-delete/:articleId/:unitId",isLoggedIn,function(req,res){
 	let articleId=req.params.articleId;
 	let unitId=req.params.unitId;
 	let queryObject={
-		"username":userFromSession,
+		"username":userFromSession
 	}
 	userModel.findOne(queryObject,function(err,userDocument){
 		

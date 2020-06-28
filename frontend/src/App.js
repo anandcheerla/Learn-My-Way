@@ -14,36 +14,51 @@ class Akc extends React.Component{
       //initial state
       this.state={
         articles: [],
+        homePageArticles:[],
         showRegisterForm: ls.get("showRegisterForm") || false,
         showLoginForm: ls.get("showLoginForm") || false,
         loginSuccess: ls.get("loginSuccess") || false,
-        fetchedArticlesFromDb: false
+        fetchedArticlesFromDb: false,
+        fetchedHomePageArticlesFromDb: false,
+        showHomePageArticles:true
 
       };
     }//constructor end
 
     //this method is to fetch articles from DB and store it in the state property called articles and make fetchedArticlesFromDb true
     fetchArticlesFromDb=()=>{
+
       axios.get("/articles").then(
           res=>{
             let articles_temp_var=[...res.data];
             let fetchArticlesFromDb_temp_var=true;
             this.setState({
               articles: articles_temp_var,
-              fetchedArticlesFromDb: fetchArticlesFromDb_temp_var
+              fetchedArticlesFromDb: fetchArticlesFromDb_temp_var,
+              showHomePageArticles: false
             });
             ls.set("articles",articles_temp_var);
             ls.set("fetchedArticlesFromDb",fetchArticlesFromDb_temp_var);
           }
-      )
+      );
     }//fetchArticlesFromDb method end
 
 
+    populateHomePage = ()=>{
+
+      console.log("frontendcall");
+      axios.get("/articles/home").then(res=>{
+        let fetchedArticles=[...res.data];
+        this.setState({
+          homePageArticles: fetchedArticles,
+          fetchedHomePageArticlesFromDb: true
+        });
+      });
+    }
+
+    
     componentDidMount(){
-      // if(this.state.loginSuccess){
-      //   this.fetchArticlesFromDb();
-      // }
-      // ls.clear();
+      
     }
    
 
@@ -189,6 +204,16 @@ class Akc extends React.Component{
       );
     }//myArticles method end
 
+    getHomePageArticles=()=>{
+          // return (<PopularArticles articles={this.state.homePageArticles}></PopularArticles>);
+
+          return (
+            <div>
+              <Articles articles={this.state.homePageArticles}></Articles>
+            </div>
+          );
+    }
+
 
     render(){
       return (
@@ -207,9 +232,18 @@ class Akc extends React.Component{
                     <button onClick={()=>{this.setState({showRegisterForm: true,showLoginForm:false});ls.set("showRegisterForm",true);ls.set("showLoginForm",false);}} className="btn btn-primary">Register</button>
                   </div>
                }
-                <div> 
-                  <button onClick={()=>this.fetchArticlesFromDb()} className="btn btn-primary">My Articles</button>
-                </div>
+                 {
+                    this.state.loginSuccess && 
+                    <div> 
+                      <button onClick={()=>this.fetchArticlesFromDb()} className="btn btn-primary">My Articles</button>
+                    </div>
+                 }
+                 {
+                    this.state.loginSuccess && 
+                    <div> 
+                      <button onClick={() => window.location.reload(false)} className="btn btn-primary">Home</button>
+                    </div>
+                 }
                  {
                     this.state.loginSuccess && 
                     <button onClick={(event)=>this.userLogout(event)} className="btn btn-primary">Logout</button>
@@ -222,9 +256,10 @@ class Akc extends React.Component{
               {this.state.showUnitCreationForm? this.unitCreationForm():null}
               {this.state.showLoginForm? this.userLoginForm():null}
               {this.state.showRegisterForm? this.userRegistrationForm():null}
-
-              {this.state.loginSuccess && this.state.fetchedArticlesFromDb ?this.myArticles():null}
               
+              {this.state.loginSuccess && !this.state.fetchedHomePageArticlesFromDb && this.populateHomePage()}
+              {this.state.loginSuccess && this.state.showHomePageArticles && this.state.fetchedHomePageArticlesFromDb && this.getHomePageArticles()}
+              {this.state.loginSuccess && this.state.fetchedArticlesFromDb ?this.myArticles():null}
               
             </div>
           </div>
