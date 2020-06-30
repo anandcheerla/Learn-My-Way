@@ -5,11 +5,16 @@
 }
 
 .unitCreationForm{
-  margin: 40px 200px;
+  margin: 40px 120px;
 }
 
 .unit{
   border: 1px solid blue;
-  padding: 50px;
-  margin: 40px 200px;
+  padding: 30px;
+  margin: 40px 120px;
+  min-width: 300px;
+}
+
+#unitCreationForm{
+  min-width: 300px;
 }

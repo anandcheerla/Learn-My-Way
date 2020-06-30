@@ -85,7 +85,7 @@ class Unit extends React.Component{
     let wrap={
       "white-space": "pre-wrap"
     }
-
+    //<button style={{"float":"right"}} onClick={()=>this.deleteUnitButtonHandler()} type="button" class="btn btn-danger">Delete</button>
     return (
       
       <div>
@@ -105,14 +105,11 @@ class Unit extends React.Component{
 
         <div className="unitModal" style={unitModalStyle}>
           <div className="unitModalContent" style={unitModalContentStyle}>
+              
+              <span style={{"float":"right"}} className="closeButton" onClick={this.closeButtonHandler}>CLOSE</span>
               <h2 style={wrap}>{this.state.heading}</h2>
               <h5 style={wrap}>{this.state.shortDescription}</h5>
               <p style={wrap}>{this.state.longDescription}</p>
-              <br/>
-              <br/>
-              <button onClick={()=>this.deleteUnitButtonHandler()} type="button" class="btn btn-danger">Delete</button>
-              <br/><br/>  
-              <span className="closeButton" onClick={this.closeButtonHandler}>CLOSE</span>
           </div> 
         </div>
         </div>

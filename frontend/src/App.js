@@ -206,7 +206,7 @@ class Akc extends React.Component{
 
     getHomePageArticles=()=>{
           // return (<PopularArticles articles={this.state.homePageArticles}></PopularArticles>);
-
+            
           return (
             <div>
               <Articles sectionName="homePage" articles={this.state.homePageArticles}></Articles>
@@ -214,10 +214,15 @@ class Akc extends React.Component{
           );
     }
 
-
+  
     render(){
+
+      let articlesSectionStyle={
+          "min-width":"1000px"
+      }
+
       return (
-          <div className="mainScreen">
+          <div style={articlesSectionStyle} className="mainScreen">
             <div>
               <nav className="navbar navbar-dark bg-dark">
               {

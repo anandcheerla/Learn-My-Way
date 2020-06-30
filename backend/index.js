@@ -215,6 +215,10 @@ app.delete("/article-delete/:articleId",isLoggedIn,function(req,res){
 		"username":userFromSession,
 	}
 	userModel.findOne(queryObject,function(err,userDocument){
+
+		//added these two lines temporarily,remove this later
+		res.send();
+		return;
 		
 		let article=userDocument.articles.id(articleId);
 		try{

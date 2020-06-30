@@ -78,6 +78,9 @@ class Articles extends React.Component{
               <label htmlFor="description">Description</label>
               <textarea type="textarea" className="form-control" id="description" name="description" placeholder="description"/>
             </div>
+            <div className="form-group" id="articleImage">
+              <input type="file" ></input>
+            </div>
             <button type="submit" className="btn btn-primary">Create</button>
             <span> <button onClick={this.cancelButtonClickHandler} className="btn btn-primary">Cancel</button></span>
         </form>
@@ -99,7 +102,7 @@ class Articles extends React.Component{
       };
 
       let articleStyle={
-        "margin-bottom": "15px", 
+        "margin-bottom": "25px", 
       }
       let newArticleButtonStyle={
           "position":"fixed",
@@ -107,8 +110,15 @@ class Articles extends React.Component{
           "right":"0"
       }
 
+      let articlesStyle={
+        "margin-left": "30%",
+        "margin-top": "5%",
+        "width":"70%"
+        
+      }
+
       return (
-        <div>
+        <div style={articlesStyle}>
           <div>
             {
               this.props.sectionName=="myArticles"
@@ -130,7 +140,9 @@ class Articles extends React.Component{
            {
             !this.state.showArticleCreationForm &&
             this.state.articles.map(element=>(
-              <li className="list-group-item" style={articleStyle}><Article dbId={element._id} heading={element.heading} description={element.description} units={element.units} unitAdd={this.unitsHandlerFromArticle} sectionName={this.props.sectionName}></Article></li>
+              <div>
+                <li className="list-group-item" style={articleStyle}><Article dbId={element._id} heading={element.heading} description={element.description} units={element.units} unitAdd={this.unitsHandlerFromArticle} sectionName={this.props.sectionName}></Article></li>
+              </div>
             ))
            }
           </ul>

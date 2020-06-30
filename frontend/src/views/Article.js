@@ -18,7 +18,8 @@ class Article extends React.Component{
       units: this.props.units,
       showArticleCreationForm: false,
       showUnitCreationForm: false,
-      articleClicked: false
+      articleClicked: false,
+      articleDeleted: false
     };
   }//constructor end
 
@@ -59,6 +60,10 @@ class Article extends React.Component{
 
   //this method will return the form for unit creation
   unitCreationForm=()=>{
+    let align={
+        "text-align":"center"
+      }
+
     return (
       <form name="createUnit" onSubmit={this.createUnit} >
         <div className="form-group">
@@ -92,7 +97,9 @@ class Article extends React.Component{
             <option value="hard">Hard</option>
           </select>
         </div>
-        <button type="submit" className="btn btn-primary">Submit</button>
+        <div style={align}>
+          <button type="submit" className="btn btn-outline-primary" id="Create-unit-button">Create</button>
+        </div>
       </form>
     );
   }//unitCreationForm method end
@@ -104,41 +111,57 @@ class Article extends React.Component{
       this.setState({articleClicked: false});
     }
     else{
-      this.setState({articleClicked: true});
+      this.setState({articleClicked: true,showUnitCreationForm:true});
     }
   }//articleClickHandler end
 
+  deletearticleButtonHandler=()=>{
+     axios.delete("/article-delete/"+this.props.dbId).then(res=>{
+      console.log(res);
+      this.setState({articleDeleted: true});
+    });
+  }
 
   render(){
+
+     // {
+     //        !this.state.articleClicked &&
+     //        <div style={{"float":"right"}}>
+     //            <button onClick={()=>this.deletearticleButtonHandler()} type="button" class="btn btn-danger">Delete</button>
+     //        </div>
+     //  }
+
+
     return (
-     <div onClick={()=>{this.articleClickHandler()}}>
-        <div>
-          <h1>{this.state.heading}</h1>
-          <h4>{this.state.description}</h4>
-        </div>
-        {
-          this.props.sectionName=="myArticles"
-          &&
-          (this.state.articleClicked?
-          <div> 
-              <button onClick={(e)=>{e.stopPropagation();this.setState({showUnitCreationForm:true});}} className="btn btn-outline-primary">New Unit</button>
+    <div>
+    {
+     !this.state.articleDeleted
+      &&
+      <div onClick={()=>{this.articleClickHandler()}}>
+          <div>
+
+            <h1>{this.state.heading}</h1>
+            <h4>{this.state.description}</h4>  
           </div>
-          :
-         null)
-        }
-        {
+
+
+            {
           this.state.articleClicked &&
           <div onClick={(e)=>e.stopPropagation()}>
             {
               this.state.units.map(element=>(
-                <Unit unitId={element._id} articleId={this.props.dbId} heading={element.heading} shortDescription={element.shortDescription} longDescription={element.longDescription} complexity={element.complexity}></Unit>
+                <Unit unitId={element._id} articleId={this.props.dbId} heading={element.heading} shortDescription={element.shortDescription} longDescription={element.longDescription} complexity={element.complexity} sectionName={this.props.sectionName}></Unit>
               ))
             }
-            <div className="unitCreationForm">
-            {this.state.showUnitCreationForm && this.unitCreationForm()}
+
+            <div id="unitCreationForm" className="unitCreationForm">
+            {this.props.sectionName=="myArticles" && this.state.showUnitCreationForm && this.unitCreationForm()}
             </div>
           </div>
-        }
+          }
+      </div>
+      
+      }
       </div>
       );
     }//render method end
