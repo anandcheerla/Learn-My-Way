@@ -60,9 +60,7 @@ class Articles extends React.Component{
 
   unitsHandlerFromArticle=(units)=>{
 
-
     // this.setState({});
-
 
   }
 
@@ -118,33 +116,62 @@ class Articles extends React.Component{
       }
 
       return (
-        <div style={articlesStyle}>
+        <div id="articles" style={articlesStyle}>
           <div>
             {
               this.props.sectionName=="myArticles"
               &&
-              (!this.state.showArticleCreationForm ?
-              <h2>My Articles</h2> : <h2>Create Article</h2>)
+              (
+                !this.state.showArticleCreationForm
+                ?
+                <h2>My Articles</h2>
+                :
+                <h2>Create Article</h2>
+              )
             }
             {
               this.props.sectionName=="myArticles"
               &&
-              (this.state.showCreateArticleButton ?
-              <button style={newArticleButtonStyle} onClick={this.createArticleButtonClickHandler} className="btn btn-outline-primary">New Article</button>
-              :
-              null)
+              (
+                this.state.showCreateArticleButton
+                ?
+                <button 
+                  style={newArticleButtonStyle} 
+                  onClick={this.createArticleButtonClickHandler} 
+                  className="btn btn-outline-primary">
+                  New Article
+                </button>
+                :
+                null
+              )
             }
           </div>
-          {this.state.showArticleCreationForm ? this.articleCreationForm() : null}
+          {
+            this.state.showArticleCreationForm
+            ?
+            this.articleCreationForm()
+            :
+            null
+          }
           <ul className="list-group" style={reverseDirectionForArticlesArray}>
-           {
-            !this.state.showArticleCreationForm &&
-            this.state.articles.map(element=>(
-              <div>
-                <li className="list-group-item" style={articleStyle}><Article dbId={element._id} heading={element.heading} description={element.description} units={element.units} unitAdd={this.unitsHandlerFromArticle} sectionName={this.props.sectionName}></Article></li>
-              </div>
-            ))
-           }
+            {
+              !this.state.showArticleCreationForm
+              &&
+              this.state.articles.map(element=>(
+                  <div>
+                    <li className="list-group-item" style={articleStyle}>
+                      <Article 
+                        dbId={element._id} 
+                        heading={element.heading} 
+                        description={element.description} 
+                        units={element.units} 
+                        unitAdd={this.unitsHandlerFromArticle} 
+                        sectionName={this.props.sectionName}>
+                      </Article>
+                    </li>
+                  </div>
+              ))
+            }
           </ul>
         </div>
       );

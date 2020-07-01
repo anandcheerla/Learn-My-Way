@@ -134,33 +134,46 @@ class Article extends React.Component{
 
     return (
     <div>
-    {
-     !this.state.articleDeleted
-      &&
-      <div onClick={()=>{this.articleClickHandler()}}>
+      {
+       !this.state.articleDeleted
+        &&
+        <div onClick={()=>{this.articleClickHandler()}}>
           <div>
-
             <h1>{this.state.heading}</h1>
             <h4>{this.state.description}</h4>  
           </div>
 
+          {
+            this.state.articleClicked
+            &&
+            <div onClick={(e)=>e.stopPropagation()}>
+              {
+                this.state.units.map(element=>(
+                  <Unit 
+                    unitId={element._id} 
+                    articleId={this.props.dbId} 
+                    heading={element.heading} 
+                    shortDescription={element.shortDescription} 
+                    longDescription={element.longDescription} 
+                    complexity={element.complexity} 
+                    sectionName={this.props.sectionName}>
+                  </Unit>
+                ))
+              }
 
-            {
-          this.state.articleClicked &&
-          <div onClick={(e)=>e.stopPropagation()}>
-            {
-              this.state.units.map(element=>(
-                <Unit unitId={element._id} articleId={this.props.dbId} heading={element.heading} shortDescription={element.shortDescription} longDescription={element.longDescription} complexity={element.complexity} sectionName={this.props.sectionName}></Unit>
-              ))
-            }
-
-            <div id="unitCreationForm" className="unitCreationForm">
-            {this.props.sectionName=="myArticles" && this.state.showUnitCreationForm && this.unitCreationForm()}
+              <div id="unitCreationForm" className="unitCreationForm">
+                {
+                  this.props.sectionName=="myArticles"
+                   &&
+                   this.state.showUnitCreationForm
+                   &&
+                   this.unitCreationForm()
+                }
+              </div>
             </div>
-          </div>
           }
-      </div>
-      
+        </div>
+        
       }
       </div>
       );

@@ -8,25 +8,25 @@ import ls from 'local-storage';
 //user defined packages or files
 import Articles from './views/Articles.js';
 
-class Akc extends React.Component{
+class Main extends React.Component{
     constructor(props){
       super(props);
       //initial state
       this.state={
         articles: [],
-        homePageArticles:[],
+        OtherArticles:[],
         showRegisterForm: ls.get("showRegisterForm") || false,
         showLoginForm: ls.get("showLoginForm") || false,
         loginSuccess: ls.get("loginSuccess") || false,
-        fetchedArticlesFromDb: false,
-        fetchedHomePageArticlesFromDb: false,
-        showHomePageArticles:true
+        fetchedMyArticlesFromDb: false,
+        fetchedOtherArticlesFromDb: false,
+        showOtherArticles:true
 
       };
     }//constructor end
 
-    //this method is to fetch articles from DB and store it in the state property called articles and make fetchedArticlesFromDb true
-    fetchArticlesFromDb=()=>{
+    //this method is to fetch articles from DB and store it in the state property called articles and make fetchedMyArticlesFromDb true
+    fetchMyArticlesFromDb=()=>{
 
       axios.get("/articles").then(
           res=>{
@@ -34,24 +34,24 @@ class Akc extends React.Component{
             let fetchArticlesFromDb_temp_var=true;
             this.setState({
               articles: articles_temp_var,
-              fetchedArticlesFromDb: fetchArticlesFromDb_temp_var,
-              showHomePageArticles: false
+              fetchedMyArticlesFromDb: fetchArticlesFromDb_temp_var,
+              showOtherArticles: false
             });
             ls.set("articles",articles_temp_var);
-            ls.set("fetchedArticlesFromDb",fetchArticlesFromDb_temp_var);
+            ls.set("fetchedMyArticlesFromDb",fetchArticlesFromDb_temp_var);
           }
       );
     }//fetchArticlesFromDb method end
 
 
-    populateHomePage = ()=>{
+    populateOtherArticles = ()=>{
 
       console.log("frontendcall");
       axios.get("/articles/home").then(res=>{
         let fetchedArticles=[...res.data];
         this.setState({
-          homePageArticles: fetchedArticles,
-          fetchedHomePageArticlesFromDb: true
+          OtherArticles: fetchedArticles,
+          fetchedOtherArticlesFromDb: true
         });
       });
     }
@@ -108,7 +108,7 @@ class Akc extends React.Component{
         showRegisterForm: false,
         showLoginForm: false,
         loginSuccess: false,
-        fetchedArticlesFromDb: false
+        fetchedMyArticlesFromDb: false
 
       });
 
@@ -144,7 +144,7 @@ class Akc extends React.Component{
     //this method will return form for user registration,used as html
     userRegistrationForm=()=>{
       return (
-        <form name="login" onSubmit={this.userRegistration}>
+        <form name="register" onSubmit={this.userRegistration}>
             <div className="form-group">
               <label htmlFor="firstName">First name</label>
               <input type="text" className="form-control" id="firstName" name="firstName" placeholder="first name"/>
@@ -196,20 +196,26 @@ class Akc extends React.Component{
 
 
 
-    myArticles=()=>{
+    displayMyArticles=()=>{
       return (
          <div>
-              <Articles sectionName="myArticles" articles={this.state.articles}></Articles>
+              <Articles 
+                sectionName="myArticles" 
+                articles={this.state.articles}>
+              </Articles>
           </div>
       );
     }//myArticles method end
 
-    getHomePageArticles=()=>{
-          // return (<PopularArticles articles={this.state.homePageArticles}></PopularArticles>);
+    displayOtherArticles=()=>{
+          // return (<PopularArticles articles={this.state.OtherArticles}></PopularArticles>);
             
           return (
             <div>
-              <Articles sectionName="homePage" articles={this.state.homePageArticles}></Articles>
+              <Articles 
+                sectionName="homePage" 
+                articles={this.state.OtherArticles}>
+              </Articles>
             </div>
           );
     }
@@ -217,30 +223,38 @@ class Akc extends React.Component{
   
     render(){
 
-      let articlesSectionStyle={
+      let mainScreenStyle={
           "min-width":"1000px"
       }
 
       return (
-          <div style={articlesSectionStyle} className="mainScreen">
-            <div>
+          <div style={mainScreenStyle} className="mainScreen">
+            <div id="menuSection">
               <nav className="navbar navbar-dark bg-dark">
-              {
-                !this.state.loginSuccess &&
-                  <div> 
-                    <button onClick={()=>{this.setState({showLoginForm: true,showRegisterForm: false});ls.set("showLoginForm",true);ls.set("showRegisterForm",false);}} className="btn btn-primary">Login</button>
-                  </div>
-               }
-               {
-                 !this.state.loginSuccess &&
-                  <div> 
-                    <button onClick={()=>{this.setState({showRegisterForm: true,showLoginForm:false});ls.set("showRegisterForm",true);ls.set("showLoginForm",false);}} className="btn btn-primary">Register</button>
-                  </div>
-               }
+                 {
+                    !this.state.loginSuccess &&
+                    <div> 
+                      <button 
+                        onClick={()=>{this.setState({showLoginForm: true,showRegisterForm: false});ls.set("showLoginForm",true);ls.set("showRegisterForm",false);}} 
+                        className="btn btn-primary">
+                        Login
+                      </button>
+                    </div>
+                 }
+                 {
+                    !this.state.loginSuccess &&
+                    <div> 
+                      <button 
+                        onClick={()=>{this.setState({showRegisterForm: true,showLoginForm:false});ls.set("showRegisterForm",true);ls.set("showLoginForm",false);}} 
+                        className="btn btn-primary">
+                        Register
+                      </button>
+                    </div>
+                 }
                  {
                     this.state.loginSuccess && 
                     <div> 
-                      <button onClick={()=>this.fetchArticlesFromDb()} className="btn btn-primary">My Articles</button>
+                      <button onClick={()=>this.fetchMyArticlesFromDb()} className="btn btn-primary">My Articles</button>
                     </div>
                  }
                  {
@@ -256,28 +270,32 @@ class Akc extends React.Component{
               </nav>
             </div>
 
-            <div className="display">
-              {this.state.showArticleCreationForm? this.articleCreationForm():null}
-              {this.state.showUnitCreationForm? this.unitCreationForm():null}
-              {this.state.showLoginForm? this.userLoginForm():null}
-              {this.state.showRegisterForm? this.userRegistrationForm():null}
-              
-              {this.state.loginSuccess && !this.state.fetchedHomePageArticlesFromDb && this.populateHomePage()}
-              {this.state.loginSuccess && this.state.showHomePageArticles && this.state.fetchedHomePageArticlesFromDb && this.getHomePageArticles()}
-              {this.state.loginSuccess && this.state.fetchedArticlesFromDb ?this.myArticles():null}
-              
+            <div className="bodySection">
+              <div>
+                {this.state.showArticleCreationForm ? this.articleCreationForm() : null}
+                {this.state.showUnitCreationForm ? this.unitCreationForm() : null}
+                {this.state.showLoginForm ? this.userLoginForm() : null}
+                {this.state.showRegisterForm ? this.userRegistrationForm() : null}
+              </div>
+
+              <div>
+                {this.state.loginSuccess && !this.state.fetchedOtherArticlesFromDb && this.populateOtherArticles()}
+                {this.state.loginSuccess && this.state.showOtherArticles && this.state.fetchedOtherArticlesFromDb && this.displayOtherArticles()}
+                {this.state.loginSuccess && this.state.fetchedMyArticlesFromDb ? this.displayMyArticles() : null}
+              </div>
             </div>
+
           </div>
       );
     }//render method end
 
-}//class Akc end 
+}//class Main end 
 
 
 class App extends React.Component{
 
   render(){
-    return <Akc/>
+    return <Main/>
   }
 }
 export default App;

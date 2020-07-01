@@ -90,32 +90,31 @@ class Unit extends React.Component{
       
       <div>
         {
-        !this.state.unitDeleted
-        &&
-        (
-         <div> 
-          <div style={unitStyle} className="unit" onClick={this.onClickHandler}>
-          <div className="unitHeading">
-            <h3 style={wrap}>{this.state.heading}</h3>
-          </div>
-          <div className="unitShortDescription">
-            <p style={wrap}>{this.state.shortDescription}</p>
-          </div>
-        </div>
+          !this.state.unitDeleted
+          &&
+          (
+           <div> 
+            <div style={unitStyle} className="unit" onClick={this.onClickHandler}>
+              <div className="unitHeading">
+                <h3 style={wrap}>{this.state.heading}</h3>
+              </div>
+              <div className="unitShortDescription">
+                <p style={wrap}>{this.state.shortDescription}</p>
+              </div>
+            </div>
 
-        <div className="unitModal" style={unitModalStyle}>
-          <div className="unitModalContent" style={unitModalContentStyle}>
-              
-              <span style={{"float":"right"}} className="closeButton" onClick={this.closeButtonHandler}>CLOSE</span>
-              <h2 style={wrap}>{this.state.heading}</h2>
-              <h5 style={wrap}>{this.state.shortDescription}</h5>
-              <p style={wrap}>{this.state.longDescription}</p>
-          </div> 
-        </div>
-        </div>
-        )
+            <div className="unitModal" style={unitModalStyle}>
+              <div className="unitModalContent" style={unitModalContentStyle}>    
+                  <span style={{"float":"right"}} className="closeButton" onClick={this.closeButtonHandler}>CLOSE</span>
+                  <h2 style={wrap}>{this.state.heading}</h2>
+                  <h5 style={wrap}>{this.state.shortDescription}</h5>
+                  <p style={wrap}>{this.state.longDescription}</p>
+              </div> 
+            </div>
+          </div>
+          )
 
-      }
+        }
 
       </div>
     );
