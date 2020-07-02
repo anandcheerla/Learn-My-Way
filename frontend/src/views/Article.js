@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-import ls from 'local-storage';
+// import ls from 'local-storage';
 
 //user defined packages or files
 import '.././App.css';
@@ -24,7 +24,7 @@ class Article extends React.Component{
   }//constructor end
 
   componentDidMount(){
-    // console.log("article component mounted");
+
   }
 
 
@@ -61,7 +61,7 @@ class Article extends React.Component{
   //this method will return the form for unit creation
   unitCreationForm=()=>{
     let align={
-        "text-align":"center"
+        "textAlign":"center"
       }
 
     return (
@@ -130,7 +130,11 @@ class Article extends React.Component{
      //            <button onClick={()=>this.deletearticleButtonHandler()} type="button" class="btn btn-danger">Delete</button>
      //        </div>
      //  }
-
+     // let units;
+     // axios.get("/get-units/"+this.props.dbId).then(res=>{
+     //    console.log(res);
+     //  // this.setState({units:res});
+     // });
 
     return (
     <div>
@@ -150,11 +154,13 @@ class Article extends React.Component{
               {
                 this.state.units.map(element=>(
                   <Unit 
+                    key={element._id}
                     unitId={element._id} 
                     articleId={this.props.dbId} 
                     heading={element.heading} 
                     shortDescription={element.shortDescription} 
-                    longDescription={element.longDescription} 
+                    longDescription={element.longDescription}
+                    priority={element.priority} 
                     complexity={element.complexity} 
                     sectionName={this.props.sectionName}>
                   </Unit>
@@ -163,7 +169,7 @@ class Article extends React.Component{
 
               <div id="unitCreationForm" className="unitCreationForm">
                 {
-                  this.props.sectionName=="myArticles"
+                  this.props.sectionName==="myArticles"
                    &&
                    this.state.showUnitCreationForm
                    &&

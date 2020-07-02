@@ -96,11 +96,12 @@ class Articles extends React.Component{
       //inline properties or variables
       let reverseDirectionForArticlesArray={
             "display": "flex",
-            "flex-direction": "column-reverse"
+            "flexDirection": "column-reverse"
       };
 
       let articleStyle={
-        "margin-bottom": "25px", 
+        "marginBottom": "25px", 
+         "background": "#e6edf0"
       }
       let newArticleButtonStyle={
           "position":"fixed",
@@ -109,8 +110,8 @@ class Articles extends React.Component{
       }
 
       let articlesStyle={
-        "margin-left": "30%",
-        "margin-top": "5%",
+        "marginLeft": "30%",
+        "marginTop": "5%",
         "width":"70%"
         
       }
@@ -119,7 +120,7 @@ class Articles extends React.Component{
         <div id="articles" style={articlesStyle}>
           <div>
             {
-              this.props.sectionName=="myArticles"
+              this.props.sectionName==="myArticles"
               &&
               (
                 !this.state.showArticleCreationForm
@@ -130,7 +131,7 @@ class Articles extends React.Component{
               )
             }
             {
-              this.props.sectionName=="myArticles"
+              this.props.sectionName==="myArticles"
               &&
               (
                 this.state.showCreateArticleButton
@@ -158,7 +159,7 @@ class Articles extends React.Component{
               !this.state.showArticleCreationForm
               &&
               this.state.articles.map(element=>(
-                  <div>
+                  <div key={element._id}>
                     <li className="list-group-item" style={articleStyle}>
                       <Article 
                         dbId={element._id} 

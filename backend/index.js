@@ -134,6 +134,7 @@ app.get("/articles",isLoggedIn,function(req,res){
 
 
 
+
 //meed to implement some sort of analytics inorder to show other articles to the user
 app.get("/articles/home",isLoggedIn,function(req,res){
 
@@ -295,7 +296,7 @@ app.put('/unit-update/:articleId/:unitId',isLoggedIn,function(req,res){
 		// unit.imageFile="";
 		// unit.audioFile="";
 		// unit.videoFile="";
-		unit.priority=req.body.priority;
+		unit.priority=req.body.priority; 
 		unit.complexity=req.body.complexity;
 
 		userDocument.save(function(err){
@@ -308,6 +309,29 @@ app.put('/unit-update/:articleId/:unitId',isLoggedIn,function(req,res){
 	res.send();
 });
 
+
+app.get("/get-units/:articleId",isLoggedIn,function(req,res){
+	let userFromSession=req.session.passport.user;
+	let articleId=req.params.articleId;
+
+	let queryObject={
+		"username":userFromSession,
+	}
+
+	userModel.findOne(queryObject,function(err,userDocument){
+
+		//added these two lines temporarily,remove this later		
+		let article=userDocument.articles.id(articleId);
+		try{
+			let units=article.units;
+		}
+		catch(err){
+			console.log("error while getting units");
+		}
+
+		res.send(units);
+	});
+});
 
 // delete unit route
 app.delete("/unit-delete/:articleId/:unitId",isLoggedIn,function(req,res){

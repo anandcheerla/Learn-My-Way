@@ -45,8 +45,6 @@ class Main extends React.Component{
 
 
     populateOtherArticles = ()=>{
-
-      console.log("frontendcall");
       axios.get("/articles/home").then(res=>{
         let fetchedArticles=[...res.data];
         this.setState({
@@ -71,7 +69,7 @@ class Main extends React.Component{
       }
 
       axios.post("/login",formData).then((res)=>{
-        if(res.data=="success"){ 
+        if(res.data==="success"){ 
           let loginSuccess_temp_var=true;
           let showRegisterForm_temp_var=false;
           let showLoginForm_temp_var=false; 
@@ -224,7 +222,7 @@ class Main extends React.Component{
     render(){
 
       let mainScreenStyle={
-          "min-width":"1000px"
+          "minWidth":"1000px"
       }
 
       return (
