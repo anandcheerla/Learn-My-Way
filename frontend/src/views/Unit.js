@@ -46,7 +46,7 @@ class Unit extends React.Component{
   deleteUnitButtonHandler=()=>{
 
     axios.delete("/unit-delete/"+this.props.articleId+"/"+this.props.unitId).then(res=>{
-      console.log(res);
+      // console.log(res);
       this.setState({modalDisplay: "none",unitDeleted: true});
     });
   }
@@ -174,11 +174,25 @@ class Unit extends React.Component{
       "hard":"#f50525"
     }
     let unitStyle={
-        "border": "2px solid "+unitBorderColor[this.props.complexity]
+        "border": "2px solid "+unitBorderColor[this.props.complexity],
+        // "width":"100%"
+
     }
 
-    let wrap={
-      "whiteSpace": "pre-wrap"
+  
+    let wrap = {
+    "whiteSpace": "pre-wrap",                 
+    "wordBreak": "break-all"
+    }
+
+    let headingDivStyle = {
+      "whiteSpace": "pre-wrap",                 
+      "wordBreak": "break-all",
+      "color": "#93b4b5",
+      "width": "70%"
+    }
+    let listStyleType={
+      "listStyleType": "none"
     }
     //<button style={{"float":"right"}} onClick={()=>this.deleteUnitButtonHandler()} type="button" class="btn btn-danger">Delete</button>
     return (
@@ -206,9 +220,11 @@ class Unit extends React.Component{
                     && 
                     <div id="displayUnitMode">
                     
-                      <h3 style={wrap}>{this.state.heading}</h3>
+                      <div style={headingDivStyle}>
+                        <h3>{this.state.heading}</h3>
+                      </div>
                       <br/>
-                      <div class="descriptionDivUnitModal">
+                      <div className="descriptionDivUnitModal">
                         <h4>Short Description</h4>
                         <div id="shortDescriptionDivModal" className="descriptionUnitModal">
                           <h5 style={wrap}>{this.state.shortDescription}</h5>
@@ -220,9 +236,9 @@ class Unit extends React.Component{
                       </div>
                       <div class="settingsUnitModal">
                         <div>
-                          <ul>
+                          <ul style={listStyleType}>
                             <li>{this.props.sectionName=="myArticles" && <h6 id="unitEditButton" onClick={()=>{this.setState({editUnitMode: true})}}>Edit</h6>}</li>
-                            <li>Delete</li>
+                            <li>{this.props.sectionName=="myArticles" && <h6 id="unitDeleteButton" onClick={()=>this.deleteUnitButtonHandler()}>Delete</h6>}</li>
                           </ul>
                         </div>
                       </div>
