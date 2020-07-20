@@ -132,6 +132,8 @@ class Unit extends React.Component{
         </div>
         <div style={align}>
           <button type="submit" className="btn btn-outline-primary" id="Create-unit-button">Create</button>
+          <button onClick={()=>{this.setState({editUnitMode: false})}} className="btn btn-outline-primary" id="Create-unit-button">Cancel</button>
+
         </div>
       </form>
     );
@@ -142,25 +144,27 @@ class Unit extends React.Component{
 
     //inline styles in the form of variables
     let unitModalStyle={
-      //taken from w3 schools
-      "display": this.state.modalDisplay, /* Hidden by default */
-      "position": "fixed", /* Stay in place */
-      "zIndex": "1", /* Sit on top */
-      "paddingTop": "100px", /* Location of the box */
+
+      "display": this.state.modalDisplay, 
+      "position": "fixed",
+      "zIndex": "1", 
+      "paddingTop": "100px", 
+      // "paddingLeft": "100px",
       "left": "0",
       "top": "0",
-      "width": "100%", /* Full width */
-      "height": "100%", /* Full height */
-      "overflow": "auto", /* Enable scroll if needed */
+      "width": "100%", 
+      "height": "100%", 
+      "overflow": "auto", 
       /* Fallback color */
       "backgroundColor": "rgba(0,0,0,0.4)" /* Black w/ opacity */          
     }
     let unitModalContentStyle={
       "backgroundColor": "#fefefe",
       "margin": "auto",
-      "padding": "20px",
+      "padding": "50px",
       "border": "1px solid #888",
-      "width": "80%"
+      "width": "80%",
+      "position": "relative"
     }
 
     let unitBorderColor={
@@ -201,11 +205,27 @@ class Unit extends React.Component{
                     !this.state.editUnitMode
                     && 
                     <div id="displayUnitMode">
-                      {this.props.sectionName=="myArticles" && <h6 id="unitEditButton" onClick={()=>{this.setState({editUnitMode: true})}}>Edit</h6>}
-                      <h2 style={wrap}>{this.state.heading}</h2>
-                      <h5 style={wrap}>{this.state.shortDescription}</h5>
-                      <p style={wrap}>{this.state.longDescription}</p>
-
+                    
+                      <h3 style={wrap}>{this.state.heading}</h3>
+                      <br/>
+                      <div class="descriptionDivUnitModal">
+                        <h4>Short Description</h4>
+                        <div id="shortDescriptionDivModal" className="descriptionUnitModal">
+                          <h5 style={wrap}>{this.state.shortDescription}</h5>
+                        </div>
+                        <h4>Long Description</h4>
+                        <div id="longDescriptionDivModal" className="descriptionUnitModal">
+                        <p style={wrap}>{this.state.longDescription}</p>
+                        </div>  
+                      </div>
+                      <div class="settingsUnitModal">
+                        <div>
+                          <ul>
+                            <li>{this.props.sectionName=="myArticles" && <h6 id="unitEditButton" onClick={()=>{this.setState({editUnitMode: true})}}>Edit</h6>}</li>
+                            <li>Delete</li>
+                          </ul>
+                        </div>
+                      </div>
                     </div>
                   }
                   {
