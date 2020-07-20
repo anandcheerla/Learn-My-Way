@@ -201,7 +201,7 @@ class Unit extends React.Component{
                     !this.state.editUnitMode
                     && 
                     <div id="displayUnitMode">
-                      <h6 id="unitEditButton" onClick={()=>{this.setState({editUnitMode: true})}}>Edit</h6>
+                      {this.props.sectionName=="myArticles" && <h6 id="unitEditButton" onClick={()=>{this.setState({editUnitMode: true})}}>Edit</h6>}
                       <h2 style={wrap}>{this.state.heading}</h2>
                       <h5 style={wrap}>{this.state.shortDescription}</h5>
                       <p style={wrap}>{this.state.longDescription}</p>
