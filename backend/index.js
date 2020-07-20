@@ -10,6 +10,7 @@ const express=require("express");
 const mongoose=require("mongoose");
 const bodyParser=require("body-parser");
 const cors = require('cors');
+const path =  require("path");
 
 const passport=require("passport");
 const passportLocalStrategy=require("passport-local");
@@ -46,6 +47,9 @@ passport.serializeUser(userModel.serializeUser());
 passport.deserializeUser(userModel.deserializeUser());
 
 
+app.use(express.static(path.join(__dirname, "../frontend/", "build")));
+app.use(express.static("public"));
+
 //------------------------------------routes--------------------------------------
 
 //register routes
@@ -74,6 +78,8 @@ app.post("/register",function(req,res){
 	});
 
 });
+
+
 
 app.get("/suc",function(req,res){
 	res.send("success");
