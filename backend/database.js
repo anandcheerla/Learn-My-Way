@@ -10,7 +10,8 @@ const mongoose=require("mongoose");
 const passportLocalMongoose=require("passport-local-mongoose");
 
 const db=module.exports.dbUrl={
-	databaseConnectionUrl:'mongodb://127.0.0.1:27017/learntheakcwaydb',
+	// databaseConnectionUrl:'mongodb://127.0.0.1:27017/learntheakcwaydb',
+	databaseConnectionUrl : "mongodb+srv://anand:anandcheerla@cluster0.x0oeh.mongodb.net/ReadMyway?retryWrites=true&w=majority",
 	secret:'iamakc'
 };
 

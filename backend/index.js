@@ -1,7 +1,7 @@
 
 /*
 
-	Author: Anand Kumar Cheerla
+	Author: Anand Cheerla
 	Descripton: Backend code which consists of logic and API routes for certain tasks
 
 */
@@ -47,8 +47,8 @@ passport.serializeUser(userModel.serializeUser());
 passport.deserializeUser(userModel.deserializeUser());
 
 
-app.use(express.static(path.join(__dirname, "../frontend/", "build")));
-app.use(express.static("public"));
+// app.use(express.static(path.join(__dirname, "../frontend/", "build")));
+// app.use(express.static("public"));
 
 //------------------------------------routes--------------------------------------
 
@@ -114,9 +114,14 @@ function isLoggedIn(req,res,next){
 //logout route
 app.get("/logout",function(req,res){
 	console.log("logout");
-	req.logout();	
+	req.logout();
+	res.send("logged out");	
 });
 
+
+app.get("/akc",isLoggedIn,function(req,res){
+	res.send("hii akc");
+});
 
 
 //my_articles route
