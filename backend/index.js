@@ -47,8 +47,8 @@ passport.serializeUser(userModel.serializeUser());
 passport.deserializeUser(userModel.deserializeUser());
 
 
-// app.use(express.static(path.join(__dirname, "../frontend/", "build")));
-// app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "../frontend/", "build")));
+app.use(express.static("public"));
 
 //------------------------------------routes--------------------------------------
 
