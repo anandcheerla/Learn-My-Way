@@ -104,7 +104,7 @@ class Main extends React.Component{
       this.setState({
         articles: [],
         showRegisterForm: false,
-        showLoginForm: false,
+        showLoginForm: true,
         loginSuccess: false,
         fetchedMyArticlesFromDb: false
 
@@ -142,7 +142,7 @@ class Main extends React.Component{
     //this method will return form for user registration,used as html
     userRegistrationForm=()=>{
       return (
-        <form name="register" onSubmit={this.userRegistration}>
+        <form className="registrationForm" name="register" onSubmit={this.userRegistration}>
             <div className="form-group">
               <label htmlFor="firstName">First name</label>
               <input type="text" className="form-control" id="firstName" name="firstName" placeholder="first name"/>
@@ -169,7 +169,10 @@ class Main extends React.Component{
               <label htmlFor="contactNumber">Contact Number</label>
               <input type="text" className="form-control" id="contactNumber" name="contactNumber" placeholder="9999999999"/>
             </div>
-            <button type="submit" className="btn btn-primary">Register</button>
+            <br/>
+            <div className="form-group">
+              <button type="submit" className="btn btn-primary btn-lg btn-block">Register</button>
+            </div>
         </form>
         );
     }//userRegistrationForm method end
@@ -177,7 +180,7 @@ class Main extends React.Component{
 
     userLoginForm=()=>{
       return (
-        <form name="login" onSubmit={this.userLogin}>
+        <form className="loginForm" name="login" onSubmit={this.userLogin}>
             <div className="form-group">
               <label htmlFor="username">Username</label>
               <input type="text" className="form-control" id="username" name="username" placeholder="username"/>
@@ -186,7 +189,10 @@ class Main extends React.Component{
               <label htmlFor="password">Password</label>
               <input type="password" className="form-control" id="password" name="password" placeholder="password"/>
             </div>
-            <button type="submit" className="btn btn-primary">Login</button>
+            <br/>
+            <div className="form-group">
+              <button type="submit" className="btn btn-primary btn-lg btn-block">Login</button>
+            </div>
         </form>
       );
     }//userLoginForm method end
@@ -216,6 +222,26 @@ class Main extends React.Component{
               </Articles>
             </div>
           );
+    }
+
+    handleToggle = ()=>{
+
+        if(this.state.showLoginForm){
+          this.setState({showLoginForm: false,showRegisterForm: true});
+          ls.set("showLoginForm",false);
+          ls.set("showRegisterForm",true);
+          document.getElementById("loginRegisterToggle").innerHTML="<---";
+        }
+
+        else{
+          this.setState({showLoginForm: true,showRegisterForm: false});
+          ls.set("showLoginForm",true);
+          ls.set("showRegisterForm",false);
+          document.getElementById("loginRegisterToggle").innerHTML="--->";
+
+        }
+
+
     }
 
   
@@ -272,6 +298,7 @@ class Main extends React.Component{
               <div>
                 {this.state.showArticleCreationForm ? this.articleCreationForm() : null}
                 {this.state.showUnitCreationForm ? this.unitCreationForm() : null}
+                
                 {this.state.showLoginForm ? this.userLoginForm() : null}
                 {this.state.showRegisterForm ? this.userRegistrationForm() : null}
               </div>
@@ -282,6 +309,18 @@ class Main extends React.Component{
                 {this.state.loginSuccess && this.state.fetchedMyArticlesFromDb ? this.displayMyArticles() : null}
               </div>
             </div>
+
+            {
+              !this.state.loginSuccess &&
+              <div className="homePage">
+                <div class="toggleSwitch">
+                  <button id="loginRegisterToggle" className="btn btn-outline-primary" onClick={()=>this.handleToggle()}>---></button>
+                </div>
+                <div id="footer">
+                  <h6>-AKC-</h6>
+                </div> 
+              </div>
+            }
 
           </div>
       );
