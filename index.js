@@ -155,8 +155,8 @@ app.get("/articles/home",isLoggedIn,function(req,res){
 	let articles_out=[];
 	userModel.find({},function(err,userDocuments){
 		userDocuments.forEach(function(doc){
-			if(doc.articles.length>0){
-				articles_out.push(doc.articles[0]);
+			for(let i=0;i<doc.articles.length;i++){
+				articles_out.push(doc.articles[i]);
 			}
 		});
 		res.send(articles_out);
