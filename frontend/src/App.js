@@ -148,7 +148,7 @@ class Main extends React.Component{
       }
 
       axios.post("/register",formData).then((res)=>{
-
+        console.log("registered");
         let showRegisterForm_temp_var=false;
         let showLoginForm_temp_var=true;
         this.setState({
