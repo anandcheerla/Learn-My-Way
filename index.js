@@ -11,6 +11,7 @@ const mongoose=require("mongoose");
 const bodyParser=require("body-parser");
 const cors = require('cors');
 const path =  require("path");
+// const expressValidator = require('express-validator');
 
 const passport=require("passport");
 const passportLocalStrategy=require("passport-local");
@@ -28,10 +29,10 @@ const app=express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(cors());
-// app.use(express.static('./public'));
-// app.get('/',function(req,res){	
-// 	res.sendFile('/index.html');
-// });
+
+// app.use(expressValidator());
+
+
 
 app.use(require("express-session")({
 	secret: "i am akc",
@@ -60,6 +61,16 @@ app.get("/register",function(req,res){
 
 //route for register
 app.post("/register",function(req,res){
+	
+	// console.log(escape(req.body.username));
+	// console.log(escape(req.body.firstName));
+	// console.log(escape(req.body.lastName));
+	// console.log(escape(req.body.email));
+	// console.log(escape(req.body.contactNumber));
+
+
+	return;
+
 	let newUser=new userModel({
 		username: req.body.username,
 		firstName: req.body.firstName,

@@ -20,7 +20,8 @@ class Main extends React.Component{
         loginSuccess: ls.get("loginSuccess") || false,
         fetchedMyArticlesFromDb: false,
         fetchedOtherArticlesFromDb: false,
-        showOtherArticles:true
+        showOtherArticles:true,
+        aboutClicked: false
 
       };
     }//constructor end
@@ -92,7 +93,28 @@ class Main extends React.Component{
     }//userLogin method end
 
 
+    aboutPage = ()=>{
 
+        // Dont forget passwords, if you want your data :)
+
+              // Author: AKC
+
+      return (
+
+          <div className="aboutPage">
+              
+              Redefine the way you read or learn. Compose articles in a different way which enhances the readability and focus. 
+
+
+              Break the article into very small individual chunks each having their own characteristics in the form of complexity,
+              importance.
+
+            
+          </div>
+
+        );
+
+    }
     userLogout=(event)=>{
 
       // console.log("event akc is "+event);
@@ -115,6 +137,7 @@ class Main extends React.Component{
     //registration api call to /register with the necessary details
     userRegistration=(event)=>{
       event.preventDefault();
+
       let formData={
         username: event.target.username.value,
         password: event.target.password.value,
@@ -139,35 +162,72 @@ class Main extends React.Component{
     }//userRegistration method end
 
 
+    inputValidation=(event)=>{
+        // console.log(event.target);
+        // console.log(event.target.value);
+        // return;
+
+        event.preventDefault();
+        // console.log(event.target.name);
+        if(event.target.name==="contactNumber"){
+          let isContactNumber = /^[0-9]+$/.test(event.target.value);
+        
+          if(!isContactNumber){
+              // console.log("I think contact number should contain Numbers");
+              document.getElementById("contactNumber").setCustomValidity('I think contact number should contain Numbers');           
+          }
+          else{
+            document.getElementById("contactNumber").setCustomValidity(''); 
+          }
+        }
+
+        else if(event.target.name==="password"){
+          // let isFirstName = /[0-/.test(event.target.value);
+        
+          if(event.target.value.length<5){
+              // console.log("I think contact number should contain Numbers");
+              document.getElementById("password").setCustomValidity('I think contact number should contain Numbers');           
+          }
+          else{
+            document.getElementById("password").setCustomValidity(''); 
+          }
+        }
+
+
+    }
+
+
+
+
     //this method will return form for user registration,used as html
     userRegistrationForm=()=>{
       return (
         <form className="registrationForm" name="register" onSubmit={this.userRegistration}>
             <div className="form-group">
               <label htmlFor="firstName">First name</label>
-              <input type="text" className="form-control" id="firstName" name="firstName" placeholder="first name"/>
+              <input type="text" className="form-control" id="firstName" name="firstName" placeholder="first name" required/>
             </div>
             <div className="form-group">
               <label htmlFor="lastName">Last name</label>
-              <input type="text" className="form-control" id="lastName" name="lastName" placeholder="last name"/>
+              <input type="text" className="form-control" id="lastName" name="lastName" placeholder="last name" required/>
             </div>
 
             <div className="form-group">
               <label htmlFor="username">Username</label>
-              <input type="text" className="form-control" id="username" name="username" placeholder="username"/>
+              <input type="text" className="form-control" id="username" name="username" placeholder="username" required/>
             </div>
             <div className="form-group">
               <label htmlFor="password">Password</label>
-              <input type="password" className="form-control" id="password" name="password" placeholder="password"/>
+              <input type="password" className="form-control" id="password" name="password" placeholder="password" required/>
             </div>
 
             <div className="form-group">
               <label htmlFor="email">Email</label>
-              <input type="email" className="form-control" id="email" name="email" placeholder="email"/>
+              <input type="email" className="form-control" id="email" name="email" placeholder="email" required/>
             </div>
             <div className="form-group">
               <label htmlFor="contactNumber">Contact Number</label>
-              <input type="text" className="form-control" id="contactNumber" name="contactNumber" placeholder="9999999999"/>
+              <input type="text" onBlur={this.inputValidation} className="form-control" id="contactNumber" name="contactNumber" placeholder="9999999999" required/>
             </div>
             <br/>
             <div className="form-group">
@@ -227,16 +287,18 @@ class Main extends React.Component{
     handleToggle = ()=>{
 
         if(this.state.showLoginForm){
-          this.setState({showLoginForm: false,showRegisterForm: true});
+          this.setState({showLoginForm: false,showRegisterForm: true,aboutClicked:false});
           ls.set("showLoginForm",false);
           ls.set("showRegisterForm",true);
+          ls.set("aboutClicked",false);
           document.getElementById("loginRegisterToggle").innerHTML="<---";
         }
 
         else{
-          this.setState({showLoginForm: true,showRegisterForm: false});
+          this.setState({showLoginForm: true,showRegisterForm: false,aboutClicked:false});
           ls.set("showLoginForm",true);
           ls.set("showRegisterForm",false);
+          ls.set("aboutClicked",false);
           document.getElementById("loginRegisterToggle").innerHTML="--->";
 
         }
@@ -244,7 +306,13 @@ class Main extends React.Component{
 
     }
 
-  
+    aboutClickHandler = ()=>{
+        this.setState({showLoginForm: false,showRegisterForm: false,aboutClicked: true});
+         ls.set("showLoginForm",false);
+         ls.set("showRegisterForm",false);
+         ls.set("aboutClicked",true);
+
+    }  
     render(){
 
       let mainScreenStyle={
@@ -259,7 +327,7 @@ class Main extends React.Component{
                     !this.state.loginSuccess &&
                     <div> 
                       <button 
-                        onClick={()=>{this.setState({showLoginForm: true,showRegisterForm: false});ls.set("showLoginForm",true);ls.set("showRegisterForm",false);}} 
+                        onClick={()=>{this.setState({showLoginForm: true,showRegisterForm: false,aboutClicked: false});ls.set("showLoginForm",true);ls.set("showRegisterForm",false); ls.set("aboutClicked",false);}} 
                         className="btn btn-primary">
                         Login
                       </button>
@@ -269,12 +337,24 @@ class Main extends React.Component{
                     !this.state.loginSuccess &&
                     <div> 
                       <button 
-                        onClick={()=>{this.setState({showRegisterForm: true,showLoginForm:false});ls.set("showRegisterForm",true);ls.set("showLoginForm",false);}} 
+                        onClick={()=>this.aboutClickHandler()} 
+                        className="btn btn-primary">
+                        About
+                      </button>
+                    </div>
+                 }
+                 
+                 {
+                    !this.state.loginSuccess &&
+                    <div> 
+                      <button 
+                        onClick={()=>{this.setState({showRegisterForm: true,showLoginForm:false,aboutClicked: false});ls.set("showRegisterForm",true);ls.set("showLoginForm",false);ls.set("aboutClicked",false);}} 
                         className="btn btn-primary">
                         Register
                       </button>
                     </div>
                  }
+
                  {
                     this.state.loginSuccess && 
                     <div> 
@@ -294,26 +374,33 @@ class Main extends React.Component{
               </nav>
             </div>
 
-            <div className="bodySection">
-              <div>
-                {this.state.showArticleCreationForm ? this.articleCreationForm() : null}
-                {this.state.showUnitCreationForm ? this.unitCreationForm() : null}
-                
-                {this.state.showLoginForm ? this.userLoginForm() : null}
-                {this.state.showRegisterForm ? this.userRegistrationForm() : null}
+
+
+              <div className="bodySection">
+                <div>
+                  {this.state.showArticleCreationForm ? this.articleCreationForm() : null}
+                  {this.state.showUnitCreationForm ? this.unitCreationForm() : null}
+                  
+                  {this.state.showLoginForm ? this.userLoginForm() : null}
+                  {this.state.showRegisterForm ? this.userRegistrationForm() : null}
+                </div>
+
+                <div>
+                  {this.state.loginSuccess && !this.state.fetchedOtherArticlesFromDb && this.populateOtherArticles()}
+                  {this.state.loginSuccess && this.state.showOtherArticles && this.state.fetchedOtherArticlesFromDb && this.displayOtherArticles()}
+                  {this.state.loginSuccess && this.state.fetchedMyArticlesFromDb ? this.displayMyArticles() : null}
+                </div>
               </div>
 
-              <div>
-                {this.state.loginSuccess && !this.state.fetchedOtherArticlesFromDb && this.populateOtherArticles()}
-                {this.state.loginSuccess && this.state.showOtherArticles && this.state.fetchedOtherArticlesFromDb && this.displayOtherArticles()}
-                {this.state.loginSuccess && this.state.fetchedMyArticlesFromDb ? this.displayMyArticles() : null}
-              </div>
-            </div>
+            {
 
+              !this.state.loginSuccess && this.state.aboutClicked && this.aboutPage()
+              
+            }
             {
               !this.state.loginSuccess &&
               <div className="homePage">
-                <div class="toggleSwitch">
+                <div className="toggleSwitch">
                   <button id="loginRegisterToggle" className="btn btn-outline-primary" onClick={()=>this.handleToggle()}>---></button>
                 </div>
                 <div id="footer">
