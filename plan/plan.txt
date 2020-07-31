@@ -1,6 +1,4 @@
-
-
-
+Author: AKC
 
 __________________________________________________________________________________________________________________
 
@@ -17,105 +15,33 @@ ________________________________________________________________________________
 
 About
 
-The Project is a learning platform where people upload articles which are available to the other people and also be used for documenting what we learned.
+
+Have you ever scared of reading an article/material that you just come across when you are browsing.... Title is catchy, but the article is too big
+
+Have you ever thought that you want to glance at an article inorder to get an overview, but tired of reading the entire thing... 
+
+Have you ever thought that it would be better to read it differently rather than boring paragraphs which spans some pages and cheeky font styles to represent importance of certain information and the massive size where the probability to overlook is high...
+
+Have you ever thought while you are reading, it would be better if we know where to focus/stress more, or which part is complex or easy to understand...It is not a news paper right!!!
+
+Have you ever overlooked things/information that is required the most in understanding or learning the further details...
 
 
-The main intention of the application is to make the learning effective.
-The learning will be in the form of articles which is the concept or technology or information or subject that the people want to share/learn. The article consists of small(very small and clear as possible)learning units with some priority and level of complexity.
-Based on the priority the user can decide which unit to focus more and which unit to focus less and which is important
-Based on the complexity the user can learn and understand what ever he wants to.
-combination of these two things makes the learning effective.
-
-Large articles look terrifying to read and we might miss or dont focus on some useful parts of the article when it is presented in a paragraph view and some people doesnot want to go for it unless they are very interested in.
-
-Breaking the article into small pieces and as a separate units helps the reader understand well and makes it intersting.
-
-This can be used also for tracking what we learned.so that we can have a glance at some other time and can even differentiate where you felt challenging by setting the priority and complexity options.your learning or your can be shared as articles so that others can also read or follow them.
-
-The idea is not to make the article too lengthy.but to convert the paragraph articles to small units.
-
-__________________________________________________________________________________________________________________
+Even if you didnot think none of these, you can see what i have got !!!
 
 
 
+This application is a learning platform.The main intention of the application is to make the reading/learning effective in terms of presentation,focus and efficiency. The learning will be in the form of articles which is some information that the people want to share/track/learn. The article is divided into small(very small and clear as possible)learning chunks with individual importance and level of complexity that is set by the person who prepare the article.
+Based on the Importance the reader can decide which unit to focus more and which unit to focus less and which is important
+Based on the level of complexity the reader can learn and understand what ever they want to in whatever pace they are able to...
+combination of these two things makes the learning effective...
 
-Applicaton
+This application could be used in two ways.
 
-consists of users,will have authentication
-ever user has articles that they create.
-every articles has heading and some short description
-
-Each article consists of small units.article is a grouping of units
-
-every unit has heading,short description and long description,image file,audio file,video file,priority,complexity
-
-Doesnot matter if we dont have large description.
-
-should have nested articles also - have to check the possibility
-
-__________________________________________________________________________________________________________________
+one way, people can track their learnings that they have learned somewhere. Preparing an article with more emphasis on each and every small unit requires some good understanding and intuition, helps them to understand things even better...
+Second way,They can post the same article, so that someone could read it and understand in the way you understood...By filtering the information, one can get the most out of it...
 
 
-code: 
-
-----------------------------------------------------------------------------------------------
-done/basic things done
-----------------------------------------------------------------------------------------------
-
-created backend with server listening to some port
-created authentication using passport
-
-database queries for few api request
-	
-created frontend components
-app component
-articles component
-article component
-unit component
-created unit modal,it appears when we click on each unit.
-register form
-login form
-few click events
-
-
-added color to the borders of every unit based on the complexity
-"basic":"#cfc10a",
-"easy":"#7dd943",
-"medium":"#f07f1d",
-"hard":"#f50525"
-
-image and complexity attributes need to be added to the DB
-
-Add timestamp for each and everything that we store in database
-----------------------------------------------------------------------------------------------
-todo
-----------------------------------------------------------------------------------------------
-
-Authentication should be done properly as the single page application refresh should lose the state of the user.
-
-input validations needs to be done properly
-
-referencing other article units in the article.it can not be edited as it belongs to others  - have to check the possibility of adding edit option
-
-display based on the complexity(check box)basic easy medium hard
-
-display based on the priority(1 to 5)1 is optional,5 is very important
-
-code for update articles or units
-
-code for delete articles or units
-
-pagination/loading concept need to implemented for articles view
-
-Articles should have more fields like likes comments and other things that are needed 
-
-some bootstraping or styling needs to be done
-
-add some modes,like problem solving mode, where you have a question as a unit and when you click it the modal appears which shows the answer,so make that model locked for few minutes,inorder to make the user think,it should be under some mode where user can turn on/off, other wise the people who wants an immediate answer gets annoyed.
-
-
-some mode whether anyone can add units to the same article,say,you create an article(say math techniques in programming) with that mode anyone can write a unit and add ,if the person created the article doesnot want to keep that he can remove that also..
-
-
+Large articles look terrifying to read and we might miss or dont focus on some useful parts of the article when it is presented in a paragraph view. Breaking the article into small pieces and as a separate units with more emphasis helps the reader understand well and makes it intersting.
 
 __________________________________________________________________________________________________________________

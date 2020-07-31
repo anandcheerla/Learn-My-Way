@@ -16,6 +16,7 @@ class Article extends React.Component{
       heading: this.props.heading,
       description: this.props.description,
       units: this.props.units,
+      filteredUnits: this.props.units,
       showArticleCreationForm: false,
       showUnitCreationForm: false,
       articleClicked: false,
@@ -57,6 +58,32 @@ class Article extends React.Component{
     event.target.reset();
   }//createUnit method end
 
+
+  filterByDifficulty=(event)=>{
+      event.preventDefault();
+      let complexity = event.target.value;
+
+      let units=[...this.state.units];
+      let required_units=[];
+
+      if(complexity==="all"){
+        this.setState({
+          filteredUnits: units
+        });
+        return;
+      }
+
+      for(let i=0;i<units.length;i++)
+      {
+        if(units[i].complexity===complexity)
+          required_units.push(units[i]);
+      }
+      // debugger;
+      this.setState({
+        filteredUnits: required_units
+      });
+
+  }
 
   //this method will return the form for unit creation
   unitCreationForm=()=>{
@@ -144,7 +171,20 @@ class Article extends React.Component{
         <div onClick={()=>{this.articleClickHandler()}}>
           <div>
             <h1>{this.state.heading}</h1>
-            <h4>{this.state.description}</h4>  
+            <h4>{this.state.description}</h4>
+            {
+              this.state.articleClicked
+              &&
+              <div onClick={(e)=>e.stopPropagation()} class="complexity-dropdown-filter-class">
+                <select name="complexity" id="complexity-dropdown-filter-id" onChange={(e)=>this.filterByDifficulty(e)}>
+                  <option value="all">ALL</option>                  
+                  <option value="basic">Basic</option>
+                  <option value="easy">Easy</option>
+                  <option value="medium">Medium</option>
+                  <option value="hard">Hard</option>
+                </select>
+              </div>
+            }
           </div>
 
           {
@@ -152,7 +192,7 @@ class Article extends React.Component{
             &&
             <div onClick={(e)=>e.stopPropagation()}>
               {
-                this.state.units.map(element=>(
+                this.state.filteredUnits.map(element=>(
                   <Unit 
                     key={element._id}
                     unitId={element._id} 

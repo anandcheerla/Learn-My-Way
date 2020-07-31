@@ -174,7 +174,9 @@ class Unit extends React.Component{
       "hard":"#f50525"
     }
     let unitStyle={
-        "border": "2px solid "+unitBorderColor[this.props.complexity],
+        "border": "1.1px solid "+unitBorderColor[this.props.complexity],
+        "borderRadius": "10px",
+        "backgroundColor": "#ffffff"
         // "width":"100%"
 
     }
@@ -237,8 +239,8 @@ class Unit extends React.Component{
                       <div class="settingsUnitModal">
                         <div>
                           <ul style={listStyleType}>
-                            <li>{this.props.sectionName=="myArticles" && <h6 id="unitEditButton" onClick={()=>{this.setState({editUnitMode: true})}}>Edit</h6>}</li>
-                            <li>{this.props.sectionName=="myArticles" && <h6 id="unitDeleteButton" onClick={()=>this.deleteUnitButtonHandler()}>Delete</h6>}</li>
+                            <li>{this.props.sectionName==="myArticles" && <h6 id="unitEditButton" onClick={()=>{this.setState({editUnitMode: true})}}>Edit</h6>}</li>
+                            <li>{this.props.sectionName==="myArticles" && <h6 id="unitDeleteButton" onClick={()=>this.deleteUnitButtonHandler()}>Delete</h6>}</li>
                           </ul>
                         </div>
                       </div>
