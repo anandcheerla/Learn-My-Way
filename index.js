@@ -68,9 +68,6 @@ app.post("/register",function(req,res){
 	// console.log(escape(req.body.email));
 	// console.log(escape(req.body.contactNumber));
 
-
-	return;
-
 	let newUser=new userModel({
 		username: req.body.username,
 		firstName: req.body.firstName,
