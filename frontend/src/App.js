@@ -48,9 +48,6 @@ class Main extends React.Component{
 
     populateOtherArticles = ()=>{
 
-      // debugger;
-      console.log("came");
-      // debugger;
       axios.get("/articles/home").then(res=>{
 
         // debugger;

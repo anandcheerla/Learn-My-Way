@@ -110,9 +110,9 @@
 }
 
 .article-filters-class{
-	position: absolute;
+	/*position: absolute;
 	top:2px;
-	left:70%;
+	left:70%;*/
 	
 }
 
@@ -146,9 +146,6 @@
 	/*appearance: none;*/
 
 }
-
-
-
 
 
 

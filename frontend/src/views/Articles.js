@@ -165,9 +165,12 @@ class Articles extends React.Component{
                         dbId={element._id} 
                         heading={element.heading} 
                         description={element.description} 
-                        units={element.units} 
+                        units={element.units}
                         unitAdd={this.unitsHandlerFromArticle} 
-                        sectionName={this.props.sectionName}>
+                        sectionName={this.props.sectionName}
+                        lastUpdatedTime={element.lastUpdatedTime}
+                        uploaderFirstName={element.uploaderFirstName}
+                        >
                       </Article>
                     </li>
                   </div>

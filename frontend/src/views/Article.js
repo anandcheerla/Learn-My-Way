@@ -190,7 +190,34 @@ class Article extends React.Component{
     });
   }
 
+
+
   render(){
+
+    let currentTs=new Date();
+    let articleTs=new Date(this.props.lastUpdatedTime);
+    let diff=currentTs-articleTs;
+    let minutes=diff/(1000*60);   //1000 is for milli seconds and 60 for seconds
+
+    let uploadedTime;
+    if(Math.floor(minutes/60>0)){
+      if(Math.floor(minutes/(60*24)))
+        uploadedTime=Math.floor(minutes/(60*24))+" days ago";
+      else
+        uploadedTime=Math.floor(minutes/60)+" hours ago";
+    }
+    else{
+        uploadedTime=Math.floor(minutes/(60*24))+" minutes ago";      
+    }
+
+
+    let uploader_info_style={
+      "border": "1px solid grey",
+      "borderRadius": "10px",
+      "padding": "5px",
+      "backgroundColor": "#aab3ad",
+      "float": "right"
+    }
 
 
     return (
@@ -203,6 +230,10 @@ class Article extends React.Component{
             <div>
               <h1 id="article-heading-id">{this.state.heading}</h1>
               <h4 id="article-description-id">{this.state.description}</h4>
+              <div style={uploader_info_style} id="uploader-info-id-article-component">
+                <h6>{this.props.uploaderFirstName}</h6>
+                {!this.state.articleClicked && <h6>{uploadedTime}</h6>}
+              </div>
               {
                 this.state.articleClicked
                 &&
@@ -226,12 +257,16 @@ class Article extends React.Component{
                       <option value="5">5</option>
                     </select>
                   </div>
+                  {
+                  this.props.sectionName==="myArticles"
+                  &&
                   <div onClick={(e)=>e.stopPropagation()} className="settings-dropdown-filter-class">
                     <select name="settings" id="settings-dropdown-filter-id" onChange={(e)=>this.articleSettings(e)}>
                       <option value="settings">settings</option>
                       <option value="delete_article">Delete Article</option>
                     </select>
                   </div>
+                  }
                 </div>
               }
               </div>
