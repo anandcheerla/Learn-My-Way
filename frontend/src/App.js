@@ -388,18 +388,18 @@ class Main extends React.Component{
                  {
                     this.state.loginSuccess && 
                     <div> 
-                      <button onClick={()=>this.fetchMyArticlesFromDb()} className="btn btn-primary">My Articles</button>
+                      <button onClick={()=>this.fetchMyArticlesFromDb()} className="btn btn-dark">My Articles</button>
                     </div>
                  }
                  {
                     this.state.loginSuccess && 
                     <div> 
-                      <button onClick={() => window.location.reload(false)} className="btn btn-primary">Home</button>
+                      <button onClick={() => window.location.reload(false)} className="btn btn-dark">Home</button>
                     </div>
                  }
                  {
                     this.state.loginSuccess && 
-                    <button onClick={(event)=>this.userLogout(event)} className="btn btn-primary">Logout</button>
+                    <button onClick={(event)=>this.userLogout(event)} className="btn btn-dark">Logout</button>
                  }
               </nav>
             </div>
@@ -431,7 +431,7 @@ class Main extends React.Component{
               !this.state.loginSuccess &&
               <div className="homePage">
                 <div className="toggleSwitch">
-                  <button id="loginRegisterToggle" className="btn btn-outline-primary" onClick={()=>this.handleToggle()}>Sign up</button>
+                  <button id="loginRegisterToggle" className="btn btn-outline-primary" onClick={()=>this.handleToggle()}>{this.state.showLoginForm ?"Sign up" : "Sign in"}</button>
                 </div>
                 <div id="footer">
                   <h6>-AKC-</h6>

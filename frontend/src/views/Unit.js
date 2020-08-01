@@ -184,7 +184,13 @@ class Unit extends React.Component{
   
     let wrap = {
     "whiteSpace": "pre-wrap",                 
-    "wordBreak": "break-all"
+    "wordBreak": "break-all",
+    }
+
+    let wrap_modal ={
+      "whiteSpace": "pre-wrap",                 
+    "wordBreak": "break-all",
+    "fontSize": "18px"
     }
 
     let headingDivStyle = {
@@ -229,11 +235,11 @@ class Unit extends React.Component{
                       <div className="descriptionDivUnitModal">
                         <h4>Short Description</h4>
                         <div id="shortDescriptionDivModal" className="descriptionUnitModal">
-                          <h5 style={wrap}>{this.state.shortDescription}</h5>
+                          <h5 style={wrap_modal}>{this.state.shortDescription}</h5>
                         </div>
                         <h4>Long Description</h4>
                         <div id="longDescriptionDivModal" className="descriptionUnitModal">
-                        <p style={wrap}>{this.state.longDescription}</p>
+                        <p style={wrap_modal}>{this.state.longDescription}</p>
                         </div>  
                       </div>
                       <div class="settingsUnitModal">
