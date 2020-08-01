@@ -165,7 +165,10 @@ app.get("/articles/home",isLoggedIn,function(req,res){
 	userModel.find({},function(err,userDocuments){
 		userDocuments.forEach(function(doc){
 			for(let i=0;i<doc.articles.length;i++){
-				articles_out.push(doc.articles[i]);
+				
+				let article = doc.articles[i].toObject();
+				article["uploaderFirstName"]=doc.firstName;
+				articles_out.push(article);
 			}
 		});
 		res.send(articles_out);
@@ -216,6 +219,7 @@ app.put('/article-update/:articleId',isLoggedIn,function(req,res){
 		//update others which are need,add necessary conditions if required
 		article.heading=req.body.heading;
 		article.description=req.body.description;
+		article.lastUpdatedTime=Date.now;
 
 		userDocument.save(function(err){
 			if(err){
