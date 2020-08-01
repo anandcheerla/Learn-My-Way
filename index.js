@@ -234,11 +234,8 @@ app.delete("/article-delete/:articleId",isLoggedIn,function(req,res){
 	let queryObject={
 		"username":userFromSession,
 	}
+	
 	userModel.findOne(queryObject,function(err,userDocument){
-
-		//added these two lines temporarily,remove this later
-		res.send();
-		return;
 		
 		let article=userDocument.articles.id(articleId);
 		try{
@@ -246,6 +243,7 @@ app.delete("/article-delete/:articleId",isLoggedIn,function(req,res){
 		}
 		catch(err){
 			console.log("error while removing article");
+
 		}
 
 		userDocument.save(function(err){
