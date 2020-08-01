@@ -114,6 +114,15 @@ class Article extends React.Component{
       });
   }
 
+  articleSettings=(event)=>{
+    event.preventDefault();
+
+    let setting=event.target.value;
+
+    if(setting === "delete_article")
+       this.deletearticleHandler();
+  }
+
 
   //this method will return the form for unit creation
   unitCreationForm=()=>{
@@ -172,7 +181,9 @@ class Article extends React.Component{
     }
   }//articleClickHandler end
 
-  deletearticleButtonHandler=()=>{
+  deletearticleHandler=()=>{
+
+
      axios.delete("/article-delete/"+this.props.dbId).then(res=>{
       console.log(res);
       this.setState({articleDeleted: true});
@@ -181,17 +192,6 @@ class Article extends React.Component{
 
   render(){
 
-     // {
-     //        !this.state.articleClicked &&
-     //        <div style={{"float":"right"}}>
-     //            <button onClick={()=>this.deletearticleButtonHandler()} type="button" class="btn btn-danger">Delete</button>
-     //        </div>
-     //  }
-     // let units;
-     // axios.get("/get-units/"+this.props.dbId).then(res=>{
-     //    console.log(res);
-     //  // this.setState({units:res});
-     // });
 
     return (
     <div>
@@ -227,6 +227,12 @@ class Article extends React.Component{
                 </div>
               </div>
             }
+            <div onClick={(e)=>e.stopPropagation()} className="settings-dropdown-filter-class">
+              <select name="settings" id="settings-dropdown-filter-id" onChange={(e)=>this.articleSettings(e)}>
+                <option value="settings">:</option>
+                <option value="delete_article">Delete Article</option>
+              </select>
+            </div>
           </div>
 
           {

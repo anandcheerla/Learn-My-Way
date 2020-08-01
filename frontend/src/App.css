@@ -99,6 +99,16 @@
   display: none;
 }
 
+.settings-dropdown-filter-class select{
+	border-radius: 20px;
+	/*background-color: w;*/
+	width: 2%;
+	padding-left: 4px;
+	appearance: none;
+
+}
+
+
 
 #footer{
 	position: fixed;
