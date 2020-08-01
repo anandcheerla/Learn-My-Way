@@ -18,7 +18,7 @@ class Main extends React.Component{
         showRegisterForm: ls.get("showRegisterForm") || false,
         showLoginForm: ls.get("showLoginForm") || false,
         loginSuccess: ls.get("loginSuccess") || false,
-        fetchedMyArticlesFromDb: false,
+        fetchedMyArticlesFromDb: ls.get("fetchedOtherArticlesFromDb") || false,
         fetchedOtherArticlesFromDb: false,
         showOtherArticles:true,
         aboutClicked: false
@@ -33,6 +33,7 @@ class Main extends React.Component{
           res=>{
             let articles_temp_var=[...res.data];
             let fetchArticlesFromDb_temp_var=true;
+            // debugger;
             this.setState({
               articles: articles_temp_var,
               fetchedMyArticlesFromDb: fetchArticlesFromDb_temp_var,
@@ -46,8 +47,17 @@ class Main extends React.Component{
 
 
     populateOtherArticles = ()=>{
+
+      // debugger;
+      console.log("came");
+      // debugger;
       axios.get("/articles/home").then(res=>{
+
+        // debugger;
         let fetchedArticles=[...res.data];
+
+        ls.set("fetchedOtherArticlesFromDb","true");
+
         this.setState({
           OtherArticles: fetchedArticles,
           fetchedOtherArticlesFromDb: true
@@ -292,13 +302,17 @@ class Main extends React.Component{
 
     displayOtherArticles=()=>{
           // return (<PopularArticles articles={this.state.OtherArticles}></PopularArticles>);
-            
+          
           return (
             <div>
+              {
+              this.state.OtherArticles.length>0
+              &&
               <Articles 
                 sectionName="homePage" 
                 articles={this.state.OtherArticles}>
               </Articles>
+              }
             </div>
           );
     }
@@ -310,7 +324,7 @@ class Main extends React.Component{
           ls.set("showLoginForm",false);
           ls.set("showRegisterForm",true);
           ls.set("aboutClicked",false);
-          document.getElementById("loginRegisterToggle").innerHTML="<---";
+          document.getElementById("loginRegisterToggle").innerHTML="Sign in";
         }
 
         else{
@@ -318,7 +332,7 @@ class Main extends React.Component{
           ls.set("showLoginForm",true);
           ls.set("showRegisterForm",false);
           ls.set("aboutClicked",false);
-          document.getElementById("loginRegisterToggle").innerHTML="--->";
+          document.getElementById("loginRegisterToggle").innerHTML="Sign up";
 
         }
 
@@ -347,7 +361,7 @@ class Main extends React.Component{
                     <div> 
                       <button 
                         onClick={()=>{this.setState({showLoginForm: true,showRegisterForm: false,aboutClicked: false});ls.set("showLoginForm",true);ls.set("showRegisterForm",false); ls.set("aboutClicked",false);}} 
-                        className="btn btn-primary">
+                        className="btn btn-dark">
                         Login
                       </button>
                     </div>
@@ -357,7 +371,7 @@ class Main extends React.Component{
                     <div> 
                       <button 
                         onClick={()=>this.aboutClickHandler()} 
-                        className="btn btn-primary">
+                        className="btn btn-dark">
                         About
                       </button>
                     </div>
@@ -368,7 +382,7 @@ class Main extends React.Component{
                     <div> 
                       <button 
                         onClick={()=>{this.setState({showRegisterForm: true,showLoginForm:false,aboutClicked: false});ls.set("showRegisterForm",true);ls.set("showLoginForm",false);ls.set("aboutClicked",false);}} 
-                        className="btn btn-primary">
+                        className="btn btn-dark">
                         Register
                       </button>
                     </div>
@@ -407,7 +421,7 @@ class Main extends React.Component{
                 <div>
                   {this.state.loginSuccess && !this.state.fetchedOtherArticlesFromDb && this.populateOtherArticles()}
                   {this.state.loginSuccess && this.state.showOtherArticles && this.state.fetchedOtherArticlesFromDb && this.displayOtherArticles()}
-                  {this.state.loginSuccess && this.state.fetchedMyArticlesFromDb ? this.displayMyArticles() : null}
+                  {this.state.loginSuccess && !this.state.showOtherArticles && this.state.fetchedMyArticlesFromDb ? this.displayMyArticles() : null}
                 </div>
               </div>
 
@@ -420,7 +434,7 @@ class Main extends React.Component{
               !this.state.loginSuccess &&
               <div className="homePage">
                 <div className="toggleSwitch">
-                  <button id="loginRegisterToggle" className="btn btn-outline-primary" onClick={()=>this.handleToggle()}>---></button>
+                  <button id="loginRegisterToggle" className="btn btn-outline-primary" onClick={()=>this.handleToggle()}>Sign up</button>
                 </div>
                 <div id="footer">
                   <h6>-AKC-</h6>
