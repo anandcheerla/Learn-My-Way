@@ -45,12 +45,24 @@ class Article extends React.Component{
 
     axios.post("/add-unit/"+this.state.dbId,formData).then(res=>{
         let units_temp_var=[...this.state.units,res.data];
-        this.setState({
-            units: units_temp_var
-        });
-        // console.log()
+        
+        let complexity = document.getElementById("complexity-dropdown-filter-id").value;
+        let importance = document.getElementById("importance-dropdown-filter-id").value;
 
-        // this.props.unitAdd(units_temp_var);
+        if((complexity ==="all" || formData.complexity===complexity) && (importance === "all" || formData.priority===importance))
+        {
+          this.setState({
+            units: units_temp_var,
+            filteredUnits: units_temp_var
+          });
+        }
+
+        else{
+          this.setState({
+              units: units_temp_var
+          });
+        }
+    
        
     });
 
@@ -62,20 +74,15 @@ class Article extends React.Component{
   filterByDifficulty=(event)=>{
       event.preventDefault();
       let complexity = event.target.value;
+      let importance = document.getElementById("importance-dropdown-filter-id").value;
+
 
       let units=[...this.state.units];
       let required_units=[];
 
-      if(complexity==="all"){
-        this.setState({
-          filteredUnits: units
-        });
-        return;
-      }
-
       for(let i=0;i<units.length;i++)
       {
-        if(units[i].complexity===complexity)
+        if((complexity === "all" || units[i].complexity===complexity) && (importance==="all" || units[i].priority===Number(importance)))
           required_units.push(units[i]);
       }
       // debugger;
@@ -84,6 +91,29 @@ class Article extends React.Component{
       });
 
   }
+
+  filterByImportance=(event)=>{
+    event.preventDefault();
+      let importance = event.target.value;
+
+      let complexity = document.getElementById("complexity-dropdown-filter-id").value;
+
+      let units=[...this.state.units];
+      let required_units=[];
+
+     
+
+      for(let i=0;i<units.length;i++)
+      {
+        if((importance==="all" || units[i].priority===Number(importance)) && (complexity==="all" || units[i].complexity===complexity))
+          required_units.push(units[i]);
+      }
+      // debugger;
+      this.setState({
+        filteredUnits: required_units
+      });
+  }
+
 
   //this method will return the form for unit creation
   unitCreationForm=()=>{
@@ -175,14 +205,26 @@ class Article extends React.Component{
             {
               this.state.articleClicked
               &&
-              <div onClick={(e)=>e.stopPropagation()} class="complexity-dropdown-filter-class">
-                <select name="complexity" id="complexity-dropdown-filter-id" onChange={(e)=>this.filterByDifficulty(e)}>
-                  <option value="all">ALL</option>                  
-                  <option value="basic">Basic</option>
-                  <option value="easy">Easy</option>
-                  <option value="medium">Medium</option>
-                  <option value="hard">Hard</option>
-                </select>
+              <div>
+                <div onClick={(e)=>e.stopPropagation()} className="complexity-dropdown-filter-class">
+                  <select name="complexity" id="complexity-dropdown-filter-id" onChange={(e)=>this.filterByDifficulty(e)}>
+                    <option value="all">ALL</option>                  
+                    <option value="basic">Basic</option>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                  </select>
+                </div>
+                <div onClick={(e)=>e.stopPropagation()} className="importance-dropdown-filter-class">
+                  <select name="complexity" id="importance-dropdown-filter-id" onChange={(e)=>this.filterByImportance(e)}>
+                    <option value="all">ALL</option>                  
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                </div>
               </div>
             }
           </div>
