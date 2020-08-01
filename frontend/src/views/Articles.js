@@ -125,7 +125,7 @@ class Articles extends React.Component{
               (
                 !this.state.showArticleCreationForm
                 ?
-                <h2>My Articles</h2>
+                (this.state.articles.length>0 ? <h2>My Articles</h2> : <h3>No Articles<h5>create one by clicking the New Article Button in the right</h5></h3>)
                 :
                 <h2>Create Article</h2>
               )

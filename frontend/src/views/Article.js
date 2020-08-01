@@ -200,39 +200,42 @@ class Article extends React.Component{
         &&
         <div onClick={()=>{this.articleClickHandler()}}>
           <div>
-            <h1>{this.state.heading}</h1>
-            <h4>{this.state.description}</h4>
-            {
-              this.state.articleClicked
-              &&
-              <div>
-                <div onClick={(e)=>e.stopPropagation()} className="complexity-dropdown-filter-class">
-                  <select name="complexity" id="complexity-dropdown-filter-id" onChange={(e)=>this.filterByDifficulty(e)}>
-                    <option value="all">ALL</option>                  
-                    <option value="basic">Basic</option>
-                    <option value="easy">Easy</option>
-                    <option value="medium">Medium</option>
-                    <option value="hard">Hard</option>
-                  </select>
+            <div>
+              <h1 id="article-heading-id">{this.state.heading}</h1>
+              <h4 id="article-description-id">{this.state.description}</h4>
+              {
+                this.state.articleClicked
+                &&
+                <div className="article-filters-class">
+                  <div onClick={(e)=>e.stopPropagation()} className="complexity-dropdown-filter-class">
+                    <select name="complexity" id="complexity-dropdown-filter-id" onChange={(e)=>this.filterByDifficulty(e)}>
+                      <option value="all">ALL</option>                  
+                      <option value="basic">Basic</option>
+                      <option value="easy">Easy</option>
+                      <option value="medium">Medium</option>
+                      <option value="hard">Hard</option>
+                    </select>
+                  </div>
+                  <div onClick={(e)=>e.stopPropagation()} className="importance-dropdown-filter-class">
+                    <select name="complexity" id="importance-dropdown-filter-id" onChange={(e)=>this.filterByImportance(e)}>
+                      <option value="all">ALL</option>                  
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </div>
+                  <div onClick={(e)=>e.stopPropagation()} className="settings-dropdown-filter-class">
+                    <select name="settings" id="settings-dropdown-filter-id" onChange={(e)=>this.articleSettings(e)}>
+                      <option value="settings">settings</option>
+                      <option value="delete_article">Delete Article</option>
+                    </select>
+                  </div>
                 </div>
-                <div onClick={(e)=>e.stopPropagation()} className="importance-dropdown-filter-class">
-                  <select name="complexity" id="importance-dropdown-filter-id" onChange={(e)=>this.filterByImportance(e)}>
-                    <option value="all">ALL</option>                  
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                  </select>
-                </div>
+              }
               </div>
-            }
-            <div onClick={(e)=>e.stopPropagation()} className="settings-dropdown-filter-class">
-              <select name="settings" id="settings-dropdown-filter-id" onChange={(e)=>this.articleSettings(e)}>
-                <option value="settings">:</option>
-                <option value="delete_article">Delete Article</option>
-              </select>
-            </div>
+            
           </div>
 
           {

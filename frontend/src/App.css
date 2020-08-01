@@ -1,4 +1,7 @@
 
+/*@import url('https://fonts.googleapis.com/css2?family=Red+Rose&display=swap');*/
+@import url('https://fonts.googleapis.com/css2?family=Red+Rose&family=Ubuntu&display=swap');
+
 .bodySection{
   margin: auto 150px;
   
@@ -16,7 +19,10 @@
   min-width: 300px;
 }
 
-
+#unit-heading-id-unit-component{
+	font-family: 'Ubuntu', sans-serif;
+	font-size: 8px;
+}
 
 #unitCreationForm{
   min-width: 300px;
@@ -52,6 +58,10 @@
 
 }
 
+#article-heading-id{
+	font-family: 'Red Rose', cursive;
+	font-size: 40px;
+}
 
 .registrationForm > .form-group {
    margin-bottom: 10px!important;
@@ -99,14 +109,46 @@
   display: none;
 }
 
+.article-filters-class{
+	position: absolute;
+	top:2px;
+	left:70%;
+	
+}
+
+
+.article-filters-class div{
+	float:left;
+}
+
 .settings-dropdown-filter-class select{
 	border-radius: 20px;
 	/*background-color: w;*/
-	width: 2%;
+	/*width: 2%;*/
 	padding-left: 4px;
 	appearance: none;
 
 }
+.complexity-dropdown-filter-class select{
+	border-radius: 20px;
+	/*background-color: w;*/
+	/*width: 70%;*/
+	/*padding-left: 4px;*/
+	/*appearance: none;*/
+
+}
+
+.importance-dropdown-filter-class select{
+	border-radius: 20px;
+	/*background-color: w;*/
+	/*width: 6%;*/
+	/*padding-left: 4px;*/
+	/*appearance: none;*/
+
+}
+
+
+
 
 
 

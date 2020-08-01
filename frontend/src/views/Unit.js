@@ -206,10 +206,10 @@ class Unit extends React.Component{
           (
            <div> 
             <div style={unitStyle} className="unit" onClick={this.onClickHandler}>
-              <div className="unitHeading">
+              <div id="unit-heading-id-unit-component">
                 <h3 style={wrap}>{this.state.heading}</h3>
               </div>
-              <div className="unitShortDescription">
+              <div id="unit-short-description-id-unit-component">
                 <p style={wrap}>{this.state.shortDescription}</p>
               </div>
             </div>
