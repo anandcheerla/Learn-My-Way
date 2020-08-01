@@ -109,11 +109,12 @@ app.post("/login",passport.authenticate("local",{successRedirect: "/suc",failure
 
 //middleware to check whether the user is logged in
 function isLoggedIn(req,res,next){
+
 	if(req.isAuthenticated()){
 		next();
 	}
 	else{
-		res.redirect("/login");
+		res.send([]);
 	}
 }
 
