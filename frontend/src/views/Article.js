@@ -200,14 +200,28 @@ class Article extends React.Component{
     let minutes=diff/(1000*60);   //1000 is for milli seconds and 60 for seconds
 
     let uploadedTime;
-    if(Math.floor(minutes/60>0)){
-      if(Math.floor(minutes/(60*24)))
-        uploadedTime=Math.floor(minutes/(60*24))+" days ago";
-      else
-        uploadedTime=Math.floor(minutes/60)+" hours ago";
+    if(Math.floor(minutes/60)>0){
+      if(Math.floor(minutes/(60*24))>0){
+        uploadedTime=Math.floor(minutes/(60*24));
+        if(uploadedTime==1)
+          uploadedTime+=" day ago";
+        else
+          uploadedTime+=" days ago";
+      }
+      else{
+        uploadedTime=Math.floor(minutes/60);
+        if(uploadedTime==1)
+          uploadedTime+=" hour ago";
+        else
+          uploadedTime+=" hours ago";
+      }
     }
     else{
-        uploadedTime=Math.floor(minutes/(60*24))+" minutes ago";      
+        uploadedTime=Math.floor(minutes/(60*24)); 
+        if(uploadedTime>=0 && uploadedTime<3)
+          uploadedTime="Just now";
+        else
+          uploadedTime+=" minutes ago";    
     }
 
 
