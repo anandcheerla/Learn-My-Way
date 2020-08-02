@@ -12,11 +12,12 @@ class Main extends React.Component{
     constructor(props){
       super(props);
       //initial state
+  
       this.state={
         articles: [],
         OtherArticles:[],
         showRegisterForm: ls.get("showRegisterForm") || false,
-        showLoginForm: ls.get("showLoginForm") || false,
+        showLoginForm: ls.get("showLoginForm") || ((ls.get("loginSuccess")===true || ls.get("showRegisterForm")===true) ? false : true),
         loginSuccess: ls.get("loginSuccess") || false,
         fetchedMyArticlesFromDb: ls.get("fetchedOtherArticlesFromDb") || false,
         fetchedOtherArticlesFromDb: false,
