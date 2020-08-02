@@ -76,6 +76,13 @@ class Main extends React.Component{
         password: event.target.password.value
       }
 
+      let login_button = document.getElementById("login-button-id-app-component");
+      let login_error_ele = document.getElementById("login-err-msg-id-app-component");
+      login_button.innerHTML="Logging In";
+      login_button.style.opacity=0.7;
+      login_error_ele.innerHTML = "";
+
+
       axios.post("/login",formData).then((res)=>{
         if(res.data==="success"){ 
           let loginSuccess_temp_var=true;
@@ -93,7 +100,11 @@ class Main extends React.Component{
           ls.set("showLoginForm",showLoginForm_temp_var);
         }
         else{
-          alert("Incorrect credentials");
+          login_error_ele.innerHTML = "* Incorrect Credentials";
+          login_error_ele.style.color="red";
+          login_button.innerHTML="Login";
+          login_button.style.opacity=1;
+
         }
       });
 
@@ -177,6 +188,14 @@ class Main extends React.Component{
     userRegistration=(event)=>{
       event.preventDefault();
 
+
+      let signup_button = document.getElementById("register-button-id-app-component");
+      let register_error_ele=document.getElementById("register-err-msg-id-app-component");
+      signup_button.innerHTML="Signing Up";
+      signup_button.style.opacity=0.7;
+      register_error_ele.innerHTML=""; 
+
+
       let formData={
         username: event.target.username.value,
         password: event.target.password.value,
@@ -187,7 +206,16 @@ class Main extends React.Component{
       }
 
       axios.post("/register",formData).then((res)=>{
-        console.log("registered");
+        if(res.data.message!==undefined)
+        {
+
+          register_error_ele.innerHTML="* "+res.data.message; 
+          register_error_ele.style.color="red";
+          signup_button.innerHTML="Register";
+          signup_button.style.opacity=1;
+          return;
+        }
+
         let showRegisterForm_temp_var=false;
         let showLoginForm_temp_var=true;
         this.setState({
@@ -268,9 +296,12 @@ class Main extends React.Component{
               <label htmlFor="contactNumber">Contact Number</label>
               <input type="text" onBlur={this.inputValidation} className="form-control" id="contactNumber" name="contactNumber" placeholder="9999999999" required/>
             </div>
+            <div>
+              <h6 id="register-err-msg-id-app-component"></h6>
+            </div>
             <br/>
             <div className="form-group">
-              <button type="submit" className="btn btn-primary btn-lg btn-block">Register</button>
+              <button type="submit" id="register-button-id-app-component" className="btn btn-primary btn-lg btn-block">Register</button>
             </div>
         </form>
         );
@@ -289,8 +320,11 @@ class Main extends React.Component{
               <input type="password" className="form-control" id="password" name="password" placeholder="password"/>
             </div>
             <br/>
+            <div>
+              <h6 id="login-err-msg-id-app-component"></h6>
+            </div>
             <div className="form-group">
-              <button type="submit" className="btn btn-primary btn-lg btn-block">Login</button>
+              <button type="submit" id="login-button-id-app-component" className="btn btn-primary btn-lg btn-block">Login</button>
             </div>
         </form>
       );

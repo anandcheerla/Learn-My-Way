@@ -78,8 +78,7 @@ app.post("/register",function(req,res){
 	userModel.register(newUser,req.body.password,function(err,user){
 		if(err){
 			//res.send(err.message);
-			return res.redirect("/register");
-		}
+			res.send(err);		}
 		passport.authenticate("local")(req,res,function(){
 			res.send("registered");
 		});
