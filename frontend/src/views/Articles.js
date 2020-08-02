@@ -70,14 +70,11 @@ class Articles extends React.Component{
         <form name="createArticle" onSubmit={this.createArticle}>
             <div className="form-group">
               <label htmlFor="heading">Name</label>
-              <input type="text" className="form-control" id="articleHeading" name="heading" placeholder="heading"/>
+              <input type="text" className="form-control" id="articleHeading" name="heading" placeholder="heading" required/>
             </div>
             <div className="form-group">
               <label htmlFor="description">Description</label>
-              <textarea type="textarea" className="form-control" id="description" name="description" placeholder="description"/>
-            </div>
-            <div className="form-group" id="articleImage">
-              <input type="file" ></input>
+              <textarea type="textarea" className="form-control" id="description" name="description" placeholder="description" required/>
             </div>
             <button type="submit" className="btn btn-primary">Create</button>
             <span> <button onClick={this.cancelButtonClickHandler} className="btn btn-primary">Cancel</button></span>

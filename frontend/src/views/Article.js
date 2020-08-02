@@ -134,11 +134,11 @@ class Article extends React.Component{
       <form name="createUnit" onSubmit={this.createUnit} >
         <div className="form-group">
           <label htmlFor="heading"></label>
-          <input type="text" className="form-control" id="heading" name="heading" placeholder="Heading"/>
+          <input type="text" className="form-control" id="heading" name="heading" placeholder="Heading" required/>
         </div>
         <div className="form-group">
           <label htmlFor="shortDescription"></label>
-          <textarea type="textarea" className="form-control" id="shortDescription" name="shortDescription" placeholder="Short description"/>
+          <textarea type="textarea" className="form-control" id="shortDescription" name="shortDescription" placeholder="Short description" required/>
         </div>
         <div className="form-group">
           <label htmlFor="longDescription"></label>
