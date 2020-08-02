@@ -3,9 +3,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Red+Rose&family=Ubuntu&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Maven+Pro&family=Sniglet&display=swap');
 
+
+
 .bodySection{
   margin: auto 150px;
-  
+ 
 }
 
 .unitCreationForm{
@@ -84,6 +86,10 @@
 .registrationForm > .form-group {
    margin-bottom: 10px!important;
    width: 100%;
+}
+
+.homePage{
+	position: relative;
 }
 
 .toggleSwitch{
@@ -173,7 +179,12 @@
 	bottom: 0;
 }
 
-
+/*
+.mainScreen{
+  
+   background-color: "red";
+}
+*/
 
 /*.unit{
 	width: 100%;

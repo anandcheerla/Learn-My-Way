@@ -242,7 +242,7 @@ class Unit extends React.Component{
                         <p style={wrap_modal}>{this.state.longDescription}</p>
                         </div>  
                       </div>
-                      <div class="settingsUnitModal">
+                      <div className="settingsUnitModal">
                         <div>
                           <ul style={listStyleType}>
                             <li>{this.props.sectionName==="myArticles" && <h6 id="unitEditButton" onClick={()=>{this.setState({editUnitMode: true})}}>Edit</h6>}</li>
