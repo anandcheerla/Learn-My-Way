@@ -203,14 +203,14 @@ class Article extends React.Component{
     if(Math.floor(minutes/60)>0){
       if(Math.floor(minutes/(60*24))>0){
         uploadedTime=Math.floor(minutes/(60*24));
-        if(uploadedTime==1)
+        if(uploadedTime===1)
           uploadedTime+=" day ago";
         else
           uploadedTime+=" days ago";
       }
       else{
         uploadedTime=Math.floor(minutes/60);
-        if(uploadedTime==1)
+        if(uploadedTime===1)
           uploadedTime+=" hour ago";
         else
           uploadedTime+=" hours ago";

@@ -170,7 +170,7 @@ class Main extends React.Component{
       // console.log("event akc is "+event);
       event.preventDefault();
       axios.get("/logout").then((res)=>{
-        console.log("logout successful");
+        
       });
       ls.clear();
       this.setState({
@@ -392,12 +392,13 @@ class Main extends React.Component{
     }  
     render(){
 
-      let mainScreenStyle={
-          "minWidth":"1000px"
-      }
+      let main_style={
+      
+          "minWidth": "1000px"
 
+      };
       return (
-          <div style={mainScreenStyle} className="mainScreen">
+          <div style={main_style} className="mainScreen">
             <div id="menuSection">
               <nav className="navbar navbar-dark bg-dark">
                  {
