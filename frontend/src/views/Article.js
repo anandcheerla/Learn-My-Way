@@ -217,7 +217,7 @@ class Article extends React.Component{
       }
     }
     else{
-        uploadedTime=minutes; 
+        uploadedTime=Math.floor(minutes); 
         if(uploadedTime>=0 && uploadedTime<3)
           uploadedTime="Just now";
         else
