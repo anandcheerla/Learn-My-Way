@@ -22,11 +22,6 @@
   min-width: 300px;
 }
 
-#unit-heading-id-unit-component{
-	font-family: 'Ubuntu', sans-serif;
-	font-size: 8px;
-}
-
 #unitCreationForm{
   min-width: 300px;
 }
@@ -78,10 +73,7 @@
 
 }
 
-#article-heading-id{
-	font-family: 'Red Rose', cursive;
-	font-size: 40px;
-}
+
 
 .registrationForm > .form-group {
    margin-bottom: 10px!important;
@@ -143,7 +135,10 @@
 }
 
 
-
+#article-article-heading{
+	font-family: 'Red Rose', cursive;
+	font-size: 40px;
+}
 
 
 /*unit*/
@@ -163,6 +158,11 @@
 	
 }
 
+
+#unit-unit-heading{
+	font-family: 'Ubuntu', sans-serif;
+	font-size: 8px;
+}
 
 
 
