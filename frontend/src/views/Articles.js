@@ -167,6 +167,7 @@ class Articles extends React.Component{
                         sectionName={this.props.sectionName}
                         lastUpdatedTime={element.lastUpdatedTime}
                         uploaderFirstName={element.uploaderFirstName}
+                        visibility={element.visibility}
                         >
                       </Article>
                     </li>

@@ -101,11 +101,11 @@ class Unit extends React.Component{
       <form name="createUnit" onSubmit={this.updateUnit} >
         <div className="form-group">
           <label htmlFor="heading"></label>
-          <input type="text" id="heading-id-unit-component" className="form-control" id="heading" name="heading" defaultValue={this.state.heading}/>
+          <input type="text" className="form-control" id="heading" name="heading" defaultValue={this.state.heading}/>
         </div>
         <div className="form-group">
           <label htmlFor="shortDescription"></label>
-          <textarea type="text" id="short-desc-id-unit-component" className="form-control" id="shortDescription" name="shortDescription" defaultValue={this.state.shortDescription} required/>
+          <textarea type="text" className="form-control" id="shortDescription" name="shortDescription" defaultValue={this.state.shortDescription}/>
         </div>
         <div className="form-group">
           <label htmlFor="longDescription"></label>

@@ -116,11 +116,28 @@ class Article extends React.Component{
 
   articleSettings=(event)=>{
     event.preventDefault();
+    event.persist();
 
     let setting=event.target.value;
-
+    // debugger;
     if(setting === "delete_article")
        this.deletearticleHandler();
+     else if(setting === "post_article"){
+        if(event.target.selectedOptions[0].label==="Make private"){
+            axios.post('/settings/article-visibility/'+this.props.dbId,{visibility: "private"}).then(res=>{
+                if(res.data==="success")
+                  event.target.selectedOptions[0].label="Make public";
+            });
+        }
+        else{
+          axios.post('/settings/article-visibility/'+this.props.dbId,{visibility: "public"}).then(res=>{
+              if(res.data==="success")
+                  event.target.selectedOptions[0].label="Make private";
+              
+            });
+        }
+     }
+
   }
 
 
@@ -134,7 +151,7 @@ class Article extends React.Component{
       <form name="createUnit" onSubmit={this.createUnit} >
         <div className="form-group">
           <label htmlFor="heading"></label>
-          <input type="text" className="form-control" id="heading" name="heading" placeholder="Heading" required/>
+          <input type="text" className="form-control" id="heading" name="heading" placeholder="Heading"/>
         </div>
         <div className="form-group">
           <label htmlFor="shortDescription"></label>
@@ -185,7 +202,6 @@ class Article extends React.Component{
 
 
      axios.delete("/article-delete/"+this.props.dbId).then(res=>{
-      console.log(res);
       this.setState({articleDeleted: true});
     });
   }
@@ -278,6 +294,7 @@ class Article extends React.Component{
                     <select name="settings" id="settings-dropdown-filter-id" onChange={(e)=>this.articleSettings(e)}>
                       <option value="settings">settings</option>
                       <option value="delete_article">Delete Article</option>
+                      <option value="post_article">Make {this.props.visibility==="private"?"public":"private"}</option>
                     </select>
                   </div>
                   }
