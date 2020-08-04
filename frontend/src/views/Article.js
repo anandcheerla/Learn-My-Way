@@ -43,9 +43,18 @@ class Article extends React.Component{
       complexity:event.target.complexity.value 
     }
 
+    let currentState = [...this.state.units];
+    let units_temp=[...currentState,formData];
+    this.setState({
+      units:units_temp
+    });
+
+
     axios.post("/add-unit/"+this.state.dbId,formData).then(res=>{
-        let units_temp_var=[...this.state.units,res.data];
+        // debugger;
         
+        let units_temp_var=[...currentState,res.data];
+
         let complexity = document.getElementById("complexity-dropdown-filter-id").value;
         let importance = document.getElementById("importance-dropdown-filter-id").value;
 

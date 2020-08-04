@@ -32,7 +32,9 @@ class Articles extends React.Component{
         heading: event.target.heading.value,
         description: event.target.description.value
       }
+
       axios.post("/new-article",formData).then(res=>{
+        // debugger;
           let newlyCreatedArticle={...res.data};
           let articles_temp_var=[...this.state.articles,newlyCreatedArticle];
 
