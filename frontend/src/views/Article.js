@@ -52,7 +52,7 @@ class Article extends React.Component{
 
     axios.post("/add-unit/"+this.state.dbId,formData).then(res=>{
         // debugger;
-        
+
         let units_temp_var=[...currentState,res.data];
 
         let complexity = document.getElementById("complexity-dropdown-filter-id").value;
@@ -260,80 +260,102 @@ class Article extends React.Component{
 
 
     return (
-    <div>
+      <div>
       {
-       !this.state.articleDeleted
+        !this.state.articleDeleted
         &&
-        <div onClick={()=>{this.articleClickHandler()}}>
-          <div>
-            <div>
-              <h1 id="article-heading-id">{this.state.heading}</h1>
-              <h4 id="article-description-id">{this.state.description}</h4>
-              <div style={uploader_info_style} id="uploader-info-id-article-component">
-                <h6>{this.props.uploaderFirstName}</h6>
-                {!this.state.articleClicked && <h6>{uploadedTime}</h6>}
-              </div>
-              {
-                this.state.articleClicked
-                &&
-                <div className="article-filters-class">
-                  <div onClick={(e)=>e.stopPropagation()} className="complexity-dropdown-filter-class">
-                    <select name="complexity" id="complexity-dropdown-filter-id" onChange={(e)=>this.filterByDifficulty(e)}>
-                      <option value="all">ALL</option>                  
-                      <option value="basic">Basic</option>
-                      <option value="easy">Easy</option>
-                      <option value="medium">Medium</option>
-                      <option value="hard">Hard</option>
-                    </select>
-                  </div>
-                  <div onClick={(e)=>e.stopPropagation()} className="importance-dropdown-filter-class">
-                    <select name="complexity" id="importance-dropdown-filter-id" onChange={(e)=>this.filterByImportance(e)}>
-                      <option value="all">ALL</option>                  
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                    </select>
-                  </div>
-                  {
-                  this.props.sectionName==="myArticles"
-                  &&
-                  <div onClick={(e)=>e.stopPropagation()} className="settings-dropdown-filter-class">
-                    <select name="settings" id="settings-dropdown-filter-id" onChange={(e)=>this.articleSettings(e)}>
-                      <option value="settings">settings</option>
-                      <option value="delete_article">Delete Article</option>
-                      <option value="post_article">Make {this.props.visibility==="private"?"public":"private"}</option>
-                    </select>
-                  </div>
-                  }
-                </div>
-              }
-              </div>
+        <div id="article-article" onClick={()=>{this.articleClickHandler()}}>
             
-          </div>
 
-          {
-            this.state.articleClicked
-            &&
-            <div onClick={(e)=>e.stopPropagation()}>
+
+              <div id="article-article-top">
+                <div id="article-article-heading">
+                  <h1>{this.state.heading}</h1>
+                </div>
+                <div id="article-article-description">
+                  <h4>{this.state.description}</h4>
+                </div>
+              </div>
+
+
+              <div id="article-article-bottom-right">
+                <div style={uploader_info_style} id="article-article-upload-info">
+                  <h6>{this.props.uploaderFirstName}</h6>
+                  {!this.state.articleClicked && <h6>{uploadedTime}</h6>}
+                </div>
+              </div>
+
+
+
+
               {
-                this.state.filteredUnits.map(element=>(
-                  <Unit 
-                    key={element._id}
-                    unitId={element._id} 
-                    articleId={this.props.dbId} 
-                    heading={element.heading} 
-                    shortDescription={element.shortDescription} 
-                    longDescription={element.longDescription}
-                    priority={element.priority} 
-                    complexity={element.complexity} 
-                    sectionName={this.props.sectionName}>
-                  </Unit>
-                ))
+
+              this.state.articleClicked
+              &&
+              <div id="article-article-filters">
+
+                <div onClick={(e)=>e.stopPropagation()} id="article-article-complexity-filter">
+                  <select name="complexity" id="complexity-dropdown-filter-id" onChange={(e)=>this.filterByDifficulty(e)}>
+
+                    <option value="all">Complexity</option>                  
+                    <option value="basic">Basic</option>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                  </select>
+                </div>
+
+                <div onClick={(e)=>e.stopPropagation()} id="article-article-priority-filter">
+                  <select name="priority" id="importance-dropdown-filter-id" onChange={(e)=>this.filterByImportance(e)}>
+                    <option value="all">Priority</option>                  
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                </div>
+
+                {
+                this.props.sectionName==="myArticles"
+                &&
+                <div onClick={(e)=>e.stopPropagation()} className="article-article-settings">
+                  <select name="settings" id="settings-dropdown-filter-id" onChange={(e)=>this.articleSettings(e)}>
+                    <option value="settings">settings</option>
+                    <option value="delete_article">Delete Article</option>
+                    <option value="post_article">Make {this.props.visibility==="private"?"public":"private"}</option>
+                  </select>
+                </div>
+
+                }
+
+              </div>
               }
 
-              <div id="unitCreationForm" className="unitCreationForm">
+              
+              {
+              this.state.articleClicked
+              &&
+              <div id="article-article-middle"  onClick={(e)=>e.stopPropagation()}>
+                <div id="article-article-units">
+                {
+                  this.state.filteredUnits.map(element=>(
+                    <Unit 
+                      key={element._id}
+                      unitId={element._id} 
+                      articleId={this.props.dbId} 
+                      heading={element.heading} 
+                      shortDescription={element.shortDescription} 
+                      longDescription={element.longDescription}
+                      priority={element.priority} 
+                      complexity={element.complexity} 
+                      sectionName={this.props.sectionName}>
+                    </Unit>
+                  ))
+                }
+                </div>
+
+                <div id="article-article-unit-creation-form">
                 {
                   this.props.sectionName==="myArticles"
                    &&
@@ -341,15 +363,18 @@ class Article extends React.Component{
                    &&
                    this.unitCreationForm()
                 }
+                </div>
               </div>
-            </div>
-          }
+              }
+             
+
         </div>
         
       }
       </div>
       );
-    }//render method end
+
+    }//render
 
   }//class Article end
 

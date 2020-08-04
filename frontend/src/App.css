@@ -103,67 +103,11 @@
 }
 
 
-.descriptionUnitModal{
 
-	padding: 15px;
-	width: 70%;
-	height: 100%;
-	min-height: 70px;
-	margin-bottom: 2%;
-	/*display: flex;*/
-	/*overflow: auto;*/
-	background-color: #d8e6dc;
-}
-
-
-.settingsUnitModal{
-
-
-
-
-}
 
 /*removes the extra scroll bar that comes with overflow property*/
 .unitModal::-webkit-scrollbar {
   display: none;
-}
-
-.article-filters-class{
-	/*position: absolute;
-	top:2px;
-	left:70%;*/
-	
-}
-
-
-.article-filters-class div{
-	float:left;
-}
-
-.settings-dropdown-filter-class select{
-	border-radius: 20px;
-	/*background-color: w;*/
-	/*width: 2%;*/
-	padding-left: 4px;
-	appearance: none;
-
-}
-.complexity-dropdown-filter-class select{
-	border-radius: 20px;
-	/*background-color: w;*/
-	/*width: 70%;*/
-	/*padding-left: 4px;*/
-	/*appearance: none;*/
-
-}
-
-.importance-dropdown-filter-class select{
-	border-radius: 20px;
-	/*background-color: w;*/
-	/*width: 6%;*/
-	/*padding-left: 4px;*/
-	/*appearance: none;*/
-
 }
 
 
@@ -176,13 +120,41 @@
 
 
 
+
+
+
+
+#article-article{
+	display: flex;
+	flex-direction: column;
+}
+
+
+#article-article-middle{
+	display: flex;
+	flex-direction: column;
+	width: 65%;
+	margin: auto;
+}
+
+
+#article-article-filters{
+	display: flex;
+}
+
+
+
+
+
+/*unit*/
+
 #unit-unit{
 	display: flex;
 	flex-direction: column;
 	border: 1px solid grey;
 	background: #ffffff;
 	padding: 20px;
-	width: 65%;
+	width: 100%;
 	margin: 40px auto;
 	border-radius: 10px;
 }
