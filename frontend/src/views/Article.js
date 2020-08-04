@@ -199,8 +199,9 @@ class Article extends React.Component{
 
   articleClickHandler=()=>{
     // console.log("article click handler is called");
+    let non_filtered_units=[...this.state.units];
     if(this.state.articleClicked){
-      this.setState({articleClicked: false});
+      this.setState({articleClicked: false,filteredUnits: non_filtered_units});
     }
     else{
       this.setState({articleClicked: true,showUnitCreationForm:true});
