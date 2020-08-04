@@ -46,18 +46,6 @@ class Unit extends React.Component{
   }
 
 
-  // getSnapshotBeforeUpdate(prevProps,prevState){
-  //   return prevState;
-  // }
-
-  // componentDidUpdate(prevProps, prevState, snapshot){
-  //     console.log(prevState);
-  // }
-
-  // shouldComponentUpdate(nextProps, nextState){
-  //   console.log(nextState);
-  //   return true;
-  // }
 
   updateUnit = (event)=>{
 
@@ -206,7 +194,7 @@ class Unit extends React.Component{
                           <div id="unit-unit-modal-short-desc">
                             <h4>Short Description</h4>
                             <div class="unit-unit-modal-desc-value">
-                              <h5>{this.state.shortDescription}</h5>
+                              <p>{this.state.shortDescription}</p>
                             </div>
                           </div>
                           <div id="unit-unit-modal-long-desc">

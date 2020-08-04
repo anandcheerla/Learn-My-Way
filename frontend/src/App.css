@@ -194,7 +194,7 @@
 
 
 .unit-unit-modal-desc-value{
-	padding: 10px;
+	padding: 15px;
 	/*word-break: break-all;*/
 	border-radius: 5px;
 	white-space: pre-wrap;
@@ -229,6 +229,8 @@
 
 #unit-unit-modal-heading{
 	 color: #93b4b5;
+	 word-wrap: break-word;
+
 }
 
 
