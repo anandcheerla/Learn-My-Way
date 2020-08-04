@@ -9,7 +9,7 @@ class Unit extends React.Component{
   constructor(props){
       super(props);
       this.state={
-          modalDisplay: "none",
+          modalDisplay: false,
           heading: this.props.heading,
           shortDescription: this.props.shortDescription,
           longDescription: this.props.longDescription,
@@ -22,24 +22,18 @@ class Unit extends React.Component{
 
 
   onClickHandler=(event)=>{
-    if(this.state.modalDisplay==="none")
-    {
+    
       this.setState({
-        modalDisplay: "block" 
+        modalDisplay: !this.state.modalDisplay
       });
-    }
-    else if(this.state.modalDisplay==="block")
-    {
-      this.setState({
-        modalDisplay: "none"
-      });
-    }
+    
   }//onClickHandler method end
 
 
   closeButtonHandler=()=>{  
+    
     this.setState({
-          modalDisplay: "none" 
+          modalDisplay: !this.state.modalDisplay
     });
   }//closeButtonHandler method end
 
@@ -142,31 +136,6 @@ class Unit extends React.Component{
 
   render(){
 
-    //inline styles in the form of variables
-    let unitModalStyle={
-
-      "display": this.state.modalDisplay, 
-      "position": "fixed",
-      "zIndex": "1", 
-      "paddingTop": "100px", 
-      // "paddingLeft": "100px",
-      "left": "0",
-      "top": "0",
-      "width": "100%", 
-      "height": "100%", 
-      "overflow": "auto", 
-      /* Fallback color */
-      "backgroundColor": "rgba(0,0,0,0.4)" /* Black w/ opacity */          
-    }
-    let unitModalContentStyle={
-      "backgroundColor": "#fefefe",
-      "margin": "auto",
-      "padding": "50px",
-      "border": "1px solid #888",
-      "width": "80%",
-      "position": "relative"
-    }
-
     let unitBorderColor={
       "basic":"#cfc10a",
       "easy":"#7dd943",
@@ -220,48 +189,58 @@ class Unit extends React.Component{
               </div>
             </div>
 
-            <div className="unitModal" style={unitModalStyle}>
-              <div className="unitModalContent" style={unitModalContentStyle}>
-                  <span style={{"float":"right"}} className="closeButton" onClick={this.closeButtonHandler}>CLOSE</span> 
-                  {  
-                    !this.state.editUnitMode
-                    && 
-                    <div id="displayUnitMode">
-                    
-                      <div style={headingDivStyle}>
-                        <h3>{this.state.heading}</h3>
-                      </div>
-                      <br/>
-                      <div className="descriptionDivUnitModal">
-                        <h4>Short Description</h4>
-                        <div id="shortDescriptionDivModal" className="descriptionUnitModal">
-                          <h5 style={wrap_modal}>{this.state.shortDescription}</h5>
+
+            {
+              this.state.modalDisplay
+              &&
+              <div id="unit-unit-modal-container-1">
+                <div id="unit-unit-modal-container-2">
+                    {  
+                      !this.state.editUnitMode
+                      && 
+                      <div id="unit-unit-modal">
+                        <div id="unit-unit-modal-left">
+                          <div id="unit-unit-modal-heading">
+                            <h3>{this.state.heading}</h3>
+                          </div>
+                          <div id="unit-unit-modal-short-desc">
+                            <h4>Short Description</h4>
+                            <div class="unit-unit-modal-desc-value">
+                              <h5>{this.state.shortDescription}</h5>
+                            </div>
+                          </div>
+                          <div id="unit-unit-modal-long-desc">
+                            <h4>Long Description</h4>
+                            <div class="unit-unit-modal-desc-value">
+                              <p>{this.state.longDescription}</p>
+                            </div>  
+                          </div>
                         </div>
-                        <h4>Long Description</h4>
-                        <div id="longDescriptionDivModal" className="descriptionUnitModal">
-                        <p style={wrap_modal}>{this.state.longDescription}</p>
-                        </div>  
-                      </div>
-                      <div className="settingsUnitModal">
-                        <div>
-                          <ul style={listStyleType}>
-                            <li>{this.props.sectionName==="myArticles" && <h6 id="unitEditButton" onClick={()=>{this.setState({editUnitMode: true})}}>Edit</h6>}</li>
-                            <li>{this.props.sectionName==="myArticles" && <h6 id="unitDeleteButton" onClick={()=>this.deleteUnitButtonHandler()}>Delete</h6>}</li>
-                          </ul>
+                        <div id="unit-unit-modal-right">
+                          <div id="unit-unit-modal-close-button">
+                            <button onClick={this.closeButtonHandler} type="button" class="close" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div id="unit-unit-modal-settings-tab">
+                                <div>{this.props.sectionName==="myArticles" && <h6 id="unitEditButton" onClick={()=>{this.setState({editUnitMode: true})}}>Edit</h6>}</div>
+                                <div>{this.props.sectionName==="myArticles" && <h6 id="unitDeleteButton" onClick={()=>this.deleteUnitButtonHandler()}>Delete</h6>}</div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  }
-                  {
-                    this.state.editUnitMode
-                    &&
-                    <div id="editUnitMode"> 
-                      {this.unitCreationForm()}
-                    </div>
-                  }
-              </div> 
-            </div>
+                    }
+                    {
+                      this.state.editUnitMode
+                      &&
+                      <div id="editUnitMode"> 
+                        {this.unitCreationForm()}
+                      </div>
+                    }
+                </div> 
+              </div>
+            }
           </div>
+        
           )
 
         }

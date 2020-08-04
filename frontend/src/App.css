@@ -118,13 +118,7 @@
 
 .settingsUnitModal{
 
-	position: absolute;
-	right:15px;
-	top:20%;
-	padding: 5px;
-	width: 150px;
-	height: 100px;
-	/*background-color: #a2aba4;*/
+
 
 
 }
@@ -180,27 +174,81 @@
 	bottom: 0;
 }
 
-/*
-.mainScreen{
-  
-   background-color: "red";
-}
-*/
 
-/*.unit{
-	width: 100%;
-	height: 100%;
-}*/
-/*
-.unitModal{
-	position: relative;
+
+
+#unit-unit-modal{
+	display: flex;
+	justify-content: space-between;
 }
-*/
-/*.descriptionUnit{
+
+#unit-unit-modal-left{
+	display: flex;
+	flex-direction: column;
+	width: 600px;
+}
+
+#unit-unit-modal-left > div{
+	margin-bottom: 30px;
+}
+
+
+.unit-unit-modal-desc-value{
+	padding: 10px;
+	/*word-break: break-all;*/
+	border-radius: 5px;
+	white-space: pre-wrap;
+	background: #F1F1F1;
 
 }
-*/
-/*.unitModal{
-	width: 100%;
-	height: 100%;
-}*/
+
+#unit-unit-modal-right{
+	display: flex;
+	flex-direction: column;
+}
+
+#unit-unit-modal-right > div {
+	margin-bottom: 60px;
+}
+
+#unit-unit-modal-settings-tab{
+	display: flex;
+	flex-direction: column;
+	
+	width: 100px;
+}
+
+#unit-unit-modal-settings-tab > div{
+	border: 1px solid grey;
+	border-radius: 4px;
+	margin-bottom: 6px;
+	padding-left: 4px;
+	background: #CCCCCC
+
+}
+
+#unit-unit-modal-heading{
+	 color: #93b4b5;
+}
+
+
+#unit-unit-modal-container-1{
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.4);        
+}
+
+#unit-unit-modal-container-2{
+  background-color: #fefefe;
+  margin: auto;
+  padding: 50px;
+  border: 1px solid #888;
+  width: 60%;
+  position: relative;
+}
