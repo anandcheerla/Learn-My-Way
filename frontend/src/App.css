@@ -176,6 +176,24 @@
 
 
 
+#unit-unit{
+	display: flex;
+	flex-direction: column;
+	border: 1px solid grey;
+	background: #ffffff;
+	padding: 20px;
+	width: 65%;
+	margin: 40px auto;
+	border-radius: 10px;
+}
+
+#unit-unit > div{
+	
+}
+
+
+
+
 
 #unit-unit-modal{
 	display: flex;

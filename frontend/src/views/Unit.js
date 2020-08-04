@@ -130,36 +130,12 @@ class Unit extends React.Component{
       "medium":"#f07f1d",
       "hard":"#f50525"
     }
-    let unitStyle={
-        "border": "1.1px solid "+unitBorderColor[this.props.complexity],
-        "borderRadius": "10px",
-        "backgroundColor": "#ffffff"
-        // "width":"100%"
 
+    let border_color = {
+      "border": "1.1px solid"+unitBorderColor[this.props.complexity]
     }
+    
 
-  
-    let wrap = {
-    "whiteSpace": "pre-wrap",                 
-    "wordBreak": "break-all",
-    }
-
-    let wrap_modal ={
-      "whiteSpace": "pre-wrap",                 
-    "wordBreak": "break-all",
-    "fontSize": "18px"
-    }
-
-    let headingDivStyle = {
-      "whiteSpace": "pre-wrap",                 
-      "wordBreak": "break-all",
-      "color": "#93b4b5",
-      "width": "70%"
-    }
-    let listStyleType={
-      "listStyleType": "none"
-    }
-    //<button style={{"float":"right"}} onClick={()=>this.deleteUnitButtonHandler()} type="button" class="btn btn-danger">Delete</button>
     return (
       
       <div>
@@ -168,15 +144,15 @@ class Unit extends React.Component{
           &&
           (
            <div> 
-            <div style={unitStyle} className="unit" onClick={this.onClickHandler}>
-              <div id="unit-heading-id-unit-component">
-                <h3 style={wrap}>{this.state.heading}</h3>
+            <div id="unit-unit" style={border_color} onClick={this.onClickHandler}>
+              <div id="unit-unit-heading">
+                <h4>{this.state.heading}</h4>
               </div>
-              <div id="unit-short-description-id-unit-component">
-                <p style={wrap}>{this.state.shortDescription}</p>
+              <div id="unit-unit-short-desc">
+                <p>{this.state.shortDescription}</p>
               </div>
             </div>
-
+      
 
             {
               this.state.modalDisplay
