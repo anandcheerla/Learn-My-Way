@@ -166,6 +166,9 @@ app.get("/articles/home",isLoggedIn,function(req,res){
 			for(let i=0;i<doc.articles.length;i++){
 				
 				let article = doc.articles[i].toObject();
+				if("visibility" in article && article.visibility==="private")
+					continue;
+				// console.log(article.visibility);
 				article["uploaderFirstName"]=doc.firstName;
 				articles_out.push(article);
 			}
@@ -261,6 +264,31 @@ app.delete("/article-delete/:articleId",isLoggedIn,function(req,res){
 });
 
 
+app.post('/settings/article-visibility/:articleId',isLoggedIn,function(req,res){
+	let userFromSession=req.session.passport.user;
+	let articleId=req.params.articleId;
+
+	let queryObject={
+		"username":userFromSession,
+	}
+
+	let visibility = req.body.visibility;
+
+	userModel.findOne(queryObject,function(err,userDocument){
+		let article=userDocument.articles.id(articleId);
+		article.visibility = visibility;
+		userDocument.save(function(err){
+			if(err){
+				console.log(err);
+				res.send("failed");
+			}
+			res.send("success");
+		});
+
+
+	});
+
+});
 //add unit for particular articles
 app.post('/add-unit/:articleId',isLoggedIn,function(req,res){
 	let userFromSession=req.session.passport.user;
