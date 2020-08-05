@@ -34,13 +34,20 @@ class Article extends React.Component{
   {
     //to prevent the default behaviour of the event
     event.preventDefault();
+    let priority_l=5;
+    let complexity_l="easy";
+    if(event.target.priority.value!=="priority")
+        priority_l=event.target.priority.value;
+
+    if(event.target.complexity.value!=="complexity")
+        complexity_l=event.target.complexity.value;
 
     let formData={
       heading:event.target.heading.value,
       shortDescription:event.target.shortDescription.value,
       longDescription:event.target.longDescription.value,
-      priority:event.target.priority.value,
-      complexity:event.target.complexity.value 
+      priority: priority_l,
+      complexity: complexity_l
     }
 
     let currentState = [...this.state.units];
@@ -173,6 +180,7 @@ class Article extends React.Component{
         <div className="form-group">
           <label htmlFor="priority"></label>
           <select className="form-control" id="priority">
+            <option value="priority">Priority</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -183,6 +191,7 @@ class Article extends React.Component{
         <div className="form-group">
           <label htmlFor="complexity"></label>
           <select className="form-control" id="complexity">
+            <option value="complexity">Complexity</option>
             <option value="basic">Basic</option>
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>

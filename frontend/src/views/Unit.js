@@ -190,6 +190,14 @@ class Unit extends React.Component{
                                 <div>{this.props.sectionName==="myArticles" && <h6 id="unitEditButton" onClick={()=>{this.setState({editUnitMode: true})}}>Edit</h6>}</div>
                                 <div>{this.props.sectionName==="myArticles" && <h6 id="unitDeleteButton" onClick={()=>this.deleteUnitButtonHandler()}>Delete</h6>}</div>
                           </div>
+                          <div id="unit-unit-modal-unit-info">
+                            <div id="unit-unit-modal-unit-priority">
+                              {this.props.priority}
+                            </div>
+                            <div id="unit-unit-modal-unit-complexity">
+                              {this.props.complexity}
+                            </div>
+                          </div>
                         </div>
                       </div>
                     }
