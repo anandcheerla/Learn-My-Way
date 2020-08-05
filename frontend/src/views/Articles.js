@@ -116,9 +116,10 @@ class Articles extends React.Component{
       }
 
       return (
-        <div id="articles" style={articlesStyle}>
-          <div>
-            {
+        <div id="articles-articles">
+
+          <div id="articles-articles-article-creation">
+          {
               this.props.sectionName==="myArticles"
               &&
               (
@@ -128,55 +129,63 @@ class Articles extends React.Component{
                 :
                 <h2>Create Article</h2>
               )
-            }
-            {
-              this.props.sectionName==="myArticles"
-              &&
-              (
-                this.state.showCreateArticleButton
-                ?
-                <button 
-                  style={newArticleButtonStyle} 
-                  onClick={this.createArticleButtonClickHandler} 
-                  className="btn btn-outline-primary">
-                  New Article
-                </button>
-                :
-                null
-              )
-            }
-          </div>
-          {
-            this.state.showArticleCreationForm
-            ?
-            this.articleCreationForm()
-            :
-            null
           }
-          <ul className="list-group" style={reverseDirectionForArticlesArray}>
-            {
-              !this.state.showArticleCreationForm
-              &&
-              this.state.articles.map(element=>(
-                  <div key={element._id}>
-                    <li className="list-group-item" style={articleStyle}>
-                      <Article 
-                        dbId={element._id} 
-                        heading={element.heading} 
-                        description={element.description} 
-                        units={element.units}
-                        unitAdd={this.unitsHandlerFromArticle} 
-                        sectionName={this.props.sectionName}
-                        lastUpdatedTime={element.lastUpdatedTime}
-                        uploaderFirstName={element.uploaderFirstName}
-                        visibility={element.visibility}
-                        >
-                      </Article>
-                    </li>
-                  </div>
-              ))
-            }
-          </ul>
+          {
+            this.props.sectionName==="myArticles"
+            &&
+            (
+              this.state.showCreateArticleButton
+              ?
+              <button 
+                style={newArticleButtonStyle} 
+                onClick={this.createArticleButtonClickHandler} 
+                className="btn btn-outline-primary">
+                New Article
+              </button>
+              :
+              null
+            )
+          }
+
+          {
+              this.state.showArticleCreationForm
+              ?
+              this.articleCreationForm()
+              :
+              null
+          }
+
+          </div>
+
+
+          <div id="articles-all-articles">
+            <ul className="list-group" style={reverseDirectionForArticlesArray}>
+              {
+                !this.state.showArticleCreationForm
+                &&
+                this.state.articles.map(element=>(
+                    <div key={element._id}>
+                      <li className="list-group-item" style={articleStyle}>
+                        <Article 
+                          dbId={element._id} 
+                          heading={element.heading} 
+                          description={element.description} 
+                          units={element.units}
+                          unitAdd={this.unitsHandlerFromArticle} 
+                          sectionName={this.props.sectionName}
+                          lastUpdatedTime={element.lastUpdatedTime}
+                          uploaderFirstName={element.uploaderFirstName}
+                          visibility={element.visibility}
+                          >
+                        </Article>
+                      </li>
+                    </div>
+                ))
+              }
+            </ul>
+          </div>
+
+
         </div>
       );
     }//render method end

@@ -113,8 +113,18 @@
 
 
 
+#articles-articles{
+	display: flex;
+	flex-direction: column;
+	margin: 3% 30%;
+	width: 60%;
+}
 
 
+
+#articles-all-articles{
+	word-break: break-all;
+}
 
 #article-article{
 	display: flex;
