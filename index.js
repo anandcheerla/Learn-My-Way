@@ -41,6 +41,7 @@ app.use(require("express-session")({
 }));
 
 
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new passportLocalStrategy(userModel.authenticate()));
@@ -87,7 +88,6 @@ app.post("/register",function(req,res){
 });
 
 
-
 app.get("/suc",function(req,res){
 	res.send("success");
 });
@@ -108,6 +108,10 @@ app.post("/login",passport.authenticate("local",{successRedirect: "/suc",failure
 
 //middleware to check whether the user is logged in
 function isLoggedIn(req,res,next){
+
+	// //for dev purpose
+	// next();
+	// return;
 
 	if(req.isAuthenticated()){
 		next();

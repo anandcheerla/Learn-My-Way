@@ -20,12 +20,20 @@ class Article extends React.Component{
       showArticleCreationForm: false,
       showUnitCreationForm: false,
       articleClicked: false,
-      articleDeleted: false
+      articleDeleted: false,
+      articleDeleteButtonClicked: true
     };
   }//constructor end
 
   componentDidMount(){
+    
+  }
 
+
+  areYouSureModal = ()=>{
+
+      
+    
   }
 
 
@@ -136,8 +144,12 @@ class Article extends React.Component{
 
     let setting=event.target.value;
     // debugger;
-    if(setting === "delete_article")
+    if(setting === "delete_article"){
+       this.setState({
+        articleDeleteButtonClicked: true
+       });
        this.deletearticleHandler();
+     }
      else if(setting === "post_article"){
         if(event.target.selectedOptions[0].label==="Make private"){
             axios.post('/settings/article-visibility/'+this.props.dbId,{visibility: "private"}).then(res=>{
@@ -268,7 +280,7 @@ class Article extends React.Component{
       "float": "right"
     }
 
-
+    console.log(this.state.articleDeleteButtonClicked);
     return (
       <div>
       {
@@ -294,8 +306,6 @@ class Article extends React.Component{
                   {!this.state.articleClicked && <h6>{uploadedTime}</h6>}
                 </div>
               </div>
-
-
 
 
               {

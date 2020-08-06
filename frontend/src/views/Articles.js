@@ -108,12 +108,7 @@ class Articles extends React.Component{
           "right":"0"
       }
 
-      let articlesStyle={
-        "marginLeft": "30%",
-        "marginTop": "5%",
-        "width":"70%"
-        
-      }
+
 
       return (
         <div id="articles-articles">
