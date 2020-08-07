@@ -186,10 +186,12 @@ class Unit extends React.Component{
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
+                          {this.props.sectionName==="myArticles" &&
                           <div id="unit-unit-modal-settings-tab">
-                                <div>{this.props.sectionName==="myArticles" && <h6 id="unitEditButton" onClick={()=>{this.setState({editUnitMode: true})}}>Edit</h6>}</div>
-                                <div>{this.props.sectionName==="myArticles" && <h6 id="unitDeleteButton" onClick={()=>this.deleteUnitButtonHandler()}>Delete</h6>}</div>
+                                <div><h6 id="unitEditButton" onClick={()=>{this.setState({editUnitMode: true})}}>Edit</h6></div>
+                                <div><h6 id="unitDeleteButton" onClick={()=>this.deleteUnitButtonHandler()}>Delete</h6></div>
                           </div>
+                          }
                           <div id="unit-unit-modal-unit-info">
                             <div id="unit-unit-modal-unit-priority">
                               {this.props.priority}
