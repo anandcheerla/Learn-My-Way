@@ -11,6 +11,7 @@ import Unit from './Unit.js';
 class Article extends React.Component{
   constructor(props){
     super(props);
+
     this.state={
       dbId:this.props.dbId,
       heading: this.props.heading,
@@ -280,7 +281,6 @@ class Article extends React.Component{
       "float": "right"
     }
 
-    console.log(this.state.articleDeleteButtonClicked);
     return (
       <div>
       {

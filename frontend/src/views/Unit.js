@@ -3,19 +3,22 @@ import axios from 'axios';
 
 //user defined packages or files
 import '.././App.css';
+import ls from 'local-storage';
 
 
 class Unit extends React.Component{
   constructor(props){
+
       super(props);
+
       this.state={
           modalDisplay: false,
-          heading: this.props.heading,
-          shortDescription: this.props.shortDescription,
-          longDescription: this.props.longDescription,
-          priority: this.props.priority,
-          complexity: this.props.complexity,
-          unitDeleted: false,
+          heading: (ls.get(this.props.unitId) && ls.get(this.props.unitId).heading) || this.props.heading,
+          shortDescription: (ls.get(this.props.unitId) && ls.get(this.props.unitId).shortDescription) || this.props.shortDescription,
+          longDescription: (ls.get(this.props.unitId) && ls.get(this.props.unitId).longDescription) || this.props.longDescription,
+          priority: (ls.get(this.props.unitId) && ls.get(this.props.unitId).priority) || this.props.priority,
+          complexity: (ls.get(this.props.unitId) && ls.get(this.props.unitId).complexity) || this.props.complexity,
+          unitDeleted: (ls.get(this.props.unitId) && ls.get(this.props.unitId).unitDeleted) || false,
           editUnitMode: false
       }
   }//constructor end
@@ -41,7 +44,9 @@ class Unit extends React.Component{
 
     axios.delete("/unit-delete/"+this.props.articleId+"/"+this.props.unitId).then(res=>{
       // console.log(res);
+      ls.set(this.props.unitId,{unitDeleted:true});
       this.setState({modalDisplay: "none",unitDeleted: true});
+
     });
   }
 
@@ -62,6 +67,8 @@ class Unit extends React.Component{
     }
     
     axios.put("/unit-update/"+this.props.articleId+"/"+this.props.unitId,formData).then(res=>{
+
+      ls.set(this.props.unitId,{heading: formData.heading,shortDescription: formData.shortDescription, longDescription: formData.longDescription, priority: formData.priority, complexity: formData.complexity });
       this.setState({
         editUnitMode:false,
         heading: formData.heading,
