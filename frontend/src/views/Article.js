@@ -44,6 +44,10 @@ class Article extends React.Component{
   {
     //to prevent the default behaviour of the event
     event.preventDefault();
+
+    let acub = document.getElementById("article-create-unit-button");
+    acub.style.opacity=0.7;
+
     let priority_l=5;
     let complexity_l="easy";
     if(event.target.priority.value!=="priority")
@@ -88,6 +92,8 @@ class Article extends React.Component{
               units: units_temp_var
           });
         }
+        acub.style.opacity=1;
+
     
        
     });
@@ -213,7 +219,7 @@ class Article extends React.Component{
           </select>
         </div>
         <div style={align}>
-          <button type="submit" className="btn btn-outline-primary" id="Create-unit-button">Create</button>
+          <button type="submit" className="btn btn-outline-primary" id="article-create-unit-button">Create</button>
         </div>
       </form>
     );
