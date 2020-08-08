@@ -90,7 +90,10 @@ class Articles extends React.Component{
     }//articleCreationForm end
 
 
-    createArticleButtonClickHandler=()=>{
+    createArticleButtonClickHandler=(event)=>{
+        event.preventDefault();
+        event.target.style.opacity=0.7;
+
         this.setState({showArticleCreationForm:true,showCreateArticleButton:false});
 
     }//createArticleButtonClickHandler method end

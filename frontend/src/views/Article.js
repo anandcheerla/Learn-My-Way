@@ -81,6 +81,12 @@ class Article extends React.Component{
 
         if((complexity ==="all" || formData.complexity===complexity) && (importance === "all" || formData.priority===importance))
         {
+
+          ls.set(this.props.dbId,{
+            units: units_temp_var,
+            filteredUnits: units_temp_var
+          });
+
           this.setState({
             units: units_temp_var,
             filteredUnits: units_temp_var
@@ -88,6 +94,11 @@ class Article extends React.Component{
         }
 
         else{
+          
+          ls.set(this.props.dbId,{
+              units: units_temp_var
+          });
+
           this.setState({
               units: units_temp_var
           });
