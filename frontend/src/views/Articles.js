@@ -33,6 +33,11 @@ class Articles extends React.Component{
         description: event.target.description.value
       }
 
+      let acfcb = document.getElementById("articles-article-creation-form-create-button");
+
+      if(acfcb)
+        acfcb.style.opacity=0.7;
+
       axios.post("/new-article",formData).then(res=>{
         // debugger;
           let newlyCreatedArticle={...res.data};
@@ -78,7 +83,7 @@ class Articles extends React.Component{
               <label htmlFor="description">Description</label>
               <textarea type="textarea" className="form-control" id="description" name="description" placeholder="description" required/>
             </div>
-            <button type="submit" className="btn btn-primary">Create</button>
+            <button type="submit" id="articles-article-creation-form-create-button" className="btn btn-primary">Create</button>
             <span> <button onClick={this.cancelButtonClickHandler} className="btn btn-primary">Cancel</button></span>
         </form>
         );
