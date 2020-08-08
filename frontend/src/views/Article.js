@@ -7,21 +7,22 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 //user defined packages or files
 import '.././App.css';
 import Unit from './Unit.js';
+import ls from 'local-storage';
 
 class Article extends React.Component{
   constructor(props){
     super(props);
 
     this.state={
-      dbId:this.props.dbId,
-      heading: this.props.heading,
-      description: this.props.description,
-      units: this.props.units,
-      filteredUnits: this.props.units,
+      dbId: this.props.dbId,
+      heading: (ls.get(this.props.dbId) && ls.get(this.props.dbId).heading) || this.props.heading,
+      description: (ls.get(this.props.dbId) && ls.get(this.props.dbId).description) || this.props.description,
+      units: (ls.get(this.props.dbId) && ls.get(this.props.dbId).units) || this.props.units,
+      filteredUnits: (ls.get(this.props.dbId) && ls.get(this.props.dbId).filteredUnits) || this.props.units,
       showArticleCreationForm: false,
       showUnitCreationForm: false,
       articleClicked: false,
-      articleDeleted: false,
+      articleDeleted: (ls.get(this.props.dbId) && ls.get(this.props.dbId).articleDeleted) || false,
       articleDeleteButtonClicked: true
     };
   }//constructor end
@@ -234,6 +235,7 @@ class Article extends React.Component{
 
 
      axios.delete("/article-delete/"+this.props.dbId).then(res=>{
+      ls.set(this.props.dbId,{articleDeleted: true});
       this.setState({articleDeleted: true});
     });
   }

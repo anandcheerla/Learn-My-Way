@@ -98,10 +98,7 @@ class Articles extends React.Component{
             "flexDirection": "column-reverse"
       };
 
-      let articleStyle={
-        "marginBottom": "25px", 
-         "background": "#e6edf0"
-      }
+
       let newArticleButtonStyle={
           "position":"fixed",
           "top":"30",
@@ -154,14 +151,13 @@ class Articles extends React.Component{
 
 
           <div id="articles-all-articles">
-            <ul className="list-group" style={reverseDirectionForArticlesArray}>
+            <div style={reverseDirectionForArticlesArray}>
               {
                 !this.state.showArticleCreationForm
                 &&
                 this.state.articles.map(element=>(
-                    <div key={element._id}>
-                      <li className="list-group-item" style={articleStyle}>
                         <Article 
+                          key={element._id}
                           dbId={element._id} 
                           heading={element.heading} 
                           description={element.description} 
@@ -173,11 +169,10 @@ class Articles extends React.Component{
                           visibility={element.visibility}
                           >
                         </Article>
-                      </li>
-                    </div>
+                    
                 ))
               }
-            </ul>
+            </div>
           </div>
 
 
