@@ -11,6 +11,7 @@ const passportLocalMongoose=require("passport-local-mongoose");
 
 const db=module.exports.dbUrl={
 	// databaseConnectionUrl:'mongodb://127.0.0.1:27017/learntheakcwaydb',
+	
 	databaseConnectionUrl : "mongodb+srv://anand:anandcheerla@cluster0.x0oeh.mongodb.net/ReadMyway?retryWrites=true&w=majority",
 	secret:'iamakc'
 };
@@ -18,6 +19,7 @@ const db=module.exports.dbUrl={
 const dbUrl=db.databaseConnectionUrl;
 
 mongoose.connect(dbUrl,{ useNewUrlParser: true, useUnifiedTopology: true  });
+
 
 const unitSchema=mongoose.Schema({
 	heading: {type: String},
@@ -45,7 +47,8 @@ const articleSchema=mongoose.Schema({
 	likes: {type:Number,default:0},
 	clicks: {type:Number,default:0},
 	lastUpdatedTime: {type: Date,default: Date.now},
-	createdTime: {type: Date,default: Date.now}
+	createdTime: {type: Date,default: Date.now},
+	visibility: {type: String ,default: "private"}
 
 },{collection:"units"});
 

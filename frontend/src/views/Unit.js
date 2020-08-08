@@ -3,43 +3,40 @@ import axios from 'axios';
 
 //user defined packages or files
 import '.././App.css';
+import ls from 'local-storage';
 
 
 class Unit extends React.Component{
   constructor(props){
+
       super(props);
+
       this.state={
-          modalDisplay: "none",
-          heading: this.props.heading,
-          shortDescription: this.props.shortDescription,
-          longDescription: this.props.longDescription,
-          priority: this.props.priority,
-          complexity: this.props.complexity,
-          unitDeleted: false,
+          modalDisplay: false,
+          heading: (ls.get(this.props.unitId) && ls.get(this.props.unitId).heading) || this.props.heading,
+          shortDescription: (ls.get(this.props.unitId) && ls.get(this.props.unitId).shortDescription) || this.props.shortDescription,
+          longDescription: (ls.get(this.props.unitId) && ls.get(this.props.unitId).longDescription) || this.props.longDescription,
+          priority: (ls.get(this.props.unitId) && ls.get(this.props.unitId).priority) || this.props.priority,
+          complexity: (ls.get(this.props.unitId) && ls.get(this.props.unitId).complexity) || this.props.complexity,
+          unitDeleted: (ls.get(this.props.unitId) && ls.get(this.props.unitId).unitDeleted) || false,
           editUnitMode: false
       }
   }//constructor end
 
 
   onClickHandler=(event)=>{
-    if(this.state.modalDisplay==="none")
-    {
+    
       this.setState({
-        modalDisplay: "block" 
+        modalDisplay: !this.state.modalDisplay
       });
-    }
-    else if(this.state.modalDisplay==="block")
-    {
-      this.setState({
-        modalDisplay: "none"
-      });
-    }
+    
   }//onClickHandler method end
 
 
   closeButtonHandler=()=>{  
+    
     this.setState({
-          modalDisplay: "none" 
+          modalDisplay: !this.state.modalDisplay
     });
   }//closeButtonHandler method end
 
@@ -47,23 +44,13 @@ class Unit extends React.Component{
 
     axios.delete("/unit-delete/"+this.props.articleId+"/"+this.props.unitId).then(res=>{
       // console.log(res);
+      ls.set(this.props.unitId,{unitDeleted:true});
       this.setState({modalDisplay: "none",unitDeleted: true});
+
     });
   }
 
 
-  // getSnapshotBeforeUpdate(prevProps,prevState){
-  //   return prevState;
-  // }
-
-  // componentDidUpdate(prevProps, prevState, snapshot){
-  //     console.log(prevState);
-  // }
-
-  // shouldComponentUpdate(nextProps, nextState){
-  //   console.log(nextState);
-  //   return true;
-  // }
 
   updateUnit = (event)=>{
 
@@ -80,6 +67,8 @@ class Unit extends React.Component{
     }
     
     axios.put("/unit-update/"+this.props.articleId+"/"+this.props.unitId,formData).then(res=>{
+
+      ls.set(this.props.unitId,{heading: formData.heading,shortDescription: formData.shortDescription, longDescription: formData.longDescription, priority: formData.priority, complexity: formData.complexity });
       this.setState({
         editUnitMode:false,
         heading: formData.heading,
@@ -142,59 +131,18 @@ class Unit extends React.Component{
 
   render(){
 
-    //inline styles in the form of variables
-    let unitModalStyle={
-
-      "display": this.state.modalDisplay, 
-      "position": "fixed",
-      "zIndex": "1", 
-      "paddingTop": "100px", 
-      // "paddingLeft": "100px",
-      "left": "0",
-      "top": "0",
-      "width": "100%", 
-      "height": "100%", 
-      "overflow": "auto", 
-      /* Fallback color */
-      "backgroundColor": "rgba(0,0,0,0.4)" /* Black w/ opacity */          
-    }
-    let unitModalContentStyle={
-      "backgroundColor": "#fefefe",
-      "margin": "auto",
-      "padding": "50px",
-      "border": "1px solid #888",
-      "width": "80%",
-      "position": "relative"
-    }
-
     let unitBorderColor={
       "basic":"#cfc10a",
       "easy":"#7dd943",
       "medium":"#f07f1d",
       "hard":"#f50525"
     }
-    let unitStyle={
-        "border": "2px solid "+unitBorderColor[this.props.complexity],
-        // "width":"100%"
 
+    let border_color = {
+      "border": "1.1px solid"+unitBorderColor[this.props.complexity]
     }
+    
 
-  
-    let wrap = {
-    "whiteSpace": "pre-wrap",                 
-    "wordBreak": "break-all"
-    }
-
-    let headingDivStyle = {
-      "whiteSpace": "pre-wrap",                 
-      "wordBreak": "break-all",
-      "color": "#93b4b5",
-      "width": "70%"
-    }
-    let listStyleType={
-      "listStyleType": "none"
-    }
-    //<button style={{"float":"right"}} onClick={()=>this.deleteUnitButtonHandler()} type="button" class="btn btn-danger">Delete</button>
     return (
       
       <div>
@@ -203,57 +151,77 @@ class Unit extends React.Component{
           &&
           (
            <div> 
-            <div style={unitStyle} className="unit" onClick={this.onClickHandler}>
-              <div className="unitHeading">
-                <h3 style={wrap}>{this.state.heading}</h3>
+            <div id="unit-unit" style={border_color} onClick={this.onClickHandler}>
+              <div id="unit-unit-heading">
+                <h4>{this.state.heading}</h4>
               </div>
-              <div className="unitShortDescription">
-                <p style={wrap}>{this.state.shortDescription}</p>
+              <div id="unit-unit-short-desc">
+                <p>{this.state.shortDescription}</p>
               </div>
             </div>
+      
 
-            <div className="unitModal" style={unitModalStyle}>
-              <div className="unitModalContent" style={unitModalContentStyle}>
-                  <span style={{"float":"right"}} className="closeButton" onClick={this.closeButtonHandler}>CLOSE</span> 
-                  {  
-                    !this.state.editUnitMode
-                    && 
-                    <div id="displayUnitMode">
-                    
-                      <div style={headingDivStyle}>
-                        <h3>{this.state.heading}</h3>
-                      </div>
-                      <br/>
-                      <div className="descriptionDivUnitModal">
-                        <h4>Short Description</h4>
-                        <div id="shortDescriptionDivModal" className="descriptionUnitModal">
-                          <h5 style={wrap}>{this.state.shortDescription}</h5>
+            {
+              this.state.modalDisplay
+              &&
+              <div id="unit-unit-modal-container-1">
+                <div id="unit-unit-modal-container-2">
+                    {  
+                      !this.state.editUnitMode
+                      && 
+                      <div id="unit-unit-modal">
+                        <div id="unit-unit-modal-left">
+                          <div id="unit-unit-modal-heading">
+                            <h3>{this.state.heading}</h3>
+                          </div>
+                          <div id="unit-unit-modal-short-desc">
+                            <h4>Short Description</h4>
+                            <div class="unit-unit-modal-desc-value">
+                              <p>{this.state.shortDescription}</p>
+                            </div>
+                          </div>
+                          <div id="unit-unit-modal-long-desc">
+                            <h4>Long Description</h4>
+                            <div class="unit-unit-modal-desc-value">
+                              <p>{this.state.longDescription}</p>
+                            </div>  
+                          </div>
                         </div>
-                        <h4>Long Description</h4>
-                        <div id="longDescriptionDivModal" className="descriptionUnitModal">
-                        <p style={wrap}>{this.state.longDescription}</p>
-                        </div>  
-                      </div>
-                      <div class="settingsUnitModal">
-                        <div>
-                          <ul style={listStyleType}>
-                            <li>{this.props.sectionName=="myArticles" && <h6 id="unitEditButton" onClick={()=>{this.setState({editUnitMode: true})}}>Edit</h6>}</li>
-                            <li>{this.props.sectionName=="myArticles" && <h6 id="unitDeleteButton" onClick={()=>this.deleteUnitButtonHandler()}>Delete</h6>}</li>
-                          </ul>
+                        <div id="unit-unit-modal-right">
+                          <div id="unit-unit-modal-close-button">
+                            <button onClick={this.closeButtonHandler} type="button" class="close" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          {this.props.sectionName==="myArticles" &&
+                          <div id="unit-unit-modal-settings-tab">
+                                <div><h6 id="unitEditButton" onClick={()=>{this.setState({editUnitMode: true})}}>Edit</h6></div>
+                                <div><h6 id="unitDeleteButton" onClick={()=>this.deleteUnitButtonHandler()}>Delete</h6></div>
+                          </div>
+                          }
+                          <div id="unit-unit-modal-unit-info">
+                            <div id="unit-unit-modal-unit-priority">
+                              {this.props.priority}
+                            </div>
+                            <div id="unit-unit-modal-unit-complexity">
+                              {this.props.complexity}
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  }
-                  {
-                    this.state.editUnitMode
-                    &&
-                    <div id="editUnitMode"> 
-                      {this.unitCreationForm()}
-                    </div>
-                  }
-              </div> 
-            </div>
+                    }
+                    {
+                      this.state.editUnitMode
+                      &&
+                      <div id="editUnitMode"> 
+                        {this.unitCreationForm()}
+                      </div>
+                    }
+                </div> 
+              </div>
+            }
           </div>
+        
           )
 
         }

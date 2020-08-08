@@ -32,7 +32,9 @@ class Articles extends React.Component{
         heading: event.target.heading.value,
         description: event.target.description.value
       }
+
       axios.post("/new-article",formData).then(res=>{
+        // debugger;
           let newlyCreatedArticle={...res.data};
           let articles_temp_var=[...this.state.articles,newlyCreatedArticle];
 
@@ -70,14 +72,11 @@ class Articles extends React.Component{
         <form name="createArticle" onSubmit={this.createArticle}>
             <div className="form-group">
               <label htmlFor="heading">Name</label>
-              <input type="text" className="form-control" id="articleHeading" name="heading" placeholder="heading"/>
+              <input type="text" className="form-control" id="articleHeading" name="heading" placeholder="heading" required/>
             </div>
             <div className="form-group">
               <label htmlFor="description">Description</label>
-              <textarea type="textarea" className="form-control" id="description" name="description" placeholder="description"/>
-            </div>
-            <div className="form-group" id="articleImage">
-              <input type="file" ></input>
+              <textarea type="textarea" className="form-control" id="description" name="description" placeholder="description" required/>
             </div>
             <button type="submit" className="btn btn-primary">Create</button>
             <span> <button onClick={this.cancelButtonClickHandler} className="btn btn-primary">Cancel</button></span>
@@ -99,81 +98,84 @@ class Articles extends React.Component{
             "flexDirection": "column-reverse"
       };
 
-      let articleStyle={
-        "marginBottom": "25px", 
-         "background": "#e6edf0"
-      }
+
       let newArticleButtonStyle={
           "position":"fixed",
           "top":"30",
           "right":"0"
       }
 
-      let articlesStyle={
-        "marginLeft": "30%",
-        "marginTop": "5%",
-        "width":"70%"
-        
-      }
+
 
       return (
-        <div id="articles" style={articlesStyle}>
-          <div>
-            {
+        <div id="articles-articles">
+
+          <div id="articles-articles-article-creation">
+          {
               this.props.sectionName==="myArticles"
               &&
               (
                 !this.state.showArticleCreationForm
                 ?
-                <h2>My Articles</h2>
+                (this.state.articles.length>0 ? <h2>My Articles</h2> : <h3>No Articles<h5>create one by clicking the New Article Button in the right</h5></h3>)
                 :
                 <h2>Create Article</h2>
               )
-            }
-            {
-              this.props.sectionName==="myArticles"
-              &&
-              (
-                this.state.showCreateArticleButton
-                ?
-                <button 
-                  style={newArticleButtonStyle} 
-                  onClick={this.createArticleButtonClickHandler} 
-                  className="btn btn-outline-primary">
-                  New Article
-                </button>
-                :
-                null
-              )
-            }
-          </div>
-          {
-            this.state.showArticleCreationForm
-            ?
-            this.articleCreationForm()
-            :
-            null
           }
-          <ul className="list-group" style={reverseDirectionForArticlesArray}>
-            {
-              !this.state.showArticleCreationForm
-              &&
-              this.state.articles.map(element=>(
-                  <div key={element._id}>
-                    <li className="list-group-item" style={articleStyle}>
-                      <Article 
-                        dbId={element._id} 
-                        heading={element.heading} 
-                        description={element.description} 
-                        units={element.units} 
-                        unitAdd={this.unitsHandlerFromArticle} 
-                        sectionName={this.props.sectionName}>
-                      </Article>
-                    </li>
-                  </div>
-              ))
-            }
-          </ul>
+          {
+            this.props.sectionName==="myArticles"
+            &&
+            (
+              this.state.showCreateArticleButton
+              ?
+              <button 
+                style={newArticleButtonStyle} 
+                onClick={this.createArticleButtonClickHandler} 
+                className="btn btn-outline-primary">
+                New Article
+              </button>
+              :
+              null
+            )
+          }
+
+          {
+              this.state.showArticleCreationForm
+              ?
+              this.articleCreationForm()
+              :
+              null
+          }
+
+          </div>
+
+
+          <div id="articles-all-articles">
+            <div style={reverseDirectionForArticlesArray}>
+              {
+                !this.state.showArticleCreationForm
+                &&
+                this.state.articles.map(element=>(
+                        <Article 
+                          key={element._id}
+                          dbId={element._id} 
+                          heading={element.heading} 
+                          description={element.description} 
+                          units={element.units}
+                          unitAdd={this.unitsHandlerFromArticle} 
+                          sectionName={this.props.sectionName}
+                          lastUpdatedTime={element.lastUpdatedTime}
+                          uploaderFirstName={element.uploaderFirstName}
+                          visibility={element.visibility}
+                          >
+                        </Article>
+                    
+                ))
+              }
+            </div>
+          </div>
+
+
         </div>
       );
     }//render method end

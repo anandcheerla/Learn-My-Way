@@ -11,6 +11,7 @@ const mongoose=require("mongoose");
 const bodyParser=require("body-parser");
 const cors = require('cors');
 const path =  require("path");
+// const expressValidator = require('express-validator');
 
 const passport=require("passport");
 const passportLocalStrategy=require("passport-local");
@@ -28,16 +29,17 @@ const app=express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(cors());
-// app.use(express.static('./public'));
-// app.get('/',function(req,res){	
-// 	res.sendFile('/index.html');
-// });
+
+// app.use(expressValidator());
+
+
 
 app.use(require("express-session")({
 	secret: "i am akc",
 	resave: false,
 	saveUninitialized: false
 }));
+
 
 
 app.use(passport.initialize());
@@ -47,7 +49,7 @@ passport.serializeUser(userModel.serializeUser());
 passport.deserializeUser(userModel.deserializeUser());
 
 
-app.use(express.static(path.join(__dirname, "/", "build")));
+app.use(express.static(path.join(__dirname, "/frontend/", "build")));
 app.use(express.static("public"));
 
 //------------------------------------routes--------------------------------------
@@ -60,6 +62,13 @@ app.get("/register",function(req,res){
 
 //route for register
 app.post("/register",function(req,res){
+	
+	// console.log(escape(req.body.username));
+	// console.log(escape(req.body.firstName));
+	// console.log(escape(req.body.lastName));
+	// console.log(escape(req.body.email));
+	// console.log(escape(req.body.contactNumber));
+
 	let newUser=new userModel({
 		username: req.body.username,
 		firstName: req.body.firstName,
@@ -70,15 +79,13 @@ app.post("/register",function(req,res){
 	userModel.register(newUser,req.body.password,function(err,user){
 		if(err){
 			//res.send(err.message);
-			return res.redirect("/register");
-		}
+			res.send(err);		}
 		passport.authenticate("local")(req,res,function(){
 			res.send("registered");
 		});
 	});
 
 });
-
 
 
 app.get("/suc",function(req,res){
@@ -101,11 +108,16 @@ app.post("/login",passport.authenticate("local",{successRedirect: "/suc",failure
 
 //middleware to check whether the user is logged in
 function isLoggedIn(req,res,next){
+
+	// //for dev purpose
+	// next();
+	// return;
+
 	if(req.isAuthenticated()){
 		next();
 	}
 	else{
-		res.redirect("/login");
+		res.send([]);
 	}
 }
 
@@ -155,8 +167,14 @@ app.get("/articles/home",isLoggedIn,function(req,res){
 	let articles_out=[];
 	userModel.find({},function(err,userDocuments){
 		userDocuments.forEach(function(doc){
-			if(doc.articles.length>0){
-				articles_out.push(doc.articles[0]);
+			for(let i=0;i<doc.articles.length;i++){
+				
+				let article = doc.articles[i].toObject();
+				if("visibility" in article && article.visibility==="private")
+					continue;
+				// console.log(article.visibility);
+				article["uploaderFirstName"]=doc.firstName;
+				articles_out.push(article);
 			}
 		});
 		res.send(articles_out);
@@ -207,6 +225,7 @@ app.put('/article-update/:articleId',isLoggedIn,function(req,res){
 		//update others which are need,add necessary conditions if required
 		article.heading=req.body.heading;
 		article.description=req.body.description;
+		article.lastUpdatedTime=Date.now;
 
 		userDocument.save(function(err){
 			if(err){
@@ -226,11 +245,8 @@ app.delete("/article-delete/:articleId",isLoggedIn,function(req,res){
 	let queryObject={
 		"username":userFromSession,
 	}
+	
 	userModel.findOne(queryObject,function(err,userDocument){
-
-		//added these two lines temporarily,remove this later
-		res.send();
-		return;
 		
 		let article=userDocument.articles.id(articleId);
 		try{
@@ -238,6 +254,7 @@ app.delete("/article-delete/:articleId",isLoggedIn,function(req,res){
 		}
 		catch(err){
 			console.log("error while removing article");
+
 		}
 
 		userDocument.save(function(err){
@@ -251,6 +268,31 @@ app.delete("/article-delete/:articleId",isLoggedIn,function(req,res){
 });
 
 
+app.post('/settings/article-visibility/:articleId',isLoggedIn,function(req,res){
+	let userFromSession=req.session.passport.user;
+	let articleId=req.params.articleId;
+
+	let queryObject={
+		"username":userFromSession,
+	}
+
+	let visibility = req.body.visibility;
+
+	userModel.findOne(queryObject,function(err,userDocument){
+		let article=userDocument.articles.id(articleId);
+		article.visibility = visibility;
+		userDocument.save(function(err){
+			if(err){
+				console.log(err);
+				res.send("failed");
+			}
+			res.send("success");
+		});
+
+
+	});
+
+});
 //add unit for particular articles
 app.post('/add-unit/:articleId',isLoggedIn,function(req,res){
 	let userFromSession=req.session.passport.user;
@@ -382,7 +424,7 @@ app.delete("/unit-delete/:articleId/:unitId",isLoggedIn,function(req,res){
 
 //--------------------------------------------------------
 
-const PORT= 5000 || process.env.PORT;
+const PORT= process.env.PORT || 5000;
 
 app.listen(PORT,()=>{
 	console.log("listening to the "+PORT);
