@@ -314,11 +314,11 @@ class Main extends React.Component{
         <form className="loginForm" name="login" onSubmit={this.userLogin}>
             <div className="form-group">
               <label htmlFor="username">Username</label>
-              <input type="text" className="form-control" id="username" name="username" placeholder="username"/>
+              <input type="text" className="form-control" id="username" name="username" placeholder="username" required/>
             </div>
             <div className="form-group">
               <label htmlFor="password">Password</label>
-              <input type="password" className="form-control" id="password" name="password" placeholder="password"/>
+              <input type="password" className="form-control" id="password" name="password" placeholder="password" required/>
             </div>
             <br/>
             <div>

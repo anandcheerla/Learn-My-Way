@@ -56,6 +56,9 @@ class Unit extends React.Component{
 
     event.preventDefault();
 
+    let cub = document.getElementById("Create-unit-button");
+    cub.style.opacity = 0.7;
+
     const {heading,shortDescription,longDescription,priority,complexity} = event.target;
 
     let formData={
