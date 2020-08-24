@@ -50,8 +50,11 @@ class Article extends React.Component{
     //to prevent the default behaviour of the event
     event.preventDefault();
 
+    console.log("zero");
     let acub = document.getElementById("article-create-unit-button");
     acub.style.opacity=0.7;
+
+    console.log("one");
 
     let priority_l=5;
     let complexity_l="easy";
@@ -62,6 +65,9 @@ class Article extends React.Component{
     if(this.state.unitComplexity)
         complexity_l=this.state.unitComplexity;
 
+          console.log("two");
+
+
     let formData={
       heading: this.state.unitHeading,
       shortDescription: this.state.unitShortDescription,
@@ -69,6 +75,9 @@ class Article extends React.Component{
       priority: priority_l,
       complexity: complexity_l
     }
+
+
+    console.log("three");
 
     let currentState = [...this.state.units];
     let units_temp=[...currentState,formData];
@@ -78,6 +87,9 @@ class Article extends React.Component{
     this.setState({
       units:units_temp
     });
+
+
+        console.log("four");
 
 
     this.state.unitPriority = "";
@@ -120,7 +132,8 @@ class Article extends React.Component{
         }
         acub.style.opacity=1;
 
-    
+          console.log("five");
+
        
     });
 
