@@ -54,12 +54,12 @@ class Main extends React.Component{
         // debugger;
         let fetchedArticles=[...res.data];
 
-        ls.set("fetchedOtherArticlesFromDb","true");
-
         this.setState({
           OtherArticles: fetchedArticles,
           fetchedOtherArticlesFromDb: true
         });
+        
+        ls.set("fetchedOtherArticlesFromDb","true");
       });
     }
 
@@ -399,7 +399,7 @@ class Main extends React.Component{
 
       };
 
-      
+
       return (
           <div style={main_style} className="mainScreen">
             <div id="menuSection">

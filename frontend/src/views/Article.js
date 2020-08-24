@@ -81,12 +81,14 @@ class Article extends React.Component{
 
     let currentState = [...this.state.units];
     let units_temp=[...currentState,formData];
-    ls.set(this.props.dbId,{
-            units: units_temp,
-          });
+
     this.setState({
       units:units_temp
     });
+    ls.set(this.props.dbId,{
+            units: units_temp,
+    });
+    
 
 
         console.log("four");
@@ -109,26 +111,28 @@ class Article extends React.Component{
         if((complexity ==="all" || formData.complexity===complexity) && (importance === "all" || formData.priority===importance))
         {
 
+          this.setState({
+            units: units_temp_var,
+            filteredUnits: units_temp_var
+          });
+
           ls.set(this.props.dbId,{
             units: units_temp_var,
             filteredUnits: units_temp_var
           });
 
-          this.setState({
-            units: units_temp_var,
-            filteredUnits: units_temp_var
-          });
         }
 
         else{
-          
-          ls.set(this.props.dbId,{
-              units: units_temp_var
-          });
 
           this.setState({
               units: units_temp_var
           });
+
+          ls.set(this.props.dbId,{
+              units: units_temp_var
+          });
+
         }
         acub.style.opacity=1;
 
@@ -318,8 +322,8 @@ class Article extends React.Component{
 
 
      axios.delete("/article-delete/"+this.props.dbId).then(res=>{
-      ls.set(this.props.dbId,{articleDeleted: true});
       this.setState({articleDeleted: true});
+      ls.set(this.props.dbId,{articleDeleted: true});
     });
   }
 

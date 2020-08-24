@@ -49,8 +49,9 @@ class Unit extends React.Component{
 
     axios.delete("/unit-delete/"+this.props.articleId+"/"+this.props.unitId).then(res=>{
       // console.log(res);
-      ls.set(this.props.unitId,{unitDeleted:true});
       this.setState({modalDisplay: "none",unitDeleted: true});
+      ls.set(this.props.unitId,{unitDeleted:true});
+
 
     });
   }
@@ -76,7 +77,6 @@ class Unit extends React.Component{
     
     axios.put("/unit-update/"+this.props.articleId+"/"+this.props.unitId,formData).then(res=>{
 
-      ls.set(this.props.unitId,{heading: formData.heading,shortDescription: formData.shortDescription, longDescription: formData.longDescription, priority: formData.priority, complexity: formData.complexity });
       this.setState({
         editUnitMode:false,
         heading: formData.heading,
@@ -85,6 +85,7 @@ class Unit extends React.Component{
         priority: formData.priority,
         complexity: formData.complexity
       });
+      ls.set(this.props.unitId,{heading: formData.heading,shortDescription: formData.shortDescription, longDescription: formData.longDescription, priority: formData.priority, complexity: formData.complexity });
     });
 
   }
