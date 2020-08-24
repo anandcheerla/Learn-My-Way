@@ -94,11 +94,14 @@ class Article extends React.Component{
         console.log("four");
 
 
-    this.state.unitPriority = "";
-    this.state.unitComplexity = "";
-    this.state.unitHeading = "";
-    this.state.unitShortDescription = "";
-    this.state.unitLongDescription = "";
+    this.setState({
+      unitPriority:"",
+      unitComplexity:"",
+      unitHeading:"",
+      unitShortDescription:"",
+      unitLongDescription:""
+    });
+
 
     axios.post("/add-unit/"+this.state.dbId,formData).then(res=>{
         // debugger;
