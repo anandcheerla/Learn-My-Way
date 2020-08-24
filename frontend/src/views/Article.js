@@ -50,11 +50,8 @@ class Article extends React.Component{
     //to prevent the default behaviour of the event
     event.preventDefault();
 
-    console.log("zero");
     let acub = document.getElementById("article-create-unit-button");
     acub.style.opacity=0.7;
-
-    console.log("one");
 
     let priority_l=5;
     let complexity_l="easy";
@@ -64,8 +61,6 @@ class Article extends React.Component{
 
     if(this.state.unitComplexity)
         complexity_l=this.state.unitComplexity;
-
-          console.log("two");
 
 
     let formData={
@@ -77,24 +72,38 @@ class Article extends React.Component{
     }
 
 
-    console.log("three");
-
     let currentState = [...this.state.units];
     let units_temp=[...currentState,formData];
 
-    this.setState({
-      units:units_temp
-    },function(){
-      console.log("this is the reason");
-    });
-    ls.set(this.props.dbId,{
-            units: units_temp,
-    });
-    
+    let complexity = document.getElementById("complexity-dropdown-filter-id").value;
+    let importance = document.getElementById("importance-dropdown-filter-id").value;
 
+    if((complexity ==="all" || formData.complexity===complexity) && (importance === "all" || formData.priority===importance))
+    {
 
-        console.log("four");
+      this.setState({
+        units: units_temp,
+        filteredUnits: units_temp
+      });
 
+      ls.set(this.props.dbId,{
+        units: units_temp,
+        filteredUnits: units_temp
+      });
+
+    }
+
+    else{
+
+      this.setState({
+          units: units_temp
+      });
+
+      ls.set(this.props.dbId,{
+          units: units_temp
+      });
+
+    }
 
     this.setState({
       unitPriority:"",
@@ -140,9 +149,6 @@ class Article extends React.Component{
 
         }
         acub.style.opacity=1;
-
-          console.log("five");
-
        
     });
 
