@@ -56,8 +56,10 @@ class Article extends React.Component{
     let priority_l=5;
     let complexity_l="easy";
 
-    if(this.state.unitPriority)
-        priority_l=this.state.unitPriority;
+    if(this.state.unitPriority){ 
+        priority_l=Number(this.state.unitPriority);
+        
+    }
 
     if(this.state.unitComplexity)
         complexity_l=this.state.unitComplexity;
