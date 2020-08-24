@@ -17,8 +17,8 @@ class Article extends React.Component{
       dbId: this.props.dbId,
       heading: (ls.get(this.props.dbId) && ls.get(this.props.dbId).heading) || this.props.heading,
       description: (ls.get(this.props.dbId) && ls.get(this.props.dbId).description) || this.props.description,
-      units: this.props.units,
-      filteredUnits: this.props.units,
+      units: (ls.get(this.props.dbId) && ls.get(this.props.dbId).units) || this.props.units,
+      filteredUnits: (ls.get(this.props.dbId) && ls.get(this.props.dbId).filteredUnits) || this.props.units,
       showArticleCreationForm: false,
       showUnitCreationForm: false,
       articleClicked: false,
@@ -84,6 +84,8 @@ class Article extends React.Component{
 
     this.setState({
       units:units_temp
+    },function(){
+      console.log("this is the reason");
     });
     ls.set(this.props.dbId,{
             units: units_temp,

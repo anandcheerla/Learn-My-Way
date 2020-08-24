@@ -40,6 +40,7 @@ class Articles extends React.Component{
 
       let newlyCreatedArticle={...formData};
       let articles_temp_var=[...this.state.articles,newlyCreatedArticle];
+      let cur_state = [...this.state.articles];
 
       this.setState({
               articles: articles_temp_var,
@@ -61,7 +62,7 @@ class Articles extends React.Component{
       axios.post("/new-article",formData).then(res=>{
         // debugger;
           newlyCreatedArticle={...res.data};
-          articles_temp_var=[...this.state.articles,newlyCreatedArticle];
+          articles_temp_var=[...cur_state,newlyCreatedArticle];
 
           if(res.data._id){
             this.setState({
