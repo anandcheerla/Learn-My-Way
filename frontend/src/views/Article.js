@@ -55,10 +55,11 @@ class Article extends React.Component{
 
     let priority_l=5;
     let complexity_l="easy";
-    if(event.target.priority.value!=="priority")
+
+    if(this.state.unitPriority)
         priority_l=this.state.unitPriority;
 
-    if(event.target.complexity.value!=="complexity")
+    if(this.state.unitComplexity)
         complexity_l=this.state.unitComplexity;
 
     let formData={
@@ -123,8 +124,6 @@ class Article extends React.Component{
        
     });
 
-    //to reset the form
-    event.target.reset();
   }//createUnit method end
 
 
@@ -249,7 +248,7 @@ class Article extends React.Component{
       }
 
     return (
-      <form name="createUnit" onSubmit={(e)=>{this.createUnit(e)}} >
+        <div>
         <div className="form-group">
           <label htmlFor="heading"></label>
           <input type="text" className="form-control" id="heading" name="heading" onChange={(e)=>{this.unitheadingInputHandler(e)}} value={this.state.unitHeading} placeholder="Heading"/>
@@ -284,9 +283,9 @@ class Article extends React.Component{
           </select>
         </div>
         <div style={align}>
-          <button type="submit" className="btn btn-outline-primary" id="article-create-unit-button">Create</button>
+          <button type="button" onClick={(e)=>{this.createUnit(e)}} className="btn btn-outline-primary" id="article-create-unit-button">Create</button>
         </div>
-      </form>
+        </div>
     );
   }//unitCreationForm method end
 

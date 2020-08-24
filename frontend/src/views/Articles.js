@@ -30,7 +30,6 @@ class Articles extends React.Component{
   //create article api call to /new-article route and append newly created articles to articles property of state
   createArticle=(event)=>{
       event.preventDefault();
-      console.log("zero");
       let formData={
         heading: this.state.articleHeadingInput,
         description: this.state.articleDescriptionInput
@@ -41,7 +40,6 @@ class Articles extends React.Component{
 
       let newlyCreatedArticle={...formData};
       let articles_temp_var=[...this.state.articles,newlyCreatedArticle];
-      console.log("one");
 
       this.setState({
               articles: articles_temp_var,
@@ -52,7 +50,6 @@ class Articles extends React.Component{
       ls.set("showArticleCreationForm",false);
       ls.set("showCreateArticleButton",true);
 
-      console.log("two");
 
 
 
@@ -76,8 +73,7 @@ class Articles extends React.Component{
             ls.set("showArticleCreationForm",false);
             ls.set("showCreateArticleButton",true);
 
-            console.log("three");
-            // console.log(ls.get("articles"));
+
           }
       });
   }//createArticle method end
