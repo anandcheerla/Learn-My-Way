@@ -398,6 +398,8 @@ class Main extends React.Component{
           "minWidth": "1000px"
 
       };
+
+      
       return (
           <div style={main_style} className="mainScreen">
             <div id="menuSection">

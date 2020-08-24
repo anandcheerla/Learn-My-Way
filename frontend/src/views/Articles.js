@@ -16,7 +16,9 @@ class Articles extends React.Component{
       // articles: ls.get("articles") || [...this.props.articles],
       articles: [...this.props.articles],
       showArticleCreationForm: false,
-      showCreateArticleButton: true
+      showCreateArticleButton: true,
+      articleHeadingInput: "",
+      articleDescriptionInput: "",
     };
   }//constructor end
 
@@ -29,9 +31,27 @@ class Articles extends React.Component{
   createArticle=(event)=>{
       event.preventDefault();
       let formData={
-        heading: event.target.heading.value,
-        description: event.target.description.value
+        heading: this.state.articleHeadingInput,
+        description: this.state.articleDescriptionInput
       }
+
+      //this is to make it load faster instead of waiting for the response from the server!!so if anything
+      //goes wrong then we can handle that in the post method callback
+
+      let newlyCreatedArticle={...formData};
+      let articles_temp_var=[...this.state.articles,newlyCreatedArticle];
+
+      this.setState({
+              articles: articles_temp_var,
+              showArticleCreationForm: false,
+              showCreateArticleButton: true
+            });
+      ls.set("articles",articles_temp_var);
+      ls.set("showArticleCreationForm",false);
+      ls.set("showCreateArticleButton",true);
+
+      
+
 
       let acfcb = document.getElementById("articles-article-creation-form-create-button");
 
@@ -40,8 +60,8 @@ class Articles extends React.Component{
 
       axios.post("/new-article",formData).then(res=>{
         // debugger;
-          let newlyCreatedArticle={...res.data};
-          let articles_temp_var=[...this.state.articles,newlyCreatedArticle];
+          newlyCreatedArticle={...res.data};
+          articles_temp_var=[...this.state.articles,newlyCreatedArticle];
 
           if(res.data._id){
             this.setState({
@@ -71,17 +91,32 @@ class Articles extends React.Component{
 
   }
 
+  articleHeadingInputHandler=(e)=>{
+    e.preventDefault();
+    this.setState({
+      articleHeadingInput: e.target.value
+    });
+
+  }
+  articleDescriptionInputHandler=(e)=>{
+    e.preventDefault();
+    this.setState({
+      articleDescriptionInput: e.target.value
+    });
+
+  }
+
   //this method is to create and return the article creation form
   articleCreationForm=()=>{
       return (
-        <form name="createArticle" onSubmit={this.createArticle}>
+        <form name="createArticle" onSubmit={(e)=>{this.createArticle(e)}}>
             <div className="form-group">
               <label htmlFor="heading">Name</label>
-              <input type="text" className="form-control" id="articleHeading" name="heading" placeholder="heading" required/>
+              <input type="text" className="form-control" id="articleHeading" onChange={(e)=>{this.articleHeadingInputHandler(e)}} name="heading" placeholder="heading" value={this.state.articleHeadingInput} required/>
             </div>
             <div className="form-group">
               <label htmlFor="description">Description</label>
-              <textarea type="textarea" className="form-control" id="description" name="description" placeholder="description" required/>
+              <textarea type="textarea" className="form-control" id="description" onChange={(e)=>{this.articleDescriptionInputHandler(e)}} name="description" placeholder="description" value={this.state.articleDescriptionInput} required/>
             </div>
             <button type="submit" id="articles-article-creation-form-create-button" className="btn btn-primary">Create</button>
             <span> <button onClick={this.cancelButtonClickHandler} className="btn btn-primary">Cancel</button></span>

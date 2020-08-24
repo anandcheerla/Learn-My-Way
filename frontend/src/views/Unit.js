@@ -19,7 +19,12 @@ class Unit extends React.Component{
           priority: (ls.get(this.props.unitId) && ls.get(this.props.unitId).priority) || this.props.priority,
           complexity: (ls.get(this.props.unitId) && ls.get(this.props.unitId).complexity) || this.props.complexity,
           unitDeleted: (ls.get(this.props.unitId) && ls.get(this.props.unitId).unitDeleted) || false,
-          editUnitMode: false
+          editUnitMode: false,
+          headingInput: "",
+          shortDescriptionInput: "",
+          longDescriptionInput: "",
+          priorityInput: "",
+          complexityInput: ""
       }
   }//constructor end
 
@@ -59,17 +64,14 @@ class Unit extends React.Component{
     let cub = document.getElementById("Create-unit-button");
     cub.style.opacity = 0.7;
 
-    const {heading,shortDescription,longDescription,priority,complexity} = event.target;
-    // debugger;
-    console.log(priority);
-    console.log(complexity);
+    
 
     let formData={
-      heading: heading.value,
-      shortDescription: shortDescription.value,
-      longDescription: longDescription.value,
-      priority: priority.value,
-      complexity: complexity.value
+      heading: this.state.headingInput || this.state.heading,
+      shortDescription: this.state.shortDescriptionInput || this.state.shortDescription,
+      longDescription: this.state.longDescriptionInput || this.state.longDescription,
+      priority: this.state.priorityInput || this.state.priority,
+      complexity: this.state.complexityInput || this.state.complexity
     }
     
     axios.put("/unit-update/"+this.props.articleId+"/"+this.props.unitId,formData).then(res=>{
@@ -86,6 +88,30 @@ class Unit extends React.Component{
     });
 
   }
+
+  handleHeadingInput=(e)=>{
+    e.preventDefault();
+    this.setState({headingInput: e.target.value});
+  }
+  handleShortDescriptionInput=(e)=>{
+    e.preventDefault();
+    this.setState({shortDescriptionInput: e.target.value});
+  }
+  handleLongDescriptionInput=(e)=>{
+    e.preventDefault();
+    this.setState({longDescriptionInput: e.target.value});
+  }
+  handlePriorityInput=(e)=>{
+    e.preventDefault();
+    this.setState({priorityInput: e.target.value});
+  }
+  handleComplexityInput=(e)=>{
+    e.preventDefault();
+    this.setState({complexityInput: e.target.value});
+  }
+
+
+
   unitCreationForm=()=>{
     let align={
         "textAlign":"center"
@@ -93,22 +119,22 @@ class Unit extends React.Component{
 
       // console.log(typeof this.state.heading);
     return (
-      <form name="createUnit" onSubmit={this.updateUnit} >
+      <form name="createUnit" onSubmit={(e)=>{this.updateUnit(e)}} >
         <div className="form-group">
           <label htmlFor="heading"></label>
-          <input type="text" className="form-control" id="heading" name="heading" defaultValue={this.state.heading}/>
+          <input type="text" className="form-control" id="heading" name="heading" onChange={(e)=>{this.handleHeadingInput(e)}} value={this.state.headingInput||this.state.heading}/>
         </div>
         <div className="form-group">
           <label htmlFor="shortDescription"></label>
-          <textarea type="text" className="form-control" id="shortDescription" name="shortDescription" defaultValue={this.state.shortDescription}/>
+          <textarea type="text" className="form-control" id="shortDescription" name="shortDescription" onChange={(e)=>{this.handleShortDescriptionInput(e)}} value={this.state.shortDescriptionInput||this.state.shortDescription}/>
         </div>
         <div className="form-group">
           <label htmlFor="longDescription"></label>
-          <textarea type="text" className="form-control" id="longDescription" name="longDescription" defaultValue={this.state.longDescription}/>
+          <textarea type="text" className="form-control" id="longDescription" name="longDescription" onChange={(e)=>{this.handleLongDescriptionInput(e)}} value={this.state.longDescriptionInput||this.state.longDescription}/>
         </div>
         <div className="form-group">
           <label htmlFor="priority"></label>
-          <select className="form-control" id="priority" defaultValue={this.state.priority}>
+          <select className="form-control" id="priority" onChange={(e)=>{this.handlePriorityInput(e)}} value={this.state.priorityInput||this.state.priority}>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -118,7 +144,7 @@ class Unit extends React.Component{
         </div>
         <div className="form-group">
           <label htmlFor="complexity"></label>
-          <select className="form-control" id="complexity" defaultValue={this.state.complexity}>
+          <select className="form-control" id="complexity" onChange={(e)=>{this.handleComplexityInput(e)}} value={this.state.complexityInput||this.state.complexity}>
             <option value="basic">Basic</option>
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
@@ -132,6 +158,7 @@ class Unit extends React.Component{
         </div>
       </form>
     );
+
   }//unitCreationForm method end
 
 
