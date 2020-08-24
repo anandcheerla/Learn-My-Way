@@ -66,6 +66,9 @@ class Article extends React.Component{
 
     let currentState = [...this.state.units];
     let units_temp=[...currentState,formData];
+    ls.set(this.props.dbId,{
+            units: units_temp,
+          });
     this.setState({
       units:units_temp
     });

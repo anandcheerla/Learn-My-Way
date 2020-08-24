@@ -222,7 +222,7 @@ app.put('/article-update/:articleId',isLoggedIn,function(req,res){
 	userModel.findOne(queryObject,function(err,userDocument){	
 		let article=userDocument.articles.id(articleId);
 
-		//update others which are need,add necessary conditions if required
+		//update others which are needed,add necessary conditions if required
 		article.heading=req.body.heading;
 		article.description=req.body.description;
 		article.lastUpdatedTime=Date.now;
@@ -346,11 +346,10 @@ app.put('/unit-update/:articleId/:unitId',isLoggedIn,function(req,res){
 		unit.heading=req.body.heading;
 		unit.shortDescription=req.body.shortDescription;
 		unit.longDescription=req.body.longDescription;
-		// unit.imageFile="";
-		// unit.audioFile="";
-		// unit.videoFile="";
 		unit.priority=req.body.priority; 
 		unit.complexity=req.body.complexity;
+
+		console.log(unit);
 
 		userDocument.save(function(err){
 			if(err){

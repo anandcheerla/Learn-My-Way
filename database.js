@@ -28,7 +28,7 @@ const unitSchema=mongoose.Schema({
 	imageFile: {type: String},
 	audioFile: {type: String},
 	videoFile: {type: String},
-	priority: {type: Number,default: 2},
+	priority: {type: String,default: 2},
 	complexity: {type: String},
 	createdTime: {type: Date,default: Date.now}
 

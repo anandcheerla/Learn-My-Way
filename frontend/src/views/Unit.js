@@ -60,6 +60,9 @@ class Unit extends React.Component{
     cub.style.opacity = 0.7;
 
     const {heading,shortDescription,longDescription,priority,complexity} = event.target;
+    // debugger;
+    console.log(priority);
+    console.log(complexity);
 
     let formData={
       heading: heading.value,
@@ -141,8 +144,9 @@ class Unit extends React.Component{
       "hard":"#f50525"
     }
 
+
     let border_color = {
-      "border": "1.1px solid"+unitBorderColor[this.props.complexity]
+      "border": "1.1px solid "+unitBorderColor[this.state.complexity]
     }
     
 
@@ -204,10 +208,10 @@ class Unit extends React.Component{
                           }
                           <div id="unit-unit-modal-unit-info">
                             <div id="unit-unit-modal-unit-priority">
-                              {this.props.priority}
+                              {this.state.priority}
                             </div>
                             <div id="unit-unit-modal-unit-complexity">
-                              {this.props.complexity}
+                              {this.state.complexity}
                             </div>
                           </div>
                         </div>
