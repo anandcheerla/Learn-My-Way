@@ -124,7 +124,7 @@ class Article extends React.Component{
         let complexity = document.getElementById("complexity-dropdown-filter-id").value;
         let importance = document.getElementById("importance-dropdown-filter-id").value;
 
-        if((complexity ==="all" || formData.complexity===complexity) && (importance === "all" || formData.priority===importance))
+        if((complexity =="all" || formData.complexity==complexity) && (importance == "all" || formData.priority==importance))
         {
 
           this.setState({
@@ -168,7 +168,7 @@ class Article extends React.Component{
 
       for(let i=0;i<units.length;i++)
       {
-        if((complexity === "all" || units[i].complexity===complexity) && (importance==="all" || units[i].priority===Number(importance)))
+        if((complexity == "all" || units[i].complexity==complexity) && (importance=="all" || units[i].priority==Number(importance)))
           required_units.push(units[i]);
       }
       // debugger;
@@ -191,7 +191,7 @@ class Article extends React.Component{
 
       for(let i=0;i<units.length;i++)
       {
-        if((importance==="all" || units[i].priority===Number(importance)) && (complexity==="all" || units[i].complexity===complexity))
+        if((importance=="all" || units[i].priority==Number(importance)) && (complexity=="all" || units[i].complexity==complexity))
           required_units.push(units[i]);
       }
       // debugger;
