@@ -11,6 +11,7 @@ Bootstrap
 HTML
 CSS
 javascript
+Material UI
 __________________________________________________________________________________________________________________
 
 About
@@ -44,4 +45,46 @@ Second way,They can post the same article, so that someone could read it and und
 
 Large articles look terrifying to read and we might miss or dont focus on some useful parts of the article when it is presented in a paragraph view. Breaking the article into small pieces and as a separate units with more emphasis helps the reader understand well and makes it intersting.
 
-__________________________________________________________________________________________________________________
+____________________________________________________________________________________________________________
+
+Design
+____________________________________________________________________________________________________________
+
+-----------
+components
+-----------
+
+Articles
+	Article
+		Unit
+			UnitModal
+
+
+PopularArticles
+	Article
+		Unit
+			UnitModal
+
+tags
+	tag
+
+
+-----------
+containers
+-----------
+
+Home - container
+tags
+	tag
+PopularArticles
+	Article
+		Unit
+			UnitModal
+
+
+MyArticles - container
+Articles
+	Article
+		Unit
+			UnitModal
+
