@@ -3,7 +3,11 @@ import axios from "axios";
 import ls from "local-storage";
 
 
+//components
 import Article from "./Article.js";
+
+//css
+import "./Articles.css";
 
 
 function Articles(props){

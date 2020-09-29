@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import axios from "axios";
-import {BrowserRouter,Route,Link} from 'react-router-dom';
+import {BrowserRouter,Route,Link,Redirect,Switch} from 'react-router-dom';
 import ls from "local-storage";
 
 //css
@@ -27,20 +27,18 @@ function App(props){
     };
 
     // alert("coming again");
+ 
     return (
       <>
           <BrowserRouter>
             <AppContext.Provider value={appState}>
-              {
-              !loginSuccess
-              ?
-              <Route path="/" component={Main}/>
-              :
-              <>
-              <Route path="/home" component={Home}/>
-              <Home/>
-              </>
-              }
+               {
+                !loginSuccess
+                ?
+                <Route path="/" component={Main}/>
+                :
+                <Home/>
+               }
             </AppContext.Provider>
           </BrowserRouter>
 
@@ -48,4 +46,7 @@ function App(props){
       );
   
 }
+
+
+
 export default App;

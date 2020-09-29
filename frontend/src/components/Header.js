@@ -5,8 +5,6 @@ import "./Header.css";
 
 
 function Header(props){
-
-	console.log(props.children);
 	
 	return(
 		<div id="Header">

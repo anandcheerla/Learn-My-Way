@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import axios from "axios";
+import {Link} from 'react-router-dom';
 
 import ls from "local-storage";
 
@@ -92,8 +93,12 @@ const createArticle = (event) => {
      setArticleDescriptionInput(e.target.value);
   };
 
-  const createArticleButtonHandler=()=>{
+  const createArticleButtonHandler=(e)=>{
+    e.preventDefault();
+    // console.log(props.history.location.pathname="/c");
+    props.history.push('/my-articles/create-article');
     setArticleCreation(true);
+    // debugger;
   }
 
   const cancelButtonClickHandler = () => {
@@ -105,6 +110,7 @@ const createArticle = (event) => {
 
 
   const articleCreationForm = () => {
+    debugger;
     return (
       <form
         name="createArticle"
@@ -167,7 +173,7 @@ const createArticle = (event) => {
       <div className="MyArticles">
         <h1>my articles</h1>
         <div id="MyArticles__create-article">
-          <button id="MyArticles__create-article-button" onClick={createArticleButtonHandler}>Create Article</button>
+          <button id="MyArticles__create-article-button" onClick={(e)=>createArticleButtonHandler(e)}>Create Article</button>
         </div>
 
         {

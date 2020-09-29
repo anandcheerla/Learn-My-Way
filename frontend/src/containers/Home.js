@@ -29,8 +29,7 @@ function Home(props){
             </Header>
           </div>
           <div id="Home__body">
-            <h1>i am body</h1>
-             <Route path="/my-articles" component={MyArticles}/>
+            <Route path="/my-articles" component={MyArticles}/>
           </div>
           <div id="Home__footer">
 

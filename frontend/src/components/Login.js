@@ -28,11 +28,11 @@ function Login(props){
     loginButton_Ref.current.innerHTML = "Logging In";
     loginButton_Ref.current.style.opacity = 0.7;
     loginErrMsg_Ref.current.innerHTML = "";
-
+    console.log(props);
     axios.post("/login", formData).then((res) => {
       if (res.data === "success") {
-
         appCtx.login.set(true);
+        props.history.push('/home');
         
       } else {
         loginErrMsg_Ref.current.innerHTML = "* Incorrect Credentials";
