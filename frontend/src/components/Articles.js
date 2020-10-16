@@ -30,6 +30,7 @@ function Articles(props){
       <div id="Articles">
         <div>
             <h1>Articles</h1>
+            <div id="Articles__articles-container">
             {
               props.articles.map((element) => (
               <Article
@@ -43,6 +44,7 @@ function Articles(props){
               >
               </Article>))
             }
+            </div>
         </div>
       </div>   
     );

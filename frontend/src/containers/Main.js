@@ -24,6 +24,7 @@ function Main(props){
 			<div id="Main__header">
 				<Header>
 					<Link to="/login">Login</Link>
+					<Link to="/about">About</Link>
 					<Link to="/register">Register</Link>
 				</Header>
 			</div>

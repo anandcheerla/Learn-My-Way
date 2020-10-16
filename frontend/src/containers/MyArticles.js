@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import axios from "axios";
 import {Link} from 'react-router-dom';
 
@@ -6,12 +6,15 @@ import ls from "local-storage";
 
 //user defined packages or files
 import Articles from "../components/Articles.js";
+import {AppContext} from '../AppContext.js';
+
 
 
 
 function MyArticles(props){
 
-      const [myArticles,setMyArticles] = useState([]);
+      const appCtx = useContext(AppContext);
+      // const [myArticles,setMyArticles] = useState([]);
       const [fetchedMyArticlesFromDb,setFetchedMyArticlesFromDb] = useState(ls.get("fetchedOtherArticlesFromDb") || false);
       const [articleCreation,setArticleCreation] = useState(false);
 
@@ -23,8 +26,8 @@ function MyArticles(props){
       axios.get("/articles").then((res) => {
         let articles_temp_var = [...res.data];
         let fetchArticlesFromDb_temp_var = true;
-
-        setMyArticles(articles_temp_var);
+ 
+        appCtx.articles.set(articles_temp_var);
         setFetchedMyArticlesFromDb(fetchArticlesFromDb_temp_var);
 
         //local storage
@@ -49,10 +52,10 @@ const createArticle = (event) => {
     //goes wrong then we can handle that in the post method callback
 
     let newlyCreatedArticle = { ...formData };
-    let articles_temp_var = [...myArticles, newlyCreatedArticle];
-    let cur_state = [...myArticles];
+    let articles_temp_var = [...appCtx.articles.get, newlyCreatedArticle];
+    let cur_state = [...appCtx.articles.get];
 
-    setMyArticles(articles_temp_var);
+    appCtx.articles.set(articles_temp_var);
     setArticleCreation(false);
 
     // ls.set("articles", articles_temp_var);
@@ -71,7 +74,7 @@ const createArticle = (event) => {
       articles_temp_var = [...cur_state, newlyCreatedArticle];
 
       if (res.data._id) {
-          setMyArticles(articles_temp_var)
+          appCtx.articles.set(articles_temp_var)
           setArticleCreation(false);
         // ls.set("articles", articles_temp_var);
         // ls.set("showArticleCreationForm", false);
@@ -104,18 +107,18 @@ const createArticle = (event) => {
   const cancelButtonClickHandler = () => {
     
     setArticleCreation(false);
+    props.history.push('/my-articles');
     // ls.set("showArticleCreationForm", false);
     // ls.set("showCreateArticleButton", true);
   }; 
 
 
   const articleCreationForm = () => {
-    debugger;
     return (
       <form
         name="createArticle"
         onSubmit={(e) => {
-          this.createArticle(e);
+          createArticle(e);
         }}
       >
         <div className="">
@@ -181,7 +184,7 @@ const createArticle = (event) => {
           ?
           articleCreationForm()
           :
-          <Articles articles={myArticles}/>
+          <Articles articles={appCtx.articles.get}/>
         }
         
       </div>

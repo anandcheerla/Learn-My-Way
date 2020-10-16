@@ -8,9 +8,11 @@ function Header(props){
 	
 	return(
 		<div id="Header">
-			{props.children && props.children.length === 2 && props.children[0]}
-			<Link to="/about">About</Link>
-			{props.children && props.children.length === 2 && props.children[1]}
+		{
+			props.children.map((header_link)=>{
+				return header_link;
+			})
+		}	
 		</div>
 		);
 

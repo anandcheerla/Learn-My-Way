@@ -2,3 +2,8 @@
 	margin-left: 200px;
 	width: 60%;
 }
+
+#Articles__articles-container{
+	display: flex;
+	flex-direction: column-reverse;
+}

@@ -45,6 +45,7 @@ function Unit(props) {
       const [longDescriptionInput,setLongDescriptionInput] = useState("");
       const [priorityInput,setPriorityInput] = useState("");
       const [complexityInput,setComplexityInput] = useState("");
+      const [unitClicked,setUnitClicked] = useState(false);
       // headingEdit: false,
       // sdEdit: false,
       // ldEdit: false,
@@ -165,11 +166,25 @@ function Unit(props) {
   //   border: "1.1px solid " + unitBorderColor[complexity],
   // };
 
+  const unitClickHandler=()=>{
+    setUnitClicked(true);
+  }
+
   return (
-      <div id="Unit">
+      <div id="Unit" onClick={unitClickHandler}>
         <h2>{props.heading}</h2>
         <h3>{props.shortDescription}</h3>
+        { unitClicked
+          &&
+          <UnitModal heading={props.heading}
+                     shortDescription={props.shortDescription}
+                     longDescription={props.longDescription}
+                     priority={props.priority}
+                     complexity={props.complexity}
+            />
+        }
       </div>
+
     );
      
 }

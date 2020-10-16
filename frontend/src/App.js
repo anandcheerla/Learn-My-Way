@@ -1,3 +1,6 @@
+//Author: Anand Kumar Cheerla
+
+
 import React,{useState} from 'react';
 import axios from "axios";
 import {BrowserRouter,Route,Link,Redirect,Switch} from 'react-router-dom';
@@ -18,15 +21,14 @@ import {AppContext} from './AppContext.js';
 function App(props){
     
     const [loginSuccess,setLoginSuccess] = useState(false);
-
-    
+    const [myArticles,setMyArticles] = useState([]);
 
 
     const appState = {
-      login: {get:loginSuccess, set:setLoginSuccess}
+      login: {get:loginSuccess, set:setLoginSuccess},
+      articles:{get: myArticles, set:setMyArticles}
     };
 
-    // alert("coming again");
  
     return (
       <>
