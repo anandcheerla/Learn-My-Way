@@ -72,6 +72,7 @@ class userService{
         }
     }
 
+
     async createNewArticle(queryObject){
 
         try{
@@ -238,6 +239,188 @@ class userService{
     }
 
 
+    async saveArticle(queryObject){
+
+        try{
+            const db_user = await userModel.findOne({_id:queryObject.userFromSession});
+            if(db_user.savedArticles){
+                db_user.savedArticles.set(queryObject.articleId,true);
+                await db_user.save();
+            }
+            return true;
+        }
+        catch(err){
+            console.log(err);
+        }
+
+        return false;
+
+    }
+
+    async unsaveArticle(queryObject){
+
+        try{
+            const db_user = await userModel.findOne({_id:queryObject.userFromSession});
+            if(db_user.savedArticles){
+                db_user.savedArticles.delete(queryObject.articleId);
+                await db_user.save();
+            }
+            return true;
+        }
+        catch(err){
+            console.log(err);
+        }
+
+        return false;
+
+    }
+
+
+    
+
+    async likeArticle(queryObject){
+
+        try{
+            const db_user = await userModel.findOne({_id:queryObject.userFromSession});
+            if(db_user.likedArticles){
+                db_user.likedArticles.set(queryObject.articleId,true);
+                await db_user.save();
+            }
+            return true;
+        }
+        catch(err){
+            console.log(err);
+        }
+
+        return false;
+
+    }
+
+    async unlikeArticle(queryObject){
+
+        try{
+            const db_user = await userModel.findOne({_id:queryObject.userFromSession});
+            if(db_user.likedArticles){
+                db_user.likedArticles.delete(queryObject.articleId);
+                await db_user.save();
+            }
+            return true;
+        }
+        catch(err){
+            console.log(err);
+        }
+
+        return false;
+
+    }
+
+    async addFavouriteTags(queryObject){
+
+        try{
+            const db_user = await userModel.findOne({_id:queryObject.userFromSession});
+            if(db_user.favouriteTags){
+                db_user.favouriteTags.push(queryObject.tagName);
+                await db_user.save();
+            }
+            return true;
+        }
+        catch(err){
+            console.log(err);
+        }
+
+        return false;
+
+    }
+
+    async makeArticlePublic(queryObject){
+        try{
+            const db_article = await articleModel.findOne({_id:queryObject.articleId});
+            db_article.visibility="public";
+            await db_.save();
+            return true;
+        }
+        catch(err){
+            console.log(err);
+        }
+
+        return false;
+
+    }
+
+    async makeArticlePrivate(queryObject){
+        try{
+            const db_article = await articleModel.findOne({_id:queryObject.articleId});
+            db_article.visibility="private";
+            await db_.save();
+            return true;
+        }
+        catch(err){
+            console.log(err);
+        }
+
+        return false;
+
+    }
+   
+    async addUserCanEdit(queryObject){
+        try{
+            const db_article = await articleModel.findOne({_id:queryObject.articleId});
+            db_article.usersCanEdit=true;
+            await db_.save();
+            return true;
+        }
+        catch(err){
+            console.log(err);
+        }
+
+        return false;
+
+    }
+
+    async removeUserCanEdit(queryObject){
+        try{
+            const db_article = await articleModel.findOne({_id:queryObject.articleId});
+            db_article.usersCanEdit=false;
+            await db_.save();
+            return true;
+        }
+        catch(err){
+            console.log(err);
+        }
+
+        return false;
+
+    }
+
+    async addUserCanAddUnits(queryObject){
+        try{
+            const db_article = await articleModel.findOne({_id:queryObject.articleId});
+            db_article.usersCanAddUnits=true;
+            await db_.save();
+            return true;
+        }
+        catch(err){
+            console.log(err);
+        }
+
+        return false;
+
+    }
+
+    async removeUserCanAddUnits(queryObject){
+        try{
+            const db_article = await articleModel.findOne({_id:queryObject.articleId});
+            db_article.usersCanAddUnits=false;
+            await db_.save();
+            return true;
+        }
+        catch(err){
+            console.log(err);
+        }
+
+        return false;
+
+    }
 
 }
 

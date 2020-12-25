@@ -14,6 +14,8 @@ const userSchema=mongoose.Schema({
 	savedArticles: [{type: mongoose.Schema.ObjectId}],
 	favouriteTags: [{type: String}],
 	articles:[{type: mongoose.Schema.ObjectId}],
+	savedArticles:{type: Map},
+	likedArticles:{type: Map},
 	timeStamp:{type: Date,default: Date.now}
 
 },{collection:"users"});

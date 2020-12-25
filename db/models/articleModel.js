@@ -10,7 +10,7 @@ const articleSchema=mongoose.Schema({
 	imageFile: {type: String},
 	articleTags: [{type: String}],
 	likes: {type:Number,default:0},
-	clicks: {type:Number,default:0},
+	views: {type:Number,default:0},
 	likedBy: [{type: String}],
 	lastUpdatedTime: {type: Date,default: Date.now},
 	createdTime: {type: Date,default: Date.now},
