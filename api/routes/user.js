@@ -17,6 +17,7 @@ export default (app)=>{
     app.use('/user',router);
 
     router.post("/register",async function(req,res){
+        console.log(req.body);
 
         let queryObject={
             "inputData":req.body
@@ -28,24 +29,25 @@ export default (app)=>{
             passport.authenticate("local")(req,res,function(){
                    
             });
-           res.send("success");
+           res.send(true);
         }
         else{
-            res.send("fail");
+            res.send(false);
         }
 
     });
 
     router.get("/suc",function(req,res){
-        res.send("Login success");
+        res.send(true);
     });
     router.get("/fail",function(req,res){
-        res.send("Loging failed");
+        res.send(false);
     });
     
 
     router.post("/login",passport.authenticate("local",{successRedirect: "/user/suc",failureRedirect: "/user/fail"}),function(req,res){
-        res.send("Login success");
+        console.log("success");
+        // res.send("Login success");
     });
 
 
@@ -85,6 +87,7 @@ export default (app)=>{
             "inputData":input_data
         }
 
+        console.log(queryObject);
         try{
             let new_article = await userService.createNewArticle(queryObject);
             if(new_article==false)
@@ -96,6 +99,7 @@ export default (app)=>{
         catch(err){
             console.log("error caught");
         }
+        res.send(false);
         
 
     });

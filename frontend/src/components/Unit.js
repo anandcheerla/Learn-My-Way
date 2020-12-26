@@ -68,7 +68,7 @@ function Unit(props) {
 
   const deleteUnitButtonHandler = () => {
     axios
-      .delete("/unit-delete/" + this.props.articleId + "/" + this.props.unitId)
+      .delete(`/${this.props.articleId}/delete-unit/${this.props.unitId}`)
       .then((res) => {
         // console.log(res);
         this.setState({ modalDisplay: "none", unitDeleted: true });
@@ -94,7 +94,7 @@ function Unit(props) {
 
     axios
       .put(
-        "/unit-update/" + this.props.articleId + "/" + this.props.unitId,
+        `/${this.props.articleId}/update-unit/${this.props.unitId}`,
         formData
       )
       .then((res) => {

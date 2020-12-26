@@ -78,20 +78,22 @@ class userService{
         try{
             const db_user = await userModel.findOne({username:queryObject.userFromSession});
 
-            let input_tags = JSON.parse(queryObject.inputData.tags);
+            // if(queryObject.inputData.tags)
+            //     let input_tags = JSON.parse(queryObject.inputData.tags);
            
 
             let size_of_articles = db_user.articles.length;
             let new_article = new articleModel();
             new_article.heading=queryObject.inputData.heading;
             new_article.description=queryObject.inputData.description;
-            new_article.articleTags=input_tags.tags;
+            // new_article.articleTags=input_tags.tags;
             new_article.username=queryObject.userFromSession;
 
 
             try{
                 const new_article_db = await new_article.save();
-                utility.putArticleInTagsCollection(new_article_db._id,input_tags.tags);
+                // if(queryObject.inputData.tags)
+                //     utility.putArticleInTagsCollection(new_article_db._id,input_tags.tags);
                 return new_article_db;
             }
             catch(err){

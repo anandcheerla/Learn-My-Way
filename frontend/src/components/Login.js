@@ -29,8 +29,8 @@ function Login(props){
     loginButton_Ref.current.style.opacity = 0.7;
     loginErrMsg_Ref.current.innerHTML = "";
     console.log(props);
-    axios.post("/login", formData).then((res) => {
-      if (res.data === "success") {
+    axios.post("/user/login", formData).then((res) => {
+      if (res.data === true) {
         appCtx.login.set(true);
         props.history.push('/home');
         
