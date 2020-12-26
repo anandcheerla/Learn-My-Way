@@ -1,5 +1,5 @@
-import React,{useState} from "react";
-import {Route,Link} from "react-router-dom";
+import React,{useState,useContext} from "react";
+import {Route,Link,Redirect} from "react-router-dom";
 import axios from "axios";
 import ls from "local-storage";
 
@@ -10,34 +10,59 @@ import "./Main.css";
 import Login from '../components/Login.js';
 import Register from '../components/Register.js';
 import Header from '../components/Header.js';
+import Logout from '../components/Logout.js';
+
 
 //containers
 import About from './About.js';
+import Home from './Home.js';
+
+
+//context
+import {AppContext} from '../AppContext.js';
 
 
 function Main(props){
 
-
+	const appCtx = useContext(AppContext);
     
 	return (
 		<div id="Main">
 			<div id="Main__header">
 				<Header>
-					<Link to="/login">Login</Link>
-					<Link to="/about">About</Link>
-					<Link to="/register">Register</Link>
 				</Header>
 			</div>
 			<div id="Main__body">
-				<div id="Main__login">
-					<Route path="/login" component={Login}/>
-				</div>
-				<div id="Main__register">
-					<Route path="/register" component={Register}/>
-				</div>
-				<div id="Main__about">
-					<Route path="/about" component={About}/>
-				</div>
+				<Route path="/login">
+					<div id="Main__login">
+						<Login/>
+					</div>
+				</Route>
+				
+				<Route path="/register">
+					<div id="Main__register">
+						<Register/>
+					</div>
+				</Route>
+				
+				<Route path="/about">
+					<div id="Main__about">
+						<About/>
+					</div>
+				</Route>
+				<Route path="/logout">
+					<div id="Main__logout">
+						<Logout/>
+					</div>
+				</Route>
+				<Route path="/home">
+					<ProtectedRoute>
+						<div id="Main__home">
+							<Home/>
+						</div>
+					</ProtectedRoute>
+				</Route>
+
 			</div>
 			<div id="Main__footer">
 
@@ -48,5 +73,22 @@ function Main(props){
 	);
    	
 } 
+
+function ProtectedRoute(props){
+		const appCtx = useContext(AppContext);
+
+		return (
+			<>
+			{
+				appCtx.login.get
+				?
+				props.children
+				:
+				<Redirect to="/login"/>
+
+			}
+			</>
+		);
+}
 
 export default Main;

@@ -1,4 +1,8 @@
 #Unit{
-	border: 1px solid green;
-	margin-left: 30px;
+	border: 1px solid grey;
+	padding:10px;
+	border-radius: 15px;
+	width:80%;
+	margin: 20px auto;
+	/* margin-left: 30px; */
 }

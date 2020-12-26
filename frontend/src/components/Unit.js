@@ -5,6 +5,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import CancelIcon from "@material-ui/icons/Cancel";
 import SaveIcon from "@material-ui/icons/Save";
 import ls from "local-storage";
+import { Route, useHistory, useRouteMatch } from "react-router";
 
 
 // components
@@ -12,10 +13,15 @@ import UnitModal from './UnitModal.js';
 
 //css
 import "./Unit.css";
+import { Link } from "react-router-dom";
+
 
 
 
 function Unit(props) {
+
+    const {path,url} = useRouteMatch();
+    const history = useHistory();
 
       // debugger;
       // modalDisplay: false,
@@ -68,7 +74,7 @@ function Unit(props) {
 
   const deleteUnitButtonHandler = () => {
     axios
-      .delete(`/${this.props.articleId}/delete-unit/${this.props.unitId}`)
+      .delete("/unit-delete/" + this.props.articleId + "/" + this.props.unitId)
       .then((res) => {
         // console.log(res);
         this.setState({ modalDisplay: "none", unitDeleted: true });
@@ -94,7 +100,7 @@ function Unit(props) {
 
     axios
       .put(
-        `/${this.props.articleId}/update-unit/${this.props.unitId}`,
+        "/unit-update/" + this.props.articleId + "/" + this.props.unitId,
         formData
       )
       .then((res) => {
@@ -166,22 +172,32 @@ function Unit(props) {
   //   border: "1.1px solid " + unitBorderColor[complexity],
   // };
 
-  const unitClickHandler=()=>{
-    setUnitClicked(true);
+  const unitClickHandler=(e)=>{
+    e.preventDefault();
+   
+    history.push(`${url}/${props.unitId}`);
   }
 
   return (
-      <div id="Unit" onClick={unitClickHandler}>
-        <h2>{props.heading}</h2>
-        <h3>{props.shortDescription}</h3>
-        { unitClicked
-          &&
-          <UnitModal heading={props.heading}
-                     shortDescription={props.shortDescription}
-                     longDescription={props.longDescription}
-                     priority={props.priority}
-                     complexity={props.complexity}
-            />
+      <div id="Unit">
+        <div onClick={(e)=>unitClickHandler(e)}>
+          <h2>{props.heading}</h2>
+          <h3>{props.shortDescription}</h3>
+        </div>
+        { 
+          <>
+          <Route path={`${path}/${props.unitId}`}>
+            <UnitModal heading={props.heading}
+                      shortDescription={props.shortDescription}
+                      longDescription={props.longDescription}
+                      priority={props.priority}
+                      complexity={props.complexity}
+                      articleId={props.articleId}
+                      unitId={props.unitId}
+                      uploaderUserName={props.uploaderUserName}
+              />
+          </Route>
+          </>
         }
       </div>
 

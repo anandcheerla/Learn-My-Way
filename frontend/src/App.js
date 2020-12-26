@@ -20,13 +20,15 @@ import {AppContext} from './AppContext.js';
 
 function App(props){
     
-    const [loginSuccess,setLoginSuccess] = useState(false);
+    const [username,setUsername] = useState("");
+    const [loginSuccess,setLoginSuccess] = useState(ls.get("authSession")||false);
     const [myArticles,setMyArticles] = useState([]);
 
 
     const appState = {
       login: {get:loginSuccess, set:setLoginSuccess},
-      articles:{get: myArticles, set:setMyArticles}
+      articles:{get: myArticles, set:setMyArticles},
+      username:{get:username,set: setUsername}
     };
 
  
@@ -34,13 +36,7 @@ function App(props){
       <>
           <BrowserRouter>
             <AppContext.Provider value={appState}>
-               {
-                !loginSuccess
-                ?
                 <Route path="/" component={Main}/>
-                :
-                <Home/>
-               }
             </AppContext.Provider>
           </BrowserRouter>
 

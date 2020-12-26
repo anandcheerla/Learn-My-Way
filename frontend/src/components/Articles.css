@@ -1,9 +1,10 @@
 #Articles{
-	margin-left: 200px;
-	width: 60%;
+	margin-left: 50%;
+	/* width: 60%; */
 }
 
 #Articles__articles-container{
 	display: flex;
 	flex-direction: column-reverse;
+
 }

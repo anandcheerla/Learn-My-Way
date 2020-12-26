@@ -1,6 +1,7 @@
 import React,{useState,useRef,useContext} from 'react';
 import axios from "axios";
 import ls from "local-storage";
+import {useHistory} from "react-router-dom";
 
 import {AppContext} from '../AppContext.js';
 
@@ -16,6 +17,7 @@ function Login(props){
   const loginErrMsg_Ref = useRef(null);
 
   const appCtx = useContext(AppContext);
+  let history=useHistory();
 
   const userLogin = () => {
     // event.preventDefault();
@@ -29,10 +31,13 @@ function Login(props){
     loginButton_Ref.current.style.opacity = 0.7;
     loginErrMsg_Ref.current.innerHTML = "";
     console.log(props);
-    axios.post("/user/login", formData).then((res) => {
-      if (res.data === true) {
+
+    axios.post("/login", formData).then((res) => {
+      if (res.data === "success") {
         appCtx.login.set(true);
-        props.history.push('/home');
+        ls.set("authSession",true);
+        appCtx.username.set(formData.username);
+        history.push('/home');
         
       } else {
         loginErrMsg_Ref.current.innerHTML = "* Incorrect Credentials";

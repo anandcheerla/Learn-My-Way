@@ -7,14 +7,13 @@ import ls from "local-storage";
 function Register(props){
 
 	const userRegistration = (event) => {
-      if(event)
-	      event.preventDefault();
+	    event.preventDefault();
 
 	    let signup_button = document.getElementById(
-	      "Register__register-button"
+	      "register-button-id-app-component"
 	    );
 	    let register_error_ele = document.getElementById(
-	      "Register__register-err-msg"
+	      "register-err-msg-id-app-component"
 	    );
 	    signup_button.innerHTML = "Signing Up";
 	    signup_button.style.opacity = 0.7;
@@ -29,10 +28,8 @@ function Register(props){
 	      contactNumber: event.target.contactNumber.value,
 	    };
 
-
-	    axios.post("/user/register", formData).then((res) => {
-        console.log(res);
-	      if (res===false) {
+	    axios.post("/register", formData).then((res) => {
+	      if (res.data.message !== undefined) {
 	        register_error_ele.innerHTML = "* " + res.data.message;
 	        register_error_ele.style.color = "red";
 	        signup_button.innerHTML = "Register";
@@ -62,10 +59,10 @@ function Register(props){
 	      if (!isContactNumber) {
 	        // console.log("I think contact number should contain Numbers");
 	        document
-	          .getElementById("Register__contact-number")
+	          .getElementById("contactNumber")
 	          .setCustomValidity("I think contact number should contain Numbers");
 	      } else {
-	        document.getElementById("Register__contact-number").setCustomValidity("");
+	        document.getElementById("contactNumber").setCustomValidity("");
 	      }
 	    } else if (event.target.name === "password") {
 	      // let isFirstName = /[0-/.test(event.target.value);
@@ -73,10 +70,10 @@ function Register(props){
 	      if (event.target.value.length < 5) {
 	        // console.log("I think contact number should contain Numbers");
 	        document
-	          .getElementById("Register__password")
+	          .getElementById("password")
 	          .setCustomValidity("I think contact number should contain Numbers");
 	      } else {
-	        document.getElementById("Register__password").setCustomValidity("");
+	        document.getElementById("password").setCustomValidity("");
 	      }
 	    }
   	};
@@ -159,9 +156,9 @@ function Register(props){
         <br />
         <div className="Register__button">
           <button
+            type="submit"
             id="Register__register-button"
             className=""
-            onClick={(e)=>userRegistration(e)}
           >
             Register
           </button>
