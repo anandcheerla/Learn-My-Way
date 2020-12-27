@@ -31,5 +31,35 @@ export default (app)=>{
         }
     });
 
+    router.get('/get-all-tags',async (req,res)=>{
+
+        try{
+            let articles = await articleService.getTags();
+            res.send(articles);
+        }
+        catch(err){
+            console.log(err);
+            res.send(false);
+        }
+    });
+
+    router.get('/get-article/:articleId',async (req,res)=>{
+
+        let articleId=req.params.articleId;
+
+        try{
+            let article = await articleService.getArticleById(articleId);
+            res.send(article);
+        }
+        catch(err){
+            console.log(err);
+            res.send(false);
+        }
+    });
+
+
+
+    
+
 
 }

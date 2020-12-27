@@ -30,7 +30,7 @@ function MyArticles(props){
   
   //fetch my articles
   const fetchMyArticlesFromDb = () => {
-      axios.get("/my-articles").then((res) => {
+      axios.get("/user/my-articles").then((res) => {
         let articles_temp_var = [...res.data];
         let fetchArticlesFromDb_temp_var = true;
  
@@ -81,7 +81,7 @@ function MyArticles(props){
 
       // if (acfcb) acfcb.style.opacity = 0.7;
 
-      axios.post("/new-article", formData).then((res) => {
+      axios.post("/user/new-article", formData).then((res) => {
 
         newlyCreatedArticle = { ...res.data };
         articles_temp_var = [...cur_state, newlyCreatedArticle];

@@ -28,11 +28,11 @@ function Home(props){
         <div id="Home">
           <div id="Home__body">
             <Switch>
-                <Route path={`/my-articles`}>
-                  <MyArticles/>
-                </Route>
                 <Route path="/home">
                   <SuggestedArticles/>
+                </Route>
+                <Route path="/my-articles">
+                  <MyArticles/>                  
                 </Route>
             </Switch>
           </div>

@@ -33,15 +33,17 @@ function UnitModal(props){
 		history.goBack();
 	}
 
-	const deleteUnitButtonHandler=()=>{
-		if(areYouSureModal()){
-			axios.delete("/unit-delete/"+props.articleId+"/"+props.unitId).then(res=>{
-			ls.set(props.unitId,{unitDeleted:true});
-			closeButtonHandler();
 
+	const deleteUnitButtonHandler = () => {
+	if(areYouSureModal()){
+		axios
+			.delete(`/user/${props.articleId}/delete-unit/${props.unitId}`)
+			.then((res) => {
+				ls.set(props.unitId,{deleted:true});
+				closeButtonHandler();
 			});
-		}
-	  }
+	}
+	};
 
 	
 	return (

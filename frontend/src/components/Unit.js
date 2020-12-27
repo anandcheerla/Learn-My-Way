@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useContext} from "react";
 import axios from "axios";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import EditIcon from "@material-ui/icons/Edit";
@@ -15,33 +15,37 @@ import UnitModal from './UnitModal.js';
 import "./Unit.css";
 import { Link } from "react-router-dom";
 
+//context
+import {AppContext} from '../AppContext.js';
+
 
 
 
 function Unit(props) {
 
+    const appCtx = useContext(AppContext);
     const {path,url} = useRouteMatch();
     const history = useHistory();
 
       // debugger;
       // modalDisplay: false,
-      let heading=
-        (ls.get(props.unitId) && ls.get(props.unitId).heading) ||
-        props.heading
-      let shortDescription=
-        (ls.get(props.unitId) &&
-          ls.get(props.unitId).shortDescription) ||
-        props.shortDescription
-      let longDescription=
-        (ls.get(props.unitId) &&
-          ls.get(props.unitId).longDescription) ||
-        props.longDescription
-      let priority=
-        (ls.get(props.unitId) && ls.get(props.unitId).priority) ||
-        props.priority
-      let complexity=
-        (ls.get(props.unitId) && ls.get(props.unitId).complexity) ||
-        props.complexity
+      // let heading=
+      //   (ls.get(props.unitId) && ls.get(props.unitId).heading) ||
+      //   props.heading
+      // let shortDescription=
+      //   (ls.get(props.unitId) &&
+      //     ls.get(props.unitId).shortDescription) ||
+      //   props.shortDescription
+      // let longDescription=
+      //   (ls.get(props.unitId) &&
+      //     ls.get(props.unitId).longDescription) ||
+      //   props.longDescription
+      // let priority=
+      //   (ls.get(props.unitId) && ls.get(props.unitId).priority) ||
+      //   props.priority
+      // let complexity=
+      //   (ls.get(props.unitId) && ls.get(props.unitId).complexity) ||
+      //   props.complexity
       // unitDeleted:
       //   (ls.get(this.props.unitId) && ls.get(this.props.unitId).unitDeleted) ||
       //   false,
@@ -74,11 +78,11 @@ function Unit(props) {
 
   const deleteUnitButtonHandler = () => {
     axios
-      .delete("/unit-delete/" + this.props.articleId + "/" + this.props.unitId)
+      .delete(`/user/${props.articleId}/delete-unit/${props.unitId}`)
       .then((res) => {
-        // console.log(res);
-        this.setState({ modalDisplay: "none", unitDeleted: true });
-        ls.set(this.props.unitId, { unitDeleted: true });
+        let articles_from_context = [...appCtx.articles.get];
+        articles_from_context[props.articleIndex].units[props.unitIndex]=null;
+        appCtx.articles.set(articles_from_context);
       });
   };
 
@@ -89,20 +93,15 @@ function Unit(props) {
     // cub.style.opacity = 0.7;
 
     let formData = {
-      heading: headingInput || heading,
-      shortDescription:
-        shortDescriptionInput || shortDescription,
-      longDescription:
-        longDescriptionInput || longDescription,
-      priority: priorityInput || priority,
-      complexity: complexityInput || complexity,
+      heading: headingInput,
+      shortDescription: shortDescriptionInput,
+      longDescription: longDescriptionInput,
+      priority: priorityInput,
+      complexity: complexityInput,
     };
 
     axios
-      .put(
-        "/unit-update/" + this.props.articleId + "/" + this.props.unitId,
-        formData
-      )
+      .put(`/user/${props.articleId}/update-unit/${props.unitId}`,formData)
       .then((res) => {
         // this.setState({
         //   input_name: false,
@@ -195,6 +194,8 @@ function Unit(props) {
                       articleId={props.articleId}
                       unitId={props.unitId}
                       uploaderUserName={props.uploaderUserName}
+                      articleIndex={props.articleIndex}
+                      unitIndex={props.unitIndex}
               />
           </Route>
           </>

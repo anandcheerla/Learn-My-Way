@@ -47,6 +47,7 @@ export default (app)=>{
 
     router.post("/login",passport.authenticate("local",{successRedirect: "/user/suc",failureRedirect: "/user/fail"}),function(req,res){
         console.log("success");
+        res.send(true);
         // res.send("Login success");
     });
 
@@ -148,10 +149,9 @@ export default (app)=>{
             "articleId": articleId,
             "inputData": req.body
         }
-
         try{
             let new_unit = await userService.addUnit(queryObject);
-            res.send(true);
+            res.send(new_unit);
         }
         catch(err){
             res.send(false);

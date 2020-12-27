@@ -9,7 +9,7 @@ import {AppContext} from "../AppContext.js";
 function Logout(props){
 	let appCtx=useContext(AppContext);
 		
-	axios.get("/logout").then((res)=>{
+	axios.get("/user/logout").then((res)=>{
 		appCtx.login.set(false);
 		ls.clear();
 	});

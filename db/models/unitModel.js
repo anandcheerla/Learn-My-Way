@@ -11,7 +11,8 @@ const unitSchema=mongoose.Schema({
 	priority: {type: Number,default: 2},
 	complexity: {type: String},
 	createdTime: {type: Date,default: Date.now},
-	lastUpdatedTime: {type: Date,default: Date.now}
+	lastUpdatedTime: {type: Date,default: Date.now},
+	unitIndex: {type: Number}
 
 },{collection:"unit"});
 

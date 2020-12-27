@@ -31,8 +31,8 @@ function Header(props){
 			</>
 			:
 			<>
-				 <Link to={`/my-articles`}>My Articles</Link>
-				 <Link to={`/home`}>Home</Link>
+				 <Link to="/my-articles">My Articles</Link>
+				 <Link to="/home">Home</Link>
     	         <Link to="/logout">Logout</Link>
 			</>
 		}	

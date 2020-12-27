@@ -16,9 +16,11 @@ class articleService{
     async getArticlesByTag(tag,pageNum,limit){
         try{
             const db_tag = await tagModel.findOne({tagName:tag});
+            let articles=[]
             if(db_tag.articles){
-                const articles = db_tag.articles.slice(pageNum*limit,pageNum*limit+limit);
-                return articles;
+                const article_ids = db_tag.articles.slice(pageNum*limit,pageNum*limit+limit);
+                const db_articles = await articleModel.find({_id:{"$in":article_ids}}); 
+                return db_articles;
             }            
             else
                 return false;
@@ -27,6 +29,32 @@ class articleService{
             console.log(err);
             return false;
         }
+    }
+
+    async getArticleById(articleId){
+        try{
+            const db_article = await articleModel.findOne({_id:articleId});
+            return db_article;
+
+        }
+        catch(err){
+            console.log(err);
+            return false;
+        }
+    }
+
+    async getTags(){
+        try{
+            const db_tags = await tagModel.find({});
+            if(db_tags){
+                return db_tags;
+            }
+        }
+        catch(err){
+            console.log(err);
+        }
+
+        return false;
     }
 
     async likeArticle(articleId){

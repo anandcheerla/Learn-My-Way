@@ -55,7 +55,7 @@ function Main(props){
 						<Logout/>
 					</div>
 				</Route>
-				<Route path="/home">
+				<Route path="/">
 					<ProtectedRoute>
 						<div id="Main__home">
 							<Home/>

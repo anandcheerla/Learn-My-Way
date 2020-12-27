@@ -152,7 +152,7 @@ function Article(props){
     setUnitPriority("");
     setUnitComplexity("");
 
-    axios.post(`/${props.dbId}/add-unit`, formData).then((res) => {
+    axios.post(`/user/${props.dbId}/add-unit`, formData).then((res) => {
 
      
       let updated_article_units = [...current_article_units, res.data];
@@ -244,7 +244,7 @@ function Article(props){
     if (option === "delete_article") {
       if(areYouSureModal())
       {
-          axios.delete("/article-delete/"+props.dbId).then(res=>{});
+          axios.delete("/user/article-delete/"+props.dbId).then(res=>{});
           let articles_from_context = [...appCtx.articles.get];
           articles_from_context[props.articleIndex]=null;
           appCtx.articles.set(articles_from_context);
@@ -473,6 +473,7 @@ function Article(props){
 
     let uploadedTime = calculateTimeForArticle();
 
+
     return (
       <div id="Article">
         <div onClick={articleClickHanlder} >
@@ -492,7 +493,7 @@ function Article(props){
           filteredUnits
           &&
           filteredUnits.map((unit)=>(
-            !ls.get(unit._id)
+            ls.get(unit._id)==null
             &&
             <Unit 
             heading={unit.heading} 
@@ -503,6 +504,8 @@ function Article(props){
             unitId={unit._id}
             articleId={props.dbId}
             uploaderUserName={props.uploaderUserName}
+            articleIndex={props.articleIndex}
+            unitIndex={unit.unitIndex}
             />
           ))
           }

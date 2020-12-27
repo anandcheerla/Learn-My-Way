@@ -30,10 +30,10 @@ function Login(props){
     loginButton_Ref.current.innerHTML = "Logging In";
     loginButton_Ref.current.style.opacity = 0.7;
     loginErrMsg_Ref.current.innerHTML = "";
-    console.log(props);
+    // console.log(props);
 
-    axios.post("/login", formData).then((res) => {
-      if (res.data === "success") {
+    axios.post("/user/login", formData).then((res) => {
+      if (res.data === true) {
         appCtx.login.set(true);
         ls.set("authSession",true);
         appCtx.username.set(formData.username);

@@ -77,9 +77,9 @@ class userService{
 
         try{
             const db_user = await userModel.findOne({username:queryObject.userFromSession});
-
-            // if(queryObject.inputData.tags)
-            //     let input_tags = JSON.parse(queryObject.inputData.tags);
+            let input_tags;
+            if(queryObject.inputData.tags)
+                input_tags = JSON.parse(queryObject.inputData.tags);
            
 
             let size_of_articles = db_user.articles.length;
@@ -92,8 +92,8 @@ class userService{
 
             try{
                 const new_article_db = await new_article.save();
-                // if(queryObject.inputData.tags)
-                //     utility.putArticleInTagsCollection(new_article_db._id,input_tags.tags);
+                if(queryObject.inputData.tags)
+                    utility.putArticleInTagsCollection(new_article_db._id,input_tags.tags);
                 return new_article_db;
             }
             catch(err){
@@ -169,6 +169,7 @@ class userService{
             new_unit.videoFile="";
             new_unit.priority=queryObject.inputData.priority;
             new_unit.complexity=queryObject.inputData.complexity;
+            new_unit.unitIndex=size_of_units;
 
             try{
                 await db_article.units.push(new_unit);

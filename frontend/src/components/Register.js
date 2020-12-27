@@ -10,10 +10,10 @@ function Register(props){
 	    event.preventDefault();
 
 	    let signup_button = document.getElementById(
-	      "register-button-id-app-component"
+	      "Register__register-button"
 	    );
 	    let register_error_ele = document.getElementById(
-	      "register-err-msg-id-app-component"
+	      "Register__register-err-msg"
 	    );
 	    signup_button.innerHTML = "Signing Up";
 	    signup_button.style.opacity = 0.7;
@@ -28,7 +28,7 @@ function Register(props){
 	      contactNumber: event.target.contactNumber.value,
 	    };
 
-	    axios.post("/register", formData).then((res) => {
+	    axios.post("/user/register", formData).then((res) => {
 	      if (res.data.message !== undefined) {
 	        register_error_ele.innerHTML = "* " + res.data.message;
 	        register_error_ele.style.color = "red";
@@ -159,6 +159,7 @@ function Register(props){
             type="submit"
             id="Register__register-button"
             className=""
+            onClick={(e)=>userRegistration(e)}
           >
             Register
           </button>
