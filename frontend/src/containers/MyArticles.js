@@ -1,11 +1,14 @@
 import React,{useState,useEffect,useContext} from 'react';
 import axios from "axios";
 import {Link,Route,useHistory,useRouteMatch} from 'react-router-dom';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import ls from "local-storage";
 
 //components
 import Articles from "../components/Articles.js";
+import Tag from "../components/Tag.js";
 
 
 //context
@@ -25,26 +28,43 @@ function MyArticles(props){
 
   const [articleHeadingInput,setArticleHeadingInput] = useState("");
   const [articleDescriptionInput,setArticleDescriptionInput] = useState("");
+  const [articleTagsInput,setArticleTagsInput] = useState([]);
+
   
   let { path, url } = useRouteMatch();
   
   //fetch my articles
   const fetchMyArticlesFromDb = () => {
       axios.get("/user/my-articles").then((res) => {
-        let articles_temp_var = [...res.data];
-        let fetchArticlesFromDb_temp_var = true;
- 
-        appCtx.articles.set(articles_temp_var);
-        setMyArticles(articles_temp_var);
-        setFetchedMyArticlesFromDb(fetchArticlesFromDb_temp_var);
+        console.log(res.data);
+        if(res.data!=false){
+          let articles_temp_var = [...res.data];
+          let fetchArticlesFromDb_temp_var = true;
+  
+          appCtx.articles.set(articles_temp_var);
+          setMyArticles(articles_temp_var);
+          setFetchedMyArticlesFromDb(fetchArticlesFromDb_temp_var);
+          console.log(articles_temp_var);
+
+        }
 
       });
     
     };
+
+    const fetchTagsFromDb = () =>{
+      axios.get("/topic/get-all-tags").then(res=>{
+        const tags = [...res.data];
+        appCtx.tags.set(tags);
+
+      }); 
+
+    }
   
   
 
    useEffect(fetchMyArticlesFromDb,[]);
+   useEffect(fetchTagsFromDb,[]);
 
   // only run when articles change
   //  useEffect(fetchMyArticlesFromDb,[appCtx.articles.get]);
@@ -58,6 +78,7 @@ function MyArticles(props){
       let formData = {
         heading: articleHeadingInput,
         description: articleDescriptionInput,
+        tags: articleTagsInput
       };
 
       //this is to make it load faster instead of waiting for the response from the server!!so if anything
@@ -85,6 +106,9 @@ function MyArticles(props){
 
         newlyCreatedArticle = { ...res.data };
         articles_temp_var = [...cur_state, newlyCreatedArticle];
+        setArticleTagsInput([]);
+        setArticleHeadingInput("");
+        setArticleDescriptionInput("");
 
         if (res.data._id) {
             appCtx.articles.set(articles_temp_var)
@@ -110,6 +134,7 @@ function MyArticles(props){
        setArticleDescriptionInput(e.target.value);
     };
 
+
     const createArticleButtonHandler=(e)=>{
       e.preventDefault();
       // console.log(props.history.location.pathname="/c");
@@ -129,7 +154,10 @@ function MyArticles(props){
     }; 
 
 
+    
+
     const articleCreationForm = () => {
+
       return (
         <form
           name="createArticle"
@@ -165,6 +193,25 @@ function MyArticles(props){
               placeholder="description"
               value={articleDescriptionInput}
               required
+            />
+          </div>
+          <div>
+              {
+                articleTagsInput.map((tag)=>(
+                  <Tag tagName={tag}/>
+                )) 
+              }
+          </div>
+          <div>
+            <Autocomplete
+              onChange={(e) => {
+                setArticleTagsInput([...articleTagsInput,e.target.innerText]);
+              }}
+              id="combo-box-demo"
+              options={appCtx.tags.get}
+              getOptionLabel={(option) => option.tagName}
+              style={{ width: 300 }}
+              renderInput={(params) => <TextField {...params} label="Tags" variant="outlined" />}
             />
           </div>
           <button

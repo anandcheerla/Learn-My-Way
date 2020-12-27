@@ -46,7 +46,12 @@ var tags = [
     description: ""
 },
 {
-    tagName: "Computer Science",
+    tagName: "Java",
+    description: ""
+},
+
+{
+    tagName: "Programming",
     description: ""
 }
 

@@ -23,12 +23,14 @@ function App(props){
     const [username,setUsername] = useState("");
     const [loginSuccess,setLoginSuccess] = useState(ls.get("authSession")||false);
     const [myArticles,setMyArticles] = useState([]);
+    const [tags,setTags] = useState([]);
 
 
     const appState = {
       login: {get:loginSuccess, set:setLoginSuccess},
       articles:{get: myArticles, set:setMyArticles},
-      username:{get:username,set: setUsername}
+      username:{get:username,set: setUsername},
+      tags:{get:tags,set: setTags}
     };
 
  

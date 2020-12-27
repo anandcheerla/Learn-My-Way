@@ -1,10 +1,21 @@
-import React from 'react';
+import React,{useState} from 'react';
 import axios from "axios";
 import ls from "local-storage";
+import { useHistory } from 'react-router';
 
 
 
 function Register(props){
+
+  const history=useHistory();
+
+  const [username,setUsername] = useState("");
+  const [password,setPassword] = useState("");
+  const [firstName,setFirstName] = useState("");
+  const [lastName,setLastName] = useState("");
+  const [email,setEmail] = useState("");
+  const [contactNumber,setContactNumber] = useState("");
+
 
 	const userRegistration = (event) => {
 	    event.preventDefault();
@@ -20,34 +31,27 @@ function Register(props){
 	    register_error_ele.innerHTML = "";
 
 	    let formData = {
-	      username: event.target.username.value,
-	      password: event.target.password.value,
-	      firstName: event.target.firstName.value,
-	      lastName: event.target.lastName.value,
-	      email: event.target.email.value,
-	      contactNumber: event.target.contactNumber.value,
+	      username: username,
+	      password: password,
+	      firstName: firstName,
+	      lastName: lastName,
+	      email: email,
+	      contactNumber: contactNumber
 	    };
 
 	    axios.post("/user/register", formData).then((res) => {
-	      if (res.data.message !== undefined) {
+	      if (res.data==false) {
 	        register_error_ele.innerHTML = "* " + res.data.message;
 	        register_error_ele.style.color = "red";
 	        signup_button.innerHTML = "Register";
 	        signup_button.style.opacity = 1;
 	        return;
-	      }
-
-	      let showRegisterForm_temp_var = false;
-	      let showLoginForm_temp_var = true;
-	      this.setState({
-	        showRegisterForm: showRegisterForm_temp_var,
-	        showLoginForm: showLoginForm_temp_var,
-	      });
-
-	      ls.set("showRegisterForm", showRegisterForm_temp_var);
-	      ls.set("showLoginForm", showLoginForm_temp_var);
-	    });
- 	};
+        }
+        else{
+          history.push('/login');
+        }
+       });
+      }
 
  	let inputValidation = (event) => {
 
@@ -89,6 +93,7 @@ function Register(props){
             id="Register__first-name"
             name="firstName"
             placeholder="first name"
+            onChange={(e)=>{setFirstName(e.target.value)}}
             required
           />
         </div>
@@ -100,6 +105,7 @@ function Register(props){
             id="Register__last-name"
             name="lastName"
             placeholder="last name"
+            onChange={(e)=>{setLastName(e.target.value)}}
             required
           />
         </div>
@@ -112,6 +118,7 @@ function Register(props){
             id="Register__username"
             name="username"
             placeholder="username"
+            onChange={(e)=>{setUsername(e.target.value)}}
             required
           />
         </div>
@@ -123,6 +130,7 @@ function Register(props){
             id="Register__password"
             name="password"
             placeholder="password"
+            onChange={(e)=>{setPassword(e.target.value)}}
             required
           />
         </div>
@@ -135,6 +143,7 @@ function Register(props){
             id="Register__email"
             name="email"
             placeholder="email"
+            onChange={(e)=>{setEmail(e.target.value)}}
             required
           />
         </div>
@@ -142,11 +151,12 @@ function Register(props){
           <label htmlFor="contactNumber">Contact Number</label>
           <input
             type="text"
-            onBlur={inputValidation}
+            // onBlur={inputValidation}
             className=""
             id="Register__contact-number"
             name="contactNumber"
             placeholder="9999999999"
+            onChange={(e)=>{setContactNumber(e.target.value)}}
             required
           />
         </div>

@@ -69,12 +69,12 @@ export default (app)=>{
         try{
             let my_articles = await userService.getMyArticles(queryObject);
             if(my_articles==false)
-                res.send("My Articles failed to load");
+                res.send(false);
             else
                 res.send(my_articles);
         }
         catch(err){
-            console.log("error caught");
+            console.log(false);
         }
     
     });
