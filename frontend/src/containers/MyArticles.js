@@ -1,8 +1,11 @@
 import React,{useState,useEffect,useContext} from 'react';
 import axios from "axios";
 import {Link,Route,useHistory,useRouteMatch} from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+
 
 import ls from "local-storage";
 
@@ -10,6 +13,8 @@ import ls from "local-storage";
 import Articles from "../components/Articles.js";
 import Tag from "../components/Tag.js";
 
+//css
+import './MyArticles.css';
 
 //context
 import {AppContext} from '../AppContext.js';
@@ -81,6 +86,11 @@ function MyArticles(props){
         tags: articleTagsInput
       };
 
+      if(formData.heading=="" || formData.description==""){
+        alert("please fill the required fields");
+        return;
+      }
+
       //this is to make it load faster instead of waiting for the response from the server!!so if anything
       //goes wrong then we can handle that in the post method callback
 
@@ -109,6 +119,8 @@ function MyArticles(props){
         setArticleTagsInput([]);
         setArticleHeadingInput("");
         setArticleDescriptionInput("");
+
+        history.push(`${path}/${newlyCreatedArticle._id}`);
 
         if (res.data._id) {
             appCtx.articles.set(articles_temp_var)
@@ -159,43 +171,38 @@ function MyArticles(props){
     const articleCreationForm = () => {
 
       return (
-        <form
-          name="createArticle"
-          onSubmit={(e) => {
-            createArticle(e);
-          }}
-        >
-          <div className="">
-            <label htmlFor="heading">Name</label>
-            <input
-              type="text"
-              className=""
-              id="articleHeading"
+        <div id="MyArticles__article-creation-form">
+          <div className="MyArticles__article-creation-form-input">
+            <label htmlFor="heading"></label>
+            <TextField 
+              id="articleHeading" 
               onChange={(e) => {
-                articleHeadingInputHandler(e);
-              }}
-              name="heading"
-              placeholder="heading"
-              value={articleHeadingInput}
+              articleHeadingInputHandler(e);
+              }} 
+              value={articleHeadingInput} 
+              label="Heading" 
+              variant="outlined" 
               required
             />
           </div>
-          <div className="">
-            <label htmlFor="description">Description</label>
-            <textarea
-              type="textarea"
-              className=""
+          <div className="MyArticles__article-creation-form-input">
+            <label htmlFor="description"></label>
+            <TextField
               id="description"
+              label="Description"
               onChange={(e) => {
                 articleDescriptionInputHandler(e);
               }}
-              name="description"
-              placeholder="description"
               value={articleDescriptionInput}
+              multiline
+              rows={4}
+              defaultValue="default"
+              variant="outlined"
               required
             />
+
           </div>
-          <div>
+          <div className="MyArticles__auto-complete-helper-div">
               {
                 articleTagsInput.map((tag)=>(
                   <Tag tagName={tag}/>
@@ -208,47 +215,54 @@ function MyArticles(props){
                 setArticleTagsInput([...articleTagsInput,e.target.innerText]);
               }}
               id="combo-box-demo"
+              className="MyArticles__article-creation-form-input"
               options={appCtx.tags.get}
               getOptionLabel={(option) => option.tagName}
               style={{ width: 300 }}
               renderInput={(params) => <TextField {...params} label="Tags" variant="outlined" />}
             />
           </div>
-          <button
-            type="submit"
-            onClick={(e)=>{createArticle(e)}}
-            id=""
-            className=""
-          >
-            Continue
-          </button>
-
-            <button
-              onClick={cancelButtonClickHandler}
-              className=""
-            >
+          <div className="MyArticles__article-creation-form-input">
+            <Button variant="outlined" onClick={(e)=>{createArticle(e)}} color="primary">
+              Continue
+            </Button>
+          </div>
+          <div className="MyArticles__article-creation-form-input">
+            <Button variant="outlined" onClick={cancelButtonClickHandler} color="primary">
               Cancel
-            </button>
+            </Button>
+          </div>
 
-        </form>
+        </div>
       );
     }; 
 
     return (
 
-        <div className="MyArticles">
-          <h1>My Articles</h1>
-          <div id="MyArticles__create-article">
-            <button id="MyArticles__create-article-button" onClick={(e)=>createArticleButtonHandler(e)}>Create Article</button>
+        <div id="MyArticles">
+          <div id="MyArticles-article-creation-section">
+            <div id="MyArticles__create-article">
+              <Route exact path={`${path}`}>
+                <Button
+                    onClick={(e)=>createArticleButtonHandler(e)}
+                    id="MyArticles__create-article-button"
+                    variant="outlined"
+                    color="primary"
+                    endIcon={<AddIcon/>}
+                >
+                Article
+                </Button>
+              </Route>
+            </div>
+            <Route path={`${path}/create-article`}>
+              {articleCreationForm()}
+            </Route>
           </div>
-          <>
-          <Route path={`${path}/create-article`}>
-            {articleCreationForm()}
-          </Route>
-          <Route path={`${path}`}>
-            <Articles articles={appCtx.articles.get}/>
-          </Route>
-          </>
+          <div id="MyArticles-my-articles-section">
+            <Route path={`${path}`}>
+              <Articles type="myArticle" articles={appCtx.articles.get}/>
+            </Route>
+          </div>
         </div>
 
       );

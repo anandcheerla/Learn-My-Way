@@ -3,6 +3,40 @@
 	margin-bottom: 30px;
 	padding: 20px;
 	border-radius: 8px;
-	width: 80%;
+	width: auto;
 }
 
+#Article__unit-creation-form{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.Article__text-area-input{
+	text-align: center;
+}
+.Article__text-area-input textarea{
+	width: 80%;
+	padding: 5px;
+}
+
+.Article__buttons-input{
+	text-align: center;
+}
+
+.Article--right-align{
+	text-align: right;
+}
+
+.Article--center-align{
+	text-align: center;
+}
+
+#Article__more-icon-div{
+	display: flex;
+	justify-content: flex-end;
+}
+
+#Article__filters{
+	display: flex;
+}

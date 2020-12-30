@@ -1,0 +1,33 @@
+
+#MyArticles{
+    display: flex;
+}
+
+
+#MyArticles__article-creation-form{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.MyArticles__article-creation-form-input{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    
+}
+
+.MyArticles__auto-complete-helper-div{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#MyArticles-article-creation-section{
+    width: 100%;
+    padding: 20px;
+}
+
+#MyArticles-my-articles-section{
+    width: 100%;
+    padding: 15px;
+}

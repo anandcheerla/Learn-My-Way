@@ -33,7 +33,7 @@ function Login(props){
     // console.log(props);
 
     axios.post("/user/login", formData).then((res) => {
-      if (res.data === true) {
+      if (res.data !== false) {
         appCtx.login.set(true);
         ls.set("authSession",true);
         appCtx.username.set(formData.username);

@@ -34,6 +34,7 @@ var utility = new utilities();
 
 class userService{
 
+
     async signUp(queryObject){
 
         let newUser=new userModel({
@@ -73,17 +74,30 @@ class userService{
     }
 
 
+    async getUserProfile(queryObject){
+
+        try{
+            const profile = await userModel.findOne({username: queryObject.userFromSession});
+            return profile;
+        }
+        catch(err){
+            return false;
+        }
+
+    }
+
     async createNewArticle(queryObject){
 
         try{
             const db_user = await userModel.findOne({username:queryObject.userFromSession});
-
+            console.log(db_user.firstName);
             let size_of_articles = db_user.articles.length;
             let new_article = new articleModel();
             new_article.heading=queryObject.inputData.heading;
             new_article.description=queryObject.inputData.description;
             new_article.articleTags=queryObject.inputData.tags;
             new_article.username=queryObject.userFromSession;
+            new_article.uploaderFirstName = db_user.firstName;
 
 
             try{

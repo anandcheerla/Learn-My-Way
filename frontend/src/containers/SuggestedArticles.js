@@ -62,7 +62,7 @@ function SuggestedArticles(props){
 
     return (
 
-        <div className="SuggestedArticles">
+        <div id="SuggestedArticles">
           <Route path={`${path}`}>
             <div className="SuggestedArticles__tags">
             {
@@ -73,7 +73,7 @@ function SuggestedArticles(props){
               ))
             }
             </div>
-            <Articles articles={suggestedArticles}/>
+            <Articles type="otherArticle" articles={suggestedArticles}/>
           </Route>
 
           <Route path={`${path}/topic/:tagName`}>
@@ -83,6 +83,7 @@ function SuggestedArticles(props){
                 element!=null
                 &&
                 <Article
+                  type="otherArticle"
                   key={element._id}
                   dbId={element._id}
                   heading={element.heading}

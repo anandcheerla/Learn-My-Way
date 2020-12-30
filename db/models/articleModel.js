@@ -9,6 +9,7 @@ const articleSchema=mongoose.Schema({
 	units: [{type: unitSchema}],
 	imageFile: {type: String},
 	articleTags: [{type: String}],
+	uploaderFirstName: {type: String},
 	likes: {type:Number,default:0},
 	views: {type:Number,default:0},
 	likedBy: [{type: String}],

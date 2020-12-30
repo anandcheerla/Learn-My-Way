@@ -2,7 +2,14 @@ import React,{useContext, useState, useRef} from "react";
 import axios from "axios";
 import ls from "local-storage";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import Button from '@material-ui/core/Button';
+import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
+import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
+import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
+import AddIcon from '@material-ui/icons/Add';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { Route, useHistory, useRouteMatch } from "react-router";
+
 
 
 //components
@@ -34,7 +41,10 @@ function Article(props){
     const [unitPriority,setUnitPriority] = useState("");
     const [unitComplexity,setUnitComplexity] = useState("");
 
-    const [filteredUnits,setFilteredUnits] = useState(props.units);
+    const [buttonColor,setButtonColor] = useState("default");
+    const [showUnitCreationForm,setShowUnitCreationForm] = useState(false);
+
+    const [filteredUnits,setFilteredUnits] = useState(props.units || []);
 
     const difficulty_filter = useRef(null);
     const importance_filter = useRef(null);
@@ -58,12 +68,12 @@ function Article(props){
 
     const unitPriorityInputHandler = (e) => {
       e.preventDefault();
-      setUnitPriority(e.target.value);
+      setUnitPriority(e.target.innerText);
     };
 
     const unitComplexityInputHandler = (e) => {
       e.preventDefault();
-      setUnitComplexity(e.target.value);
+      setUnitComplexity(e.target.innerText);
     };
 
 
@@ -100,6 +110,11 @@ function Article(props){
 
     // let acub = document.getElementById("article-create-unit-button");
     // acub.style.opacity = 0.7;
+
+    if(unitShortDescription==="" && unitHeading==="" ){
+      alert("please fill the mandatory fields");
+      return;
+    }
 
     let priority_l = 5;
     let complexity_l = "easy";
@@ -250,6 +265,12 @@ function Article(props){
           appCtx.articles.set(articles_from_context);
       }
     } 
+    else if (option === "save_article") {
+          // axios.delete("/user/article-delete/"+props.dbId).then(res=>{});
+          // let articles_from_context = [...appCtx.articles.get];
+          // articles_from_context[props.articleIndex]=null;
+          // appCtx.articles.set(articles_from_context);
+    } 
     else if (option === "change_visibility") {
       if (event.target.selectedOptions[0].label === "Make private") {
         axios
@@ -280,8 +301,8 @@ function Article(props){
   const unitCreationForm = () => {
 
     return (
-      <div className="">
-        <div className="">
+      <div id="Article__unit-creation-form">
+        <div className="Article__text-area-input">
           <TextareaAutosize
             className=""
             id=""
@@ -291,7 +312,7 @@ function Article(props){
             placeholder="Heading"
           />
         </div>
-        <div className="">
+        <div className="Article__text-area-input">
           <TextareaAutosize
             className=""
             id=""
@@ -302,7 +323,7 @@ function Article(props){
             placeholder="Short description"
           />
         </div>
-        <div className="">
+        <div className="Article__text-area-input">
           <TextareaAutosize
             className=""
             id=""
@@ -314,46 +335,46 @@ function Article(props){
             placeholder="Long description"
           />
         </div>
-        <div className="">
-          <select
-            className=""
-            id=""
-            onChange={(e)=>{unitPriorityInputHandler(e)}}
-            value={unitPriority}
-          >
-            <option value="priority">Priority</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
+        <div className="Article__buttons-input">
+            <Button variant="outlined" onClick={(e)=>{unitPriorityInputHandler(e)}} size="small"  color="default" className="">
+              1
+            </Button>
+            <Button variant="outlined" onClick={(e)=>{unitPriorityInputHandler(e)}} size="small"  color="default" className="">
+              2
+            </Button>
+            <Button variant="outlined" onClick={(e)=>{unitPriorityInputHandler(e)}} size="small"  color="default" className="">
+              3
+            </Button>
+            <Button variant="outlined" onClick={(e)=>{unitPriorityInputHandler(e)}} size="small"  color="default" className="">
+              4
+            </Button>
+            <Button variant="outlined" onClick={(e)=>{unitPriorityInputHandler(e)}} size="small"  color="default" className="">
+              5
+            </Button>
         </div>
-        <div className="">
-          <select
-            className=""
-            id=""
-            onChange={(e)=>{unitComplexityInputHandler(e)}}
-            value={unitComplexity}
-          >
-            <option value="complexity">Complexity</option>
-            <option value="basic">Basic</option>
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
-          </select>
+        <div className="Article__buttons-input">
+          <Button variant="outlined" onClick={(e)=>{unitComplexityInputHandler(e)}} size="small" color="default" className="">
+            Basic
+          </Button>
+          <Button variant="outlined" onClick={(e)=>{unitComplexityInputHandler(e)}} size="small" color="default" className="">
+            Easy
+          </Button>
+          <Button variant="outlined" onClick={(e)=>{unitComplexityInputHandler(e)}} size="small" color="default" className="">
+            Medium
+          </Button>
+          <Button variant="outlined" onClick={(e)=>{unitComplexityInputHandler(e)}} size="small" color="default" className="">
+            Hard
+          </Button>
         </div>
-        <div>
-          <button
-            type="button"
-            onClick={(e) => {
-              createUnit(e);
-            }}
-            className=""
-            id=""
+        <div className="Article--center-align">
+          <Button
+                onClick={(e)=>{createUnit(e)}}
+                variant="outlined"
+                color="primary"
+                endIcon={<AddIcon/>}
           >
-            Create
-          </button>
+          Create
+          </Button>
         </div>
       </div>
     );
@@ -364,18 +385,18 @@ function Article(props){
       <div onClick={(e)=>e.stopPropagation()} className="Article__more_dropdown">
         <select name="more" id="Article__more_dropdown_id" onChange={(e)=>articleMoreSelectHandler(e)}>
           <option value="more">More</option>
-          <option value="delete_article">Delete Article</option>
           <option value="change_visibility">Make {props.visibility==="private"?"public":"private"}</option>
+          <option value="delete_article">Delete Article</option>
+          <option value="save_article">Save</option>
         </select>
       </div>
     );
   }
 
-  const unitFilters=()=>{
 
-      return (
-      <div className="Article__article_filters">
-        <div onClick={(e)=>e.stopPropagation()} id="Article__unit_difficulty_filter">
+  const unitComplexityFilter=()=>{
+    return (
+      <div onClick={(e)=>e.stopPropagation()} id="Article__unit_difficulty_filter">
           <select ref={difficulty_filter} name="complexity" id="Article__unit_difficulty_filter_id" onChange={(e)=>filterByDifficulty(e)}>
 
             <option value="all">Complexity</option>                  
@@ -385,22 +406,23 @@ function Article(props){
             <option value="hard">Hard</option>
           </select>
         </div>
-
-        <div onClick={(e)=>e.stopPropagation()} id="Article__unit_importance_filter">
-          <select ref={importance_filter} name="priority" id="Article__unit_importance_filter_id" onChange={(e)=>filterByImportance(e)}>
-            <option value="all">Priority</option>                  
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-        </div>
-      </div>
-      );
-
+    );
   }
-
+  const unitPriorityFilter=()=>{
+    return (
+      <div onClick={(e)=>e.stopPropagation()} id="Article__unit_importance_filter">
+        <select ref={importance_filter} name="priority" id="Article__unit_importance_filter_id" onChange={(e)=>filterByImportance(e)}>
+          <option value="all">Priority</option>                  
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+    </div>
+    );
+  }
+  
     const articleClickHanlder=()=>{
       if(!articleCliked){
         setArticleClicked(true);
@@ -408,6 +430,7 @@ function Article(props){
         history.push(`${url}/${props.dbId}`);
       }
       else if(articleCliked){
+        setShowUnitCreationForm(false);
         setArticleClicked(false);
         history.push(beforeHoverUrl);
       }
@@ -472,23 +495,40 @@ function Article(props){
     }
 
     let uploadedTime = calculateTimeForArticle();
-
+    console.log(props.uploaderFirstName);
 
     return (
       <div id="Article">
         <div onClick={articleClickHanlder} >
-          <h1>{props.heading}</h1>
-          <p>{props.description}</p>
-          <p>{props.uploaderFirstName}</p>
-          <p>{uploadedTime}</p>
-         
+          <div>
+            <h1>{props.heading}</h1>
+            <p>{props.description}</p>
+          </div>
+          <Route exact path={`${path}`}>
+            <div>
+              {
+                props.type!="myArticle"
+                &&
+                <p>{props.uploaderFirstName}</p>
+              }
+              <p>{uploadedTime}</p>
+            </div>
+          </Route>
+          <div className="Article--right-align" id="Article__more-icon-div">
+            {more()}
+            {/* <MoreHorizIcon/> */}
+          </div>
         </div>
         <Route path={`${path}/${props.dbId}`}>
-          {unitFilters()}
-          {more()}
-          {
-            unitCreationForm()
-          }
+          <div id="Article__filters">
+            {
+              unitComplexityFilter()
+            }
+            {
+              unitPriorityFilter()
+            }
+          </div>
+          
           {
           filteredUnits
           &&
@@ -509,8 +549,32 @@ function Article(props){
             />
           ))
           }
+          <div>
+            <div className="Article--center-align">
+              {
+              !showUnitCreationForm
+              &&
+              <Button
+                onClick={(e)=>{setShowUnitCreationForm(true)}}
+                variant="outlined"
+                color="primary"
+                endIcon={<AddIcon/>}
+              >Unit</Button>
+              }
+            </div>
+            {
+              showUnitCreationForm
+              &&
+              unitCreationForm()
+            }
+          </div>
        </Route>
+       <div>
+          <ThumbUpAltOutlinedIcon/>
+          <ThumbDownAltOutlinedIcon/>
+       </div>
       </div>
+
     );
 
 } 

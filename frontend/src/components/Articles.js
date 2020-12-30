@@ -33,31 +33,29 @@ function Articles(props){
 
     // debugger;
 
+    console.log(props.type);
     return (
-      <div id="Articles">
-        <div>
-            <div id="Articles__articles-container">
-            {
-              props.articles.map((element,ele_ind) => (
-              element!=null
-              &&
-              <Article
-                key={element._id}
-                dbId={element._id}
-                heading={element.heading}
-                description={element.description}
-                units={element.units}
-                lastUpdatedTime={element.lastUpdatedTime}
-                uploaderFirstName={element.uploaderFirstName}
-                uploaderUserName={element.uploaderUserName || appCtx.username.get}
-                visibility={element.visibility}
-                articleIndex={ele_ind}
-              >
-              </Article>))
-            }
-            </div>
-        </div>
-      </div>   
+      <div id="Articles__articles-container">
+        {
+          props.articles.map((element,ele_ind) => (
+          element!=null
+          &&
+          <Article
+            type={props.type}
+            key={element._id}
+            dbId={element._id}
+            heading={element.heading}
+            description={element.description}
+            units={element.units}
+            lastUpdatedTime={element.lastUpdatedTime}
+            uploaderFirstName={element.uploaderFirstName}
+            uploaderUserName={element.uploaderUserName || appCtx.username.get}
+            visibility={element.visibility}
+            articleIndex={ele_ind}
+          >
+          </Article>))
+        }
+      </div> 
     );
 
 }

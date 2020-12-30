@@ -21,6 +21,7 @@ import {AppContext} from './AppContext.js';
 function App(props){
     
     const [username,setUsername] = useState("");
+    const [userDetails,setUserDetails] = useState({});
     const [loginSuccess,setLoginSuccess] = useState(ls.get("authSession")||false);
     const [myArticles,setMyArticles] = useState([]);
     const [tags,setTags] = useState([]);
@@ -30,19 +31,19 @@ function App(props){
       login: {get:loginSuccess, set:setLoginSuccess},
       articles:{get: myArticles, set:setMyArticles},
       username:{get:username,set: setUsername},
-      tags:{get:tags,set: setTags}
+      tags:{get:tags,set: setTags},
+      userDetails: {get:userDetails,set: setUserDetails}
     };
 
  
     return (
-      <>
+    
           <BrowserRouter>
             <AppContext.Provider value={appState}>
                 <Route path="/" component={Main}/>
             </AppContext.Provider>
           </BrowserRouter>
 
-      </>
       );
   
 }

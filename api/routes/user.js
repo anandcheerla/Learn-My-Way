@@ -8,6 +8,7 @@ import userMiddlewares from '../middlewares/userMiddlewares.js';
 
 //services
 import userService from '../../services/userService.js';
+import { userModel } from '../../db/models/userModel.js';
 
 
 const router = express.Router();
@@ -37,8 +38,19 @@ export default (app)=>{
 
     });
 
-    router.get("/suc",function(req,res){
-        res.send(true);
+    router.get("/suc",async function(req,res){
+        let userFromSession=req.session.passport.user;
+        let queryObject={
+            "userFromSession": userFromSession
+        }
+
+        try{
+            let profile = await userService.getUserProfile(queryObject);
+            res.send(profile);
+        }
+        catch(err){
+            res.send(false);
+        }
     });
     router.get("/fail",function(req,res){
         res.send(false);
