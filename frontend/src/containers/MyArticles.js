@@ -205,15 +205,21 @@ function MyArticles(props){
           <div className="MyArticles__auto-complete-helper-div">
               {
                 articleTagsInput.map((tag)=>(
-                  <Tag tagName={tag}/>
+                  tag!='' && <Tag tagName={tag}/>
                 )) 
               }
           </div>
           <div>
             <Autocomplete
               onChange={(e) => {
-                setArticleTagsInput([...articleTagsInput,e.target.innerText]);
+                if(e.target.innerText!='')
+                  setArticleTagsInput([...articleTagsInput,e.target.innerText]);
               }}
+              onKeyUp={(e) => {
+                if(e.key==='Enter')
+                  setArticleTagsInput([...articleTagsInput,e.target.value]);
+              }}
+              autoHighlight='true'
               id="combo-box-demo"
               className="MyArticles__article-creation-form-input"
               options={appCtx.tags.get}
