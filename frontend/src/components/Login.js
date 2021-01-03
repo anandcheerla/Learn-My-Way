@@ -16,14 +16,20 @@ function Login(props){
   const [username,setUsername] = useState("");
   const [password,setPassword] = useState("");
 
+  const [usernameMessage,setUsernameMessage] = useState("");
+  const [passwordMessage,setPasswordMessage] = useState("");
+  const [formMessage,setFormMessage] = useState("");
+
   const loginButton_Ref = useRef(null);
-  const loginErrMsg_Ref = useRef(null);
 
   const appCtx = useContext(AppContext);
   let history=useHistory();
 
   const userLogin = () => {
     // event.preventDefault();
+
+    if(!inputValidation())
+        return;
 
     let formData = {
       username: username,
@@ -32,7 +38,6 @@ function Login(props){
 
     loginButton_Ref.current.innerHTML = "Logging In";
     loginButton_Ref.current.style.opacity = 0.7;
-    loginErrMsg_Ref.current.innerHTML = "";
     // console.log(props);
 
     axios.post("/user/login", formData).then((res) => {
@@ -43,19 +48,39 @@ function Login(props){
         history.push('/home');
         
       } else {
-        loginErrMsg_Ref.current.innerHTML = "* Incorrect Credentials";
-        loginErrMsg_Ref.current.style.color = "red";
+        setFormMessage("Incorrect Credentials");
         loginButton_Ref.current.innerHTML = "Login";
         loginButton_Ref.current.style.opacity = 1;
       }
     });
   }; //userLogin function end
 
+  const inputValidation = ()=>{
+    let flag=true;
+    if(username==''){
+      setUsernameMessage("Please Fill in this field");
+      flag=false;
+    }
+    else{      
+      setUsernameMessage("");
+    }
+    
+    if(password==''){
+      setPasswordMessage("Please Fill in this field");
+      flag=false;
+    }
+    else{
+      setPasswordMessage("");
+    }
+
+    return flag;
+  }
+
 
   return (
       <div id="Login">
         <div className="Login__input-div">
-          <label htmlFor="username">Username</label>
+          {/* <label htmlFor="username">Username</label> */}
           <input
             type="text"
             className="Login__input-field"
@@ -66,9 +91,10 @@ function Login(props){
             value = {username}
             required
           />
+          <label className="Login__input-validation-message">{usernameMessage}</label>
         </div>
         <div className="Login__input-div">
-          <label htmlFor="password">Password</label>
+          {/* <label htmlFor="password">Password</label> */}
           <input
             type="password"
             className="Login__input-field"
@@ -79,9 +105,10 @@ function Login(props){
             value = {password}
             required
           />
+          <label className="Login__input-validation-message">{passwordMessage}</label>
         </div>
         <div className="Login__message">
-          <h6 ref={loginErrMsg_Ref} id="Login__login-err-msg"></h6>
+          <label id="Login__login-err-msg" className="Login__input-validation-message">{formMessage}</label>
         </div>
         
         <div className="Login__button">

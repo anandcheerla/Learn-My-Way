@@ -33,7 +33,7 @@ export default (app)=>{
            res.send(true);
         }
         else{
-            res.send(false);
+            res.send(sign_up_status);
         }
 
     });

@@ -58,6 +58,34 @@ export default (app)=>{
     });
 
 
+    app.use('/article',router);
+
+    router.post('/like-article/:articleId',async (req,res)=>{
+        let articleId=req.params.articleId;
+
+        try{
+            let status = await articleService.likeArticle(articleId);
+            res.send(true);
+        }
+        catch(err){
+            console.log(err);
+            res.send(false);
+        }
+    });
+
+    router.post('/unlike-article/:articleId',async (req,res)=>{
+        let articleId=req.params.articleId;
+
+        try{
+            let status = await articleService.unlikeArticle(articleId);
+            res.send(true);
+        }
+        catch(err){
+            console.log(err);
+            res.send(false);
+        }
+    });
+
 
     
 

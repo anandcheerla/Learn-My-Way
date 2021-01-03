@@ -40,3 +40,12 @@
 #Article__filters{
 	display: flex;
 }
+
+#Article__likes-div{
+	display:flex;
+	padding: 8px;
+	width: fit-content;
+}
+#Article__likes-div div{
+	margin-right: 10px;
+}

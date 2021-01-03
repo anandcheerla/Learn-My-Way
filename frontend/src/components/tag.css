@@ -1,10 +1,11 @@
 
-.Tag{
+.Tag__tag{
   /* background: grey;   */
-  padding: 0 10px;
+  padding: 3px 5px;
   margin: 10px;
   width: fit-content;
   min-width: 60px;
   border: 1px solid grey;
-  border-radius: 10px;
+  border-radius: 5px;
+  text-align: center;
 }

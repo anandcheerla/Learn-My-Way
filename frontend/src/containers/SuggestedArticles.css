@@ -1,14 +1,25 @@
 
 #SuggestedArticles{
     display: flex;
-    width: auto;
+    /* width: auto; */
     flex-wrap: wrap;
+    min-width: 600px;
 }
 
-.SuggestedArticles__tags{
+#SuggestedArticles__tags{
     display: flex;
     height: 100%;
     /* min-width: 100%; */
+     width: 50%;
     flex-wrap: wrap;
+}
+
+#Suggested__articles-container{
+    width: 50%;
+}
+
+
+.center-align{
+    text-align: center;
 }
 

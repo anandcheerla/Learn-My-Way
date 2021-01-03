@@ -22,18 +22,25 @@ function Register(props){
   const [contactNumber,setContactNumber] = useState("");
 
 
+  const [usernameMessage,setUsernameMessage] = useState("");
+  const [passwordMessage,setPasswordMessage] = useState("");
+  const [firstNameMessage,setFirstNameMessage] = useState("");
+  const [lastNameMessage,setLastNameMessage] = useState("");
+  const [emailMessage,setEmailMessage] = useState("");
+  const [contactNumberMessage,setContactNumberMessage] = useState("");
+  const [formMessage,setFormMessage] = useState("");
+
 	const userRegistration = (event) => {
-	    event.preventDefault();
+      event.preventDefault();
+      if(!inputValidation())
+        return;
 
 	    let signup_button = document.getElementById(
 	      "Register__register-button"
 	    );
-	    let register_error_ele = document.getElementById(
-	      "Register__register-err-msg"
-	    );
+	    
 	    signup_button.innerHTML = "Signing Up";
 	    signup_button.style.opacity = 0.7;
-	    register_error_ele.innerHTML = "";
 
 	    let formData = {
 	      username: username,
@@ -45,9 +52,9 @@ function Register(props){
 	    };
 
 	    axios.post("/user/register", formData).then((res) => {
-	      if (res.data==false) {
-	        register_error_ele.innerHTML = "* " + res.data.message;
-	        register_error_ele.style.color = "red";
+	      if (res.data!=true) {
+          console.log("coming");
+	        setFormMessage(res.data);
 	        signup_button.innerHTML = "Register";
 	        signup_button.style.opacity = 1;
 	        return;
@@ -58,123 +65,178 @@ function Register(props){
        });
       }
 
- 	let inputValidation = (event) => {
+ 	let inputValidation = () => {
 
-	    event.preventDefault();
-	    // console.log(event.target.name);
-	    if (event.target.name === "contactNumber") {
-	      let isContactNumber = /^[0-9]+$/.test(event.target.value);
+      let flag=true;
 
-	      if (!isContactNumber) {
-	        // console.log("I think contact number should contain Numbers");
-	        document
-	          .getElementById("contactNumber")
-	          .setCustomValidity("I think contact number should contain Numbers");
-	      } else {
-	        document.getElementById("contactNumber").setCustomValidity("");
-	      }
-	    } else if (event.target.name === "password") {
-	      // let isFirstName = /[0-/.test(event.target.value);
+      //empty check
+      if(firstName==''){
+        setFirstNameMessage("Please Fill in this field");
+        flag=false;
+      }
+      else{
+        setFirstNameMessage("");
+      }
+      if(lastName==''){
+        setLastNameMessage("Please Fill in this field");
+        flag=false;
+      }
+      else{
+        setLastNameMessage("");
+      }
 
-	      if (event.target.value.length < 5) {
-	        // console.log("I think contact number should contain Numbers");
-	        document
-	          .getElementById("password")
-	          .setCustomValidity("I think contact number should contain Numbers");
-	      } else {
-	        document.getElementById("password").setCustomValidity("");
-	      }
-	    }
+      if(username==''){
+        setUsernameMessage("Please Fill in this field");
+        flag=false;
+      }
+      else{      
+        setUsernameMessage("");
+      }
+      
+      
+      
+      if(password==''){
+        setPasswordMessage("Please Fill in this field");
+        flag=false;
+      }
+      else if(password.length<8)
+      {
+        setPasswordMessage("Password Must be greater than 7 Characters");
+        flag=false;
+      }
+      else{
+        setPasswordMessage("");
+      }
+      
+
+      //custom validity, @ and dot are mandatory for this
+      let isEmail = /^.*@.*\..+/.test(email);
+      if(email==''){
+        setEmailMessage("Please Fill in this field");
+        flag=false;
+      }
+      else if(!isEmail){
+        setEmailMessage("Please Enter the correct Email");
+        flag=false;
+      }
+      else{
+        setEmailMessage("");
+      }
+
+      
+      let isContactNumber = /^[0-9]+$/.test(contactNumber);
+
+      if(contactNumber==''){
+        setContactNumberMessage("Please Fill in this field");
+        flag=false;
+      }
+
+      else if (!isContactNumber) {
+        setContactNumberMessage("Contact number should contain digits");
+         flag=false;
+      }
+      else{
+        setContactNumberMessage("");
+      }
+        
+      return flag;
+      
   	};
 
 
     return (
-      <form id="Register">
+      <div id="Register">
         <div className="Register__input-div">
-          <label htmlFor="firstName">First name</label>
+          {/* <label htmlFor="firstName">First name</label> */}
           <input
             type="text"
+            onChange={(e)=>{setFirstName(e.target.value)}}
             className="Register__input-field"
             id="Register__first-name"
             name="firstName"
-            placeholder="first name"
-            onChange={(e)=>{setFirstName(e.target.value)}}
+            placeholder="First Name"
             required
           />
+          <label className="Register__input-validation-message">{firstNameMessage}</label>
         </div>
         <div className="Register__input-div">
-          <label htmlFor="lastName">Last name</label>
+          {/* <label htmlFor="lastName">Last name</label> */}
           <input
             type="text"
             className="Register__input-field"
             id="Register__last-name"
             name="lastName"
-            placeholder="last name"
+            placeholder="Last Name"
             onChange={(e)=>{setLastName(e.target.value)}}
             required
           />
+          <label className="Register__input-validation-message">{lastNameMessage}</label>
         </div>
 
         <div className="Register__input-div">
-          <label htmlFor="username">Username</label>
+          {/* <label htmlFor="username">Username</label> */}
           <input
             type="text"
             className="Register__input-field"
             id="Register__username"
             name="username"
-            placeholder="username"
+            placeholder="User Name"
             onChange={(e)=>{setUsername(e.target.value)}}
             required
           />
+          <label className="Register__input-validation-message">{usernameMessage}</label>
         </div>
         <div className="Register__input-div">
-          <label htmlFor="password">Password</label>
+          {/* <label htmlFor="password">Password</label> */}
           <input
             type="password"
             className="Register__input-field"
             id="Register__password"
             name="password"
-            placeholder="password"
+            placeholder="Password"
             onChange={(e)=>{setPassword(e.target.value)}}
             required
           />
+          <label className="Register__input-validation-message">{passwordMessage}</label>
         </div>
 
         <div className="Register__input-div">
-          <label htmlFor="email">Email</label>
+          {/* <label htmlFor="email">Email</label> */}
           <input
             type="email"
             className="Register__input-field"
             id="Register__email"
             name="email"
-            placeholder="email"
+            placeholder="Email"
             onChange={(e)=>{setEmail(e.target.value)}}
             required
           />
+          <label className="Register__input-validation-message">{emailMessage}</label>
         </div>
         <div className="Register__input-div">
-          <label htmlFor="contactNumber">Contact Number</label>
+          {/* <label htmlFor="contactNumber">Contact Number</label> */}
           <input
             type="text"
             // onBlur={inputValidation}
             className="Register__input-field"
             id="Register__contact-number"
             name="contactNumber"
-            placeholder="9999999999"
+            placeholder="Contact Number"
             onChange={(e)=>{setContactNumber(e.target.value)}}
             required
           />
+          <label className="Register__input-validation-message">{contactNumberMessage}</label>
         </div>
         <div className="Register__message">
-          <h6 id="Register__register-err-msg"></h6>
+          <label className="Register__input-validation-message">{formMessage}</label>
         </div>
         <br />
         <div className="Register__button">
-          <Button  onClick={(e)=>userRegistration(e)}  id="Register__register-button" variant="outlined" color="primary">
+          <Button onClick={(e)=>userRegistration(e)}  id="Register__register-button" variant="outlined" color="primary">
             Register
           </Button>
         </div>
-      </form>
+      </div>
     );
 
 }

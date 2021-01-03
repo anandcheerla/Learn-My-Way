@@ -8,4 +8,12 @@
     display: flex;
     flex-direction: column;
     width: 300px;
+    margin-bottom: 10px;
 }
+
+.Register__input-validation-message{
+    color: red;
+    padding-left: 10px;
+    font-size: small;
+}
+

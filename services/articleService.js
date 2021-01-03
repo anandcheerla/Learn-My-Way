@@ -14,12 +14,14 @@ class utilities{
 class articleService{
 
     async getArticlesByTag(tag,pageNum,limit){
+        console.log("hey there...........")
         try{
-            const db_tag = await tagModel.findOne({tagName:tag,visibility:"public"});
+            const db_tag = await tagModel.findOne({tagName:tag});
+
             let articles=[]
             if(db_tag.articles){
                 const article_ids = db_tag.articles.slice(pageNum*limit,pageNum*limit+limit);
-                const db_articles = await articleModel.find({_id:{"$in":article_ids}}); 
+                const db_articles = await articleModel.find({_id:{"$in":article_ids},visibility:"public"}); 
                 return db_articles;
             }            
             else

@@ -41,6 +41,8 @@ function Article(props){
     const [unitPriority,setUnitPriority] = useState("");
     const [unitComplexity,setUnitComplexity] = useState("");
 
+    const [likes,setLikes] = useState(props.likes);
+
     const [buttonColor,setButtonColor] = useState("default");
     const [showUnitCreationForm,setShowUnitCreationForm] = useState(false);
 
@@ -273,9 +275,7 @@ function Article(props){
           // appCtx.articles.set(articles_from_context);
     } 
     else if (option === "change_visibility") {
-      console.log("hey there");
       if (props.visibility==="private") {
-        console.log("hey ttt");
         axios
           .get(`/user/${props.dbId}/make-article-public`)
           .then((res) => {
@@ -451,6 +451,21 @@ function Article(props){
       }
     }
 
+    const likeHandler=()=>{
+      try{
+        axios.post(`/article/like-article/${props.dbId}`).then((res)=>{
+          console.log(res.data);
+          if(res.data==true)
+          {
+            setLikes(likes+1);
+          }
+        });
+      }
+      catch(err){
+        console.log(err);
+      }
+    }
+
     const calculateTimeForArticle=()=>{
       let currentTs=new Date();
       let articleTs=new Date(props.lastUpdatedTime);
@@ -579,8 +594,14 @@ function Article(props){
           </div>
        </Route>
        <div>
-          <ThumbUpAltOutlinedIcon/>
-          <ThumbDownAltOutlinedIcon/>
+          <div id="Article__likes-div">
+            <div>
+              <ThumbUpAltOutlinedIcon onClick={likeHandler}/>
+            </div>
+            <div>
+              <label>{likes}</label>
+            </div>
+          </div>
        </div>
       </div>
 

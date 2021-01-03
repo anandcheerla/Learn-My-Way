@@ -48,11 +48,11 @@ function SuggestedArticles(props){
 
     const fetchArticlesByTag= (event,tagName) =>{
       setTagArticles([]);
+      history.push(`${url}/topic/${tagName}`);
       axios.get(`/topic/${tagName}/0/5`).then(res=>{
         if(res.data!=false){
           const articles = [...res.data];
           setTagArticles(articles);
-          history.push(`${url}/topic/${tagName}`);
         }
       });
     }
@@ -64,7 +64,7 @@ function SuggestedArticles(props){
 
         <div id="SuggestedArticles">
           <Route path={`${path}`}>
-            <div className="SuggestedArticles__tags">
+            <div id="SuggestedArticles__tags">
             {
               tags.map(tag => (
                 <div onClick={(e)=>fetchArticlesByTag(e,tag.tagName)}>
@@ -79,22 +79,30 @@ function SuggestedArticles(props){
           <Route path={`${path}/topic/:tagName`}>
             <div id="Suggested__articles-container">
               {
+                tagArticles.length==0
+                ?
+                <div className="center-align">
+                  <h2>Sorry, No Articles Found with this Tag!!</h2>
+                </div>
+                :
                 tagArticles.map((element) => (
-                element!=null
-                &&
-                <Article
-                  type="otherArticle"
-                  key={element._id}
-                  dbId={element._id}
-                  heading={element.heading}
-                  description={element.description}
-                  units={element.units}
-                  lastUpdatedTime={element.lastUpdatedTime}
-                  uploaderFirstName={element.uploaderFirstName}
-                  uploaderUserName={element.uploaderUserName || appCtx.username.get}
-                  visibility={element.visibility}
-                >
-                </Article>))
+                  element!=null
+                  &&
+                  <Article
+                    type="otherArticle"
+                    key={element._id}
+                    dbId={element._id}
+                    heading={element.heading}
+                    description={element.description}
+                    units={element.units}
+                    lastUpdatedTime={element.lastUpdatedTime}
+                    uploaderFirstName={element.uploaderFirstName}
+                    uploaderUserName={element.uploaderUserName || appCtx.username.get}
+                    visibility={element.visibility}
+                    likes={element.likes}
+                  >
+                  </Article>)
+                )
               }
               </div>
           </Route>

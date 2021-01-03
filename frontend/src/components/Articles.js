@@ -52,6 +52,7 @@ function Articles(props){
             uploaderUserName={element.uploaderUserName || appCtx.username.get}
             visibility={element.visibility}
             articleIndex={ele_ind}
+            likes={element.likes}
           >
           </Article>))
         }
