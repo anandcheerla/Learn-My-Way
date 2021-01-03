@@ -25,6 +25,8 @@ function SuggestedArticles(props){
     const [tags,setTags] = useState([]);
     const [tagArticles,setTagArticles] = useState([]);
 
+    const [tagFetchMessage,setTagFetchMessage] = useState("");
+
     //fetch suggested articles
     const fetchSuggestedArticlesFromDb = () => {
         axios.get("/articles/home").then((res) => {
@@ -53,6 +55,10 @@ function SuggestedArticles(props){
         if(res.data!=false){
           const articles = [...res.data];
           setTagArticles(articles);
+          setTagFetchMessage("");
+        }
+        else{
+          setTagFetchMessage("Sorry, No Articles Found with this Tag!!");
         }
       });
     }
@@ -82,7 +88,7 @@ function SuggestedArticles(props){
                 tagArticles.length==0
                 ?
                 <div className="center-align">
-                  <h2>Sorry, No Articles Found with this Tag!!</h2>
+                  <h2>{tagFetchMessage}</h2>
                 </div>
                 :
                 tagArticles.map((element) => (
