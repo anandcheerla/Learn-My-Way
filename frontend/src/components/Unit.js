@@ -186,7 +186,9 @@ function Unit(props) {
         { 
           <>
           <Route path={`${path}/${props.unitId}`}>
-            <UnitModal heading={props.heading}
+            <UnitModal 
+                      articleType={props.articleType}
+                      heading={props.heading}
                       shortDescription={props.shortDescription}
                       longDescription={props.longDescription}
                       priority={props.priority}

@@ -16,13 +16,14 @@ import mongoose from 'mongoose';
 export default async ()=>{
 	const db = {
 		databaseConnectionUrl:'mongodb://127.0.0.1:27017/sampleDB1',
-		// databaseConnectionUrl : "mongodb+srv://anand:anandcheerla@cluster0.x0oeh.mongodb.net/ReadMyway?retryWrites=true&w=majority",
+		// databaseConnectionUrl : "mongodb+srv://anand:anandcheerla@cluster0.x0oeh.mongodb.net/read_my_way_v2?retryWrites=true&w=majority",
 		secret:'iamakc'
 	};
 
 	var dbUrl = db.databaseConnectionUrl;
 
 	try{
+		console.log("connecting to database....");
 		await mongoose.connect(dbUrl,{ useNewUrlParser: true, useUnifiedTopology: true });
 		console.log("database connection success");
 	}

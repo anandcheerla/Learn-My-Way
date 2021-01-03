@@ -15,7 +15,7 @@ class articleService{
 
     async getArticlesByTag(tag,pageNum,limit){
         try{
-            const db_tag = await tagModel.findOne({tagName:tag});
+            const db_tag = await tagModel.findOne({tagName:tag,visibility:"public"});
             let articles=[]
             if(db_tag.articles){
                 const article_ids = db_tag.articles.slice(pageNum*limit,pageNum*limit+limit);

@@ -1,8 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import EditIcon from '@material-ui/icons/Edit';
 import CancelIcon from '@material-ui/icons/Cancel';
+import CloseIcon from '@material-ui/icons/Close';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import StarIcon from '@material-ui/icons/Star';
 import ls from 'local-storage';
 import { useHistory } from 'react-router';
 import axios from 'axios';
@@ -19,6 +23,8 @@ import {AppContext} from '../AppContext.js';
 function UnitModal(props){
 	const history = useHistory();
 	const appCtx = useContext(AppContext);
+
+	const [moreClicked,setMoreClicked] = useState(false);
 
 	const areYouSureModal = () => {
 
@@ -45,24 +51,70 @@ function UnitModal(props){
 	}
 	};
 
-	
+
+
 	return (
 		<div id="UnitModal">
-			<h2>{props.heading}</h2>
-			<h3>{props.shortDescription}</h3>
-			<h3>{props.longDescription}</h3>
-			<h2>{props.priority}</h2>
-			<h2>{props.complexity}</h2>
-			{
-			appCtx.username.get === props.uploaderUserName
-			&&
-			<div>
-				<h3>Edit</h3>
-				<h3 onClick={deleteUnitButtonHandler}>Delete</h3>
+			<div id="UnitModal__inner-div">
+				<div id="UnitModal__unit-data">
+					{
+					props.heading!=""
+					&&
+					<div className="UnitModal--background-grey">
+						<h2>{props.heading}</h2>
+					</div>
+					}
+					{
+					props.shortDescription!=""
+					&&
+					<div className="UnitModal--background-grey">      
+						<h3>{props.shortDescription}</h3>
+					</div>
+					}
+					{
+					props.longDescription!=""
+					&&
+					<div className="UnitModal--background-grey">
+						<h3>{props.longDescription}</h3>
+					</div>
+					}
+				</div>
+				<div>
+					<CloseIcon onClick={(e)=>closeButtonHandler(e)}/>
+					{
+					props.articleType==="myArticle"
+					&&
+					<div id="UnitModal__more">
+						<div onClick={(e)=>{setMoreClicked(!moreClicked)}}>
+							More <ExpandMoreIcon/>
+						</div>
+						{
+						moreClicked
+						&&
+						<div onClick={deleteUnitButtonHandler}>
+							Delete
+						</div>
+						}
+						{
+						moreClicked
+						&&
+						<div>
+							Edit
+						</div>
+						}
+					</div>
+					}
+					<div className="">
+					{
+						Array(props.priority).fill(1).map(()=>(<StarIcon/>))
+					}
+					{
+						Array(5-props.priority).fill(1).map(()=>(<StarBorderIcon/>))
+					}
+					<h2>{props.complexity}</h2>
+					</div>
+				</div>
 			</div>
-			}
-			
-			<h1 onClick={(e)=>closeButtonHandler(e)}>CLOSE X</h1>
 		</div>
 		);
 }

@@ -146,8 +146,9 @@ function Article(props){
     appCtx.articles.set(articles_from_context);
 
 
-    let complexity = difficulty_filter.current.value;
-    let importance = importance_filter.current.value;
+
+    let complexity = difficulty_filter.current && difficulty_filter.current.value || "all";
+    let importance = importance_filter.current && importance_filter.current.value || "all";
 
     if (
       (complexity === "all" || formData.complexity === complexity) &&
@@ -272,23 +273,22 @@ function Article(props){
           // appCtx.articles.set(articles_from_context);
     } 
     else if (option === "change_visibility") {
-      if (event.target.selectedOptions[0].label === "Make private") {
+      console.log("hey there");
+      if (props.visibility==="private") {
+        console.log("hey ttt");
         axios
-          .post("/settings/article-visibility/" + props.dbId, {
-            visibility: "private",
-          })
+          .get(`/user/${props.dbId}/make-article-public`)
           .then((res) => {
-            if (res.data === "success")
+            console.log(res.data);
+            if (res.data === true)
               event.target.selectedOptions[0].label = "Make public";
           });
       }
        else {
         axios
-          .post("/settings/article-visibility/" + props.dbId, {
-            visibility: "public",
-          })
+          .get(`/user/${props.dbId}/make-article-private`)
           .then((res) => {
-            if (res.data === "success")
+            if (res.data === false)
               event.target.selectedOptions[0].label = "Make private";
           });
       }
@@ -520,6 +520,11 @@ function Article(props){
           </div>
         </div>
         <Route path={`${path}/${props.dbId}`}>
+          {
+          props.units 
+          &&
+          props.units.length>0
+          &&
           <div id="Article__filters">
             {
               unitComplexityFilter()
@@ -528,6 +533,7 @@ function Article(props){
               unitPriorityFilter()
             }
           </div>
+          }
           
           {
           filteredUnits
@@ -535,7 +541,8 @@ function Article(props){
           filteredUnits.map((unit)=>(
             ls.get(unit._id)==null
             &&
-            <Unit 
+            <Unit
+            articleType={props.type}
             heading={unit.heading} 
             shortDescription={unit.shortDescription} 
             longDescription={unit.longDescription}
@@ -553,6 +560,8 @@ function Article(props){
             <div className="Article--center-align">
               {
               !showUnitCreationForm
+              &&
+              props.type==="myArticle"
               &&
               <Button
                 onClick={(e)=>{setShowUnitCreationForm(true)}}

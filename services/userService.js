@@ -349,7 +349,7 @@ class userService{
         try{
             const db_article = await articleModel.findOne({_id:queryObject.articleId});
             db_article.visibility="public";
-            await db_.save();
+            await db_article.save();
             return true;
         }
         catch(err){
@@ -364,7 +364,7 @@ class userService{
         try{
             const db_article = await articleModel.findOne({_id:queryObject.articleId});
             db_article.visibility="private";
-            await db_.save();
+            await db_article.save();
             return true;
         }
         catch(err){
@@ -379,7 +379,7 @@ class userService{
         try{
             const db_article = await articleModel.findOne({_id:queryObject.articleId});
             db_article.usersCanEdit=true;
-            await db_.save();
+            await db_article.save();
             return true;
         }
         catch(err){

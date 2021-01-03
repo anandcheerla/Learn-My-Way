@@ -218,8 +218,48 @@ export default (app)=>{
         
     });
 
-    
 
+    router.get("/:articleId/make-article-public",userMiddlewares.isLoggedIn,async function(req,res){
+        
+        let articleId=req.params.articleId;
+
+        let queryObject={
+            "articleId":articleId,
+        }
+
+        console.log(articleId);
+        try{
+            console.log("hey there");
+            let done = await userService.makeArticlePublic(queryObject);
+            console.log(res);
+            if(done)
+                res.send(true);
+            else
+                res.send(false);
+        }
+        catch(err){
+            res.send(false);
+        }
+    });
+
+    router.get("/:articleId/make-article-private",userMiddlewares.isLoggedIn,async function(req,res){
+        let articleId=req.params.articleId;
+
+        let queryObject={
+            "articleId":articleId,
+        }
+
+        try{
+            let done = await userService.makeArticlePrivate(queryObject);
+            if(done)
+                res.send(true);
+            else
+                res.send(false);
+        }
+        catch(err){
+            res.send(false);
+        }
+    });
     
 
     router.get("/akc",function(req,res){

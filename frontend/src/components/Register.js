@@ -2,7 +2,12 @@ import React,{useState} from 'react';
 import axios from "axios";
 import ls from "local-storage";
 import { useHistory } from 'react-router';
+import Button from '@material-ui/core/Button';
 
+
+
+//css
+import './Register.css';
 
 
 function Register(props){
@@ -84,12 +89,12 @@ function Register(props){
 
 
     return (
-      <form className="Register">
-        <div className="Register__input">
+      <form id="Register">
+        <div className="Register__input-div">
           <label htmlFor="firstName">First name</label>
           <input
             type="text"
-            className=""
+            className="Register__input-field"
             id="Register__first-name"
             name="firstName"
             placeholder="first name"
@@ -97,11 +102,11 @@ function Register(props){
             required
           />
         </div>
-        <div className="Register__input">
+        <div className="Register__input-div">
           <label htmlFor="lastName">Last name</label>
           <input
             type="text"
-            className=""
+            className="Register__input-field"
             id="Register__last-name"
             name="lastName"
             placeholder="last name"
@@ -110,11 +115,11 @@ function Register(props){
           />
         </div>
 
-        <div className="Register__input">
+        <div className="Register__input-div">
           <label htmlFor="username">Username</label>
           <input
             type="text"
-            className=""
+            className="Register__input-field"
             id="Register__username"
             name="username"
             placeholder="username"
@@ -122,11 +127,11 @@ function Register(props){
             required
           />
         </div>
-        <div className="Register__input">
+        <div className="Register__input-div">
           <label htmlFor="password">Password</label>
           <input
             type="password"
-            className=""
+            className="Register__input-field"
             id="Register__password"
             name="password"
             placeholder="password"
@@ -135,11 +140,11 @@ function Register(props){
           />
         </div>
 
-        <div className="Register__input">
+        <div className="Register__input-div">
           <label htmlFor="email">Email</label>
           <input
             type="email"
-            className=""
+            className="Register__input-field"
             id="Register__email"
             name="email"
             placeholder="email"
@@ -147,12 +152,12 @@ function Register(props){
             required
           />
         </div>
-        <div className="Register__input">
+        <div className="Register__input-div">
           <label htmlFor="contactNumber">Contact Number</label>
           <input
             type="text"
             // onBlur={inputValidation}
-            className=""
+            className="Register__input-field"
             id="Register__contact-number"
             name="contactNumber"
             placeholder="9999999999"
@@ -165,14 +170,9 @@ function Register(props){
         </div>
         <br />
         <div className="Register__button">
-          <button
-            type="submit"
-            id="Register__register-button"
-            className=""
-            onClick={(e)=>userRegistration(e)}
-          >
+          <Button  onClick={(e)=>userRegistration(e)}  id="Register__register-button" variant="outlined" color="primary">
             Register
-          </button>
+          </Button>
         </div>
       </form>
     );

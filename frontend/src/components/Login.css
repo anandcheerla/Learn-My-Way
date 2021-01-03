@@ -1,0 +1,16 @@
+#Login{
+    display: flex;
+    flex-direction: column;
+}
+.Login__input-field{
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#Login div{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    /* transform: rotate(5deg); */
+}
+

@@ -1,0 +1,11 @@
+
+.Register__input-field{
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#Register div{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}

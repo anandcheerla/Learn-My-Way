@@ -2,9 +2,12 @@ import React,{useState,useRef,useContext} from 'react';
 import axios from "axios";
 import ls from "local-storage";
 import {useHistory} from "react-router-dom";
+import Button from '@material-ui/core/Button';
 
 import {AppContext} from '../AppContext.js';
 
+//css
+import './Login.css'; 
 
 
 function Login(props){
@@ -50,12 +53,12 @@ function Login(props){
 
 
   return (
-      <div className="Login">
-        <div className="Login__input">
+      <div id="Login">
+        <div className="Login__input-div">
           <label htmlFor="username">Username</label>
           <input
             type="text"
-            className=""
+            className="Login__input-field"
             id="Login__username"
             name="username"
             placeholder="username"
@@ -64,11 +67,11 @@ function Login(props){
             required
           />
         </div>
-        <div className="Login__input">
+        <div className="Login__input-div">
           <label htmlFor="password">Password</label>
           <input
             type="password"
-            className=""
+            className="Login__input-field"
             id="Login__password"
             name="password"
             placeholder="password"
@@ -80,15 +83,11 @@ function Login(props){
         <div className="Login__message">
           <h6 ref={loginErrMsg_Ref} id="Login__login-err-msg"></h6>
         </div>
+        
         <div className="Login__button">
-          <button
-            onClick={userLogin}
-            id="Login__login-button"
-            className=""
-            ref={loginButton_Ref}
-          >
-            Login
-          </button>
+          <Button  onClick={userLogin} ref={loginButton_Ref} variant="outlined" color="primary">
+            Log In
+          </Button>
         </div>
       </div>
     );
