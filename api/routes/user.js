@@ -18,6 +18,7 @@ export default (app)=>{
     app.use('/user',router);
 
     router.post("/register",async function(req,res){
+        
         console.log(req.body);
 
         let queryObject={
@@ -43,6 +44,7 @@ export default (app)=>{
         let queryObject={
             "userFromSession": userFromSession
         }
+        console.log("success");
 
         try{
             let profile = await userService.getUserProfile(queryObject);
@@ -52,14 +54,16 @@ export default (app)=>{
             res.send(false);
         }
     });
+    
     router.get("/fail",function(req,res){
+        console.log("fail");
         res.send(false);
     });
     
 
     router.post("/login",passport.authenticate("local",{successRedirect: "/user/suc",failureRedirect: "/user/fail"}),function(req,res){
         console.log("success");
-        res.send(true);
+        // res.send(true);
         // res.send("Login success");
     });
 

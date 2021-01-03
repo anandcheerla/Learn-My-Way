@@ -15,8 +15,8 @@ import mongoose from 'mongoose';
 
 export default async ()=>{
 	const db = {
-		databaseConnectionUrl:'mongodb://127.0.0.1:27017/sampleDB1',
-		// databaseConnectionUrl : "mongodb+srv://anand:anandcheerla@cluster0.x0oeh.mongodb.net/read_my_way_v2?retryWrites=true&w=majority",
+		// databaseConnectionUrl:'mongodb://127.0.0.1:27017/sampleDB1',
+		databaseConnectionUrl : "mongodb+srv://anand:anandcheerla@cluster0.x0oeh.mongodb.net/read_my_way_v2?retryWrites=true&w=majority",
 		secret:'iamakc'
 	};
 
