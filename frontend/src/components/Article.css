@@ -18,7 +18,28 @@
 .Article__text-area-input textarea{
 	width: 80%;
 	padding: 5px;
+	border-radius: 4px;
 }
+
+.Article__buttons-input-outer-div{
+	display: flex;
+	justify-content: center;
+}
+
+.Article__buttons-input-outer-div div{
+	display: flex;
+	flex-direction: row;
+	width: 80%;
+}
+
+.Article__buttons-input{
+	width: 100%;
+}
+.Article__buttons-input select{
+	width: 100%;
+	padding: 5px;
+	border-radius: 4px;
+} 
 
 .Article__buttons-input{
 	text-align: center;

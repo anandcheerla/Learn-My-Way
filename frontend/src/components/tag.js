@@ -6,8 +6,8 @@ import './Tag.css';
 function Tag(props){
 
     return (
-        <div class="Tag">
-            <h4 class="Tag__tag">{props.tagName}</h4>
+        <div className="Tag">
+            <h4 className="Tag__tag">{props.tagName}</h4>
         </div>
     );
 }

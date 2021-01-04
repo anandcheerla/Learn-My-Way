@@ -41,7 +41,6 @@ function MyArticles(props){
   //fetch my articles
   const fetchMyArticlesFromDb = () => {
       axios.get("/user/my-articles").then((res) => {
-        console.log(res.data);
         if(res.data!=false){
           let articles_temp_var = [...res.data];
           let fetchArticlesFromDb_temp_var = true;
@@ -49,7 +48,6 @@ function MyArticles(props){
           appCtx.articles.set(articles_temp_var);
           setMyArticles(articles_temp_var);
           setFetchedMyArticlesFromDb(fetchArticlesFromDb_temp_var);
-          console.log(articles_temp_var);
 
         }
 

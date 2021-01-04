@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
 import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 import AddIcon from '@material-ui/icons/Add';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { Route, useHistory, useRouteMatch } from "react-router";
@@ -71,12 +72,12 @@ function Article(props){
 
     const unitPriorityInputHandler = (e) => {
       e.preventDefault();
-      setUnitPriority(e.target.innerText);
+      setUnitPriority(e.target.value);
     };
 
     const unitComplexityInputHandler = (e) => {
       e.preventDefault();
-      setUnitComplexity(e.target.innerText);
+      setUnitComplexity(e.target.value);
     };
 
 
@@ -330,36 +331,28 @@ function Article(props){
             placeholder="Long description"
           />
         </div>
-        <div className="Article__buttons-input">
-            <Button variant="outlined" onClick={(e)=>{unitPriorityInputHandler(e)}} size="small"  color="default" className="">
-              1
-            </Button>
-            <Button variant="outlined" onClick={(e)=>{unitPriorityInputHandler(e)}} size="small"  color="default" className="">
-              2
-            </Button>
-            <Button variant="outlined" onClick={(e)=>{unitPriorityInputHandler(e)}} size="small"  color="default" className="">
-              3
-            </Button>
-            <Button variant="outlined" onClick={(e)=>{unitPriorityInputHandler(e)}} size="small"  color="default" className="">
-              4
-            </Button>
-            <Button variant="outlined" onClick={(e)=>{unitPriorityInputHandler(e)}} size="small"  color="default" className="">
-              5
-            </Button>
-        </div>
-        <div className="Article__buttons-input">
-          <Button variant="outlined" onClick={(e)=>{unitComplexityInputHandler(e)}} size="small" color="default" className="">
-            Basic
-          </Button>
-          <Button variant="outlined" onClick={(e)=>{unitComplexityInputHandler(e)}} size="small" color="default" className="">
-            Easy
-          </Button>
-          <Button variant="outlined" onClick={(e)=>{unitComplexityInputHandler(e)}} size="small" color="default" className="">
-            Medium
-          </Button>
-          <Button variant="outlined" onClick={(e)=>{unitComplexityInputHandler(e)}} size="small" color="default" className="">
-            Hard
-          </Button>
+        <div className="Article__buttons-input-outer-div">
+          <div>
+          <div className="Article__buttons-input">
+              <select onChange={(e)=>{unitPriorityInputHandler(e)}}>
+                <option>Priority</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+          </div>
+          <div className="Article__buttons-input">
+            <select onChange={(e)=>{unitComplexityInputHandler(e)}}>
+                <option>Complexity</option>
+                <option>Basic</option>
+                <option>Easy</option>
+                <option>Medium</option>
+                <option>Hard</option>
+            </select>
+          </div>
+          </div>
         </div>
         <div className="Article--center-align">
           <Button
