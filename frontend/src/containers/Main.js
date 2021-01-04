@@ -1,7 +1,7 @@
 import React,{useState,useContext} from "react";
 import {Route,Link,Redirect} from "react-router-dom";
-import axios from "axios";
-import ls from "local-storage";
+// import axios from "axios";
+// import ls from "local-storage";
 
 //css
 import "./Main.css";

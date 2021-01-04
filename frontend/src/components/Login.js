@@ -45,6 +45,8 @@ function Login(props){
         appCtx.login.set(true);
         ls.set("authSession",true);
         appCtx.username.set(formData.username);
+        appCtx.userDetails.set(res.data);
+        ls.set("savedArticles",res.data.savedArticles);
         history.push('/home');
         
       } else {

@@ -42,6 +42,7 @@ function Article(props){
     const [unitComplexity,setUnitComplexity] = useState("");
 
     const [likes,setLikes] = useState(props.likes);
+    const [articleSaved,setArticleSaved] = useState(props.articleSaved);
 
     const [buttonColor,setButtonColor] = useState("default");
     const [showUnitCreationForm,setShowUnitCreationForm] = useState(false);
@@ -203,7 +204,6 @@ function Article(props){
     let complexity = event.target.value;
     let importance = importance_filter.current.value;
 
-    console.log(props.units);
     let units = [...props.units];
     let required_units = [];
 
@@ -213,8 +213,7 @@ function Article(props){
         (complexity == "all" || units[i].complexity.toLowerCase() == complexity) &&
         (importance == "all" || units[i].priority == Number(importance))
       ){
-        // console.log(complexity);
-        // console.log(units[i].complexity);
+    
         required_units.push(units[i]);
       }
     }
@@ -269,17 +268,13 @@ function Article(props){
       }
     } 
     else if (option === "save_article") {
-          // axios.delete("/user/article-delete/"+props.dbId).then(res=>{});
-          // let articles_from_context = [...appCtx.articles.get];
-          // articles_from_context[props.articleIndex]=null;
-          // appCtx.articles.set(articles_from_context);
+          saveArticleHandler();
     } 
     else if (option === "change_visibility") {
       if (props.visibility==="private") {
         axios
           .get(`/user/${props.dbId}/make-article-public`)
           .then((res) => {
-            console.log(res.data);
             if (res.data === true)
               event.target.selectedOptions[0].label = "Make public";
           });
@@ -387,7 +382,11 @@ function Article(props){
           <option value="more">More</option>
           <option value="change_visibility">Make {props.visibility==="private"?"public":"private"}</option>
           <option value="delete_article">Delete Article</option>
-          <option value="save_article">Save</option>
+          {
+            !props.articleSaved
+            &&
+            <option value="save_article">Save</option>
+          }
         </select>
       </div>
     );
@@ -437,7 +436,6 @@ function Article(props){
     }
 
     const articleHoverHandler=()=>{
-      console.log(history.location.pathname);
       if(!articleCliked){
         if(!articleHovered){
           setArticleHovered(true);
@@ -453,17 +451,52 @@ function Article(props){
 
     const likeHandler=()=>{
       try{
-        axios.post(`/article/like-article/${props.dbId}`).then((res)=>{
+        axios.post(`/user/like-article/${props.dbId}`).then((res)=>{
+          console.log("coming");
           console.log(res.data);
-          if(res.data==true)
-          {
+          if(res.data=="liked"){
             setLikes(likes+1);
+          }
+          else if(res.data=="unliked"){
+            setLikes(likes-1);
           }
         });
       }
       catch(err){
         console.log(err);
       }
+    }
+
+    const saveArticleHandler = ()=>{
+      try{
+        axios.post(`/user/save-article/${props.dbId}`).then((res)=>{
+          if(res.data==true){
+            console.log("saved");
+            setArticleSaved(true);
+            ls.set(props.dbId,true);
+          }
+        });
+      }
+      catch(err){
+        console.log(err);
+      }
+
+    }
+
+    const unsaveArticleHandler = ()=>{
+      try{
+        axios.post(`/user/unsave-article/${props.dbId}`).then((res)=>{
+          if(res.data==true){
+            console.log("removed from saved articles");
+            setArticleSaved(false);
+            ls.set(props.dbId,false);
+          }
+        });
+      }
+      catch(err){
+        console.log(err);
+      }
+
     }
 
     const calculateTimeForArticle=()=>{
@@ -510,7 +543,8 @@ function Article(props){
     }
 
     let uploadedTime = calculateTimeForArticle();
-    console.log(props.uploaderFirstName);
+
+    // console.log(props.articleSaved);
 
     return (
       <div id="Article">

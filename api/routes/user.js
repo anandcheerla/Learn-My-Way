@@ -264,6 +264,80 @@ export default (app)=>{
             res.send(false);
         }
     });
+
+    router.post("/like-article/:articleId",userMiddlewares.isLoggedIn,async function(req,res){
+        let articleId=req.params.articleId;
+        let userFromSession=req.session.passport.user;
+
+        let queryObject={
+            "articleId":articleId,
+            "userFromSession": userFromSession
+        }
+
+        try{
+            let done = await userService.likeArticle(queryObject);
+            console.log(done);
+            res.send(done);
+        }
+        catch(err){
+            res.send(false);
+        }
+    });
+
+    router.post("/save-article/:articleId",userMiddlewares.isLoggedIn,async function(req,res){
+        let articleId=req.params.articleId;
+        let userFromSession=req.session.passport.user;
+
+        let queryObject={
+            "articleId":articleId,
+            "userFromSession": userFromSession
+        }
+
+        try{
+            let done = await userService.saveArticle(queryObject);
+            res.send(done);
+        }
+        catch(err){
+            res.send(false);
+        }
+    });
+
+    
+    router.post("/unsave-article/:articleId",userMiddlewares.isLoggedIn,async function(req,res){
+        let articleId=req.params.articleId;
+        let userFromSession=req.session.passport.user;
+
+        let queryObject={
+            "articleId":articleId,
+            "userFromSession": userFromSession
+        }
+
+        try{
+            let done = await userService.unsaveArticle(queryObject);
+            res.send(done);
+        }
+        catch(err){
+            res.send(false);
+        }
+    });
+
+
+    router.get("/get-user",userMiddlewares.isLoggedIn,async function(req,res){
+        let userFromSession=req.session.passport.user;
+
+        let queryObject={
+            "userFromSession": userFromSession
+        }
+
+        try{
+            let user = await userService.getUserProfile(queryObject);
+            res.send(user);
+        }
+        catch(err){
+            res.send(false);
+        }
+    });
+
     
 
     router.get("/akc",function(req,res){

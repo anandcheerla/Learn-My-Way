@@ -1,5 +1,5 @@
 import React,{useContext,useState} from "react";
-import axios from "axios";
+// import axios from "axios";
 import ls from "local-storage";
 
 
@@ -32,8 +32,9 @@ function Articles(props){
     // };
 
     // debugger;
+    let user_saved_articles = ls.get("savedArticles");
+    
 
-    console.log(props.type);
     return (
       <div id="Articles__articles-container">
         {
@@ -53,6 +54,7 @@ function Articles(props){
             visibility={element.visibility}
             articleIndex={ele_ind}
             likes={element.likes}
+            articleSaved={user_saved_articles[element._id]==true || false}
           >
           </Article>))
         }

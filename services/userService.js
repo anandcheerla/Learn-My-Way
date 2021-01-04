@@ -5,6 +5,8 @@ import {unitModel} from '../db/models/unitModel.js';
 import {tagModel} from '../db/models/tagModel.js';
 
 
+import articleService from './articleService.js';
+
 class utilities{
 
     putArticleInTagsCollection(articleId,tags){
@@ -42,8 +44,12 @@ class userService{
             firstName: queryObject.inputData.firstName,
             lastName: queryObject.inputData.lastName,
             email: queryObject.inputData.email,
-            contactNumber: queryObject.inputData.contactNumber
+            contactNumber: queryObject.inputData.contactNumber,
+            likedArticles: new Map(),
+            savedArticles: new Map() 
         });
+
+        console.log(newUser);
         try{
             const temp = await userModel.register(newUser,queryObject.inputData.password);
             return true;
@@ -254,7 +260,7 @@ class userService{
     async saveArticle(queryObject){
 
         try{
-            const db_user = await userModel.findOne({_id:queryObject.userFromSession});
+            const db_user = await userModel.findOne({username:queryObject.userFromSession});
             if(db_user.savedArticles){
                 db_user.savedArticles.set(queryObject.articleId,true);
                 await db_user.save();
@@ -291,14 +297,27 @@ class userService{
     
 
     async likeArticle(queryObject){
-
+        let temp;
         try{
-            const db_user = await userModel.findOne({_id:queryObject.userFromSession});
+            const db_user = await userModel.findOne({username:queryObject.userFromSession});
+            console.log(db_user);
+            console.log(db_user.likedArticles);
             if(db_user.likedArticles){
-                db_user.likedArticles.set(queryObject.articleId,true);
+                if(db_user.likedArticles.get(queryObject.articleId)==undefined || db_user.likedArticles.get(queryObject.articleId)==false){
+                    db_user.likedArticles.set(queryObject.articleId,true);
+                    await articleService.likeArticle(queryObject.articleId);
+                    temp="liked";
+                }
+                else{ 
+                    db_user.likedArticles.set(queryObject.articleId,false);
+                    await articleService.unlikeArticle(queryObject.articleId);
+                    temp="unliked";
+                }
                 await db_user.save();
+                
+                return temp;
             }
-            return true;
+           
         }
         catch(err){
             console.log(err);
@@ -308,23 +327,6 @@ class userService{
 
     }
 
-    async unlikeArticle(queryObject){
-
-        try{
-            const db_user = await userModel.findOne({_id:queryObject.userFromSession});
-            if(db_user.likedArticles){
-                db_user.likedArticles.delete(queryObject.articleId);
-                await db_user.save();
-            }
-            return true;
-        }
-        catch(err){
-            console.log(err);
-        }
-
-        return false;
-
-    }
 
     async addFavouriteTags(queryObject){
 

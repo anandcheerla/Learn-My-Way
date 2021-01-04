@@ -11,7 +11,6 @@ const userSchema=mongoose.Schema({
 	email: {type: String},
 	contactNumber: {type: String},
 	country: {type: String},
-	savedArticles: [{type: mongoose.Schema.ObjectId}],
 	favouriteTags: [{type: String}],
 	articles:[{type: mongoose.Schema.ObjectId}],
 	savedArticles:{type: Map},
