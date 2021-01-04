@@ -52,7 +52,7 @@ passport.deserializeUser(userModel.deserializeUser());
 // app.use(express.static("public"));
 // const __dirname = path.dirname(new URL(import.meta.url).pathname);
 app.use(express.static(path.resolve('./frontend/build')));  
-app.get('/', (req, res) => {    
+app.get('/*', (req, res) => {    
 	res.sendFile(path.resolve('./frontend/build/index.html'));
 });
 
