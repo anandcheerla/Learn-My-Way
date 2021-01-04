@@ -52,14 +52,16 @@ passport.deserializeUser(userModel.deserializeUser());
 // app.use(express.static("public"));
 // const __dirname = path.dirname(new URL(import.meta.url).pathname);
 app.use(express.static(path.resolve('./frontend/build')));  
-app.get('/*', (req, res) => {    
-	res.sendFile(path.resolve('./frontend/build/index.html'));
-});
 
 
 
 // initializeRoutes function returns a express router function which gets executed on the below path as first parameter
 app.use('',initializeRoutes());
+
+app.get('/*', (req, res) => {    
+	res.sendFile(path.resolve('./frontend/build/index.html'));
+});
+
 
 
 const PORT= process.env.PORT || 5000;
