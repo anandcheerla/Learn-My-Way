@@ -210,7 +210,7 @@ function Article(props){
 
     for (let i = 0; i < units.length; i++) {
       if (
-        (complexity == "all" || units[i].complexity == complexity) &&
+        (complexity == "all" || units[i].complexity.toLowerCase() == complexity) &&
         (importance == "all" || units[i].priority == Number(importance))
       ){
         // console.log(complexity);
@@ -237,7 +237,7 @@ function Article(props){
     for (let i = 0; i < units.length; i++) {
       if (
         (importance == "all" || units[i].priority == Number(importance)) &&
-        (complexity == "all" || units[i].complexity == complexity)
+        (complexity == "all" || units[i].complexity.toLowerCase() == complexity)
       )
         required_units.push(units[i]);
     }
