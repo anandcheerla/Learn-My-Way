@@ -6,7 +6,7 @@
 	width: 60%;
 	height: 80%;
 	padding: 5% 20%;
-	background-color: rgba(0,0,0,0.8);
+	background-color: rgba(0,0,0,0.4);
 	overflow: auto;
 	z-index: 1;
 }
@@ -15,17 +15,22 @@
 	display: flex;
 	justify-content: space-between;
 	padding: 40px;
-	background: #ebf0f5;
+	background: white;
 	white-space: pre-wrap;
 	
 }
 
 .UnitModal--background-grey{
 	padding: 2px 15px;
-	background: #CCCCCC;
+	background: #f5f0f0;
 	margin-bottom: 15px ;
 	border-radius: 10px;
 	
+}
+
+.UnitModal__heading{
+	color: rgb(147, 180, 181);
+	padding: 2px 15px;
 }
 
 #UnitModal__unit-data{

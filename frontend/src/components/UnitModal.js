@@ -60,7 +60,7 @@ function UnitModal(props){
 					{
 					props.heading!=""
 					&&
-					<div className="UnitModal--background-grey">
+					<div className="UnitModal__heading">
 						<h2>{props.heading}</h2>
 					</div>
 					}
@@ -68,14 +68,14 @@ function UnitModal(props){
 					props.shortDescription!=""
 					&&
 					<div className="UnitModal--background-grey">      
-						<h3>{props.shortDescription}</h3>
+						<p>{props.shortDescription}</p>
 					</div>
 					}
 					{
 					props.longDescription!=""
 					&&
 					<div className="UnitModal--background-grey">
-						<h3>{props.longDescription}</h3>
+						<p>{props.longDescription}</p>
 					</div>
 					}
 				</div>

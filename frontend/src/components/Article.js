@@ -1,4 +1,4 @@
-import React,{useContext, useState, useRef} from "react";
+import React,{useContext, useState, useRef, useEffect} from "react";
 import axios from "axios";
 import ls from "local-storage";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
@@ -41,6 +41,8 @@ function Article(props){
     const [unitLongDescription,setUnitLongDescription] = useState("");
     const [unitPriority,setUnitPriority] = useState("");
     const [unitComplexity,setUnitComplexity] = useState("");
+    
+    const [articleUploadedTime,setArticleUploadedTime] = useState("Just now");
 
     const [likes,setLikes] = useState(props.likes);
     const [articleSaved,setArticleSaved] = useState(props.articleSaved);
@@ -445,8 +447,6 @@ function Article(props){
     const likeHandler=()=>{
       try{
         axios.post(`/user/like-article/${props.dbId}`).then((res)=>{
-          console.log("coming");
-          console.log(res.data);
           if(res.data=="liked"){
             setLikes(likes+1);
           }
@@ -493,51 +493,35 @@ function Article(props){
     }
 
     const calculateTimeForArticle=()=>{
+      if(props.lastUpdatedTime==undefined || props.lastUpdatedTime==null)
+        return;
       let currentTs=new Date();
       let articleTs=new Date(props.lastUpdatedTime);
-      let diff=currentTs-articleTs;
-      let minutes=diff/(1000*60);   //1000 is for milli seconds and 60 for seconds
+      let diff=Math.floor(currentTs-articleTs);
+      let minutes=Math.floor(diff/(1000*60));   //1000 is for milli seconds and 60 for seconds
 
-      let uploadedTime;
-      if(Math.floor(minutes/60)>0){
-        if(Math.floor(minutes/(60*24))>0){
-          uploadedTime=Math.floor(minutes/(60*24));
-          if(uploadedTime===1)
-            uploadedTime+=" day ago";
-          else
-            uploadedTime+=" days ago";
-        }
-        else{
-          uploadedTime=Math.floor(minutes/60);
-          if(uploadedTime===1)
-            uploadedTime+=" hour ago";
-          else
-            uploadedTime+=" hours ago";
-        }
+
+      let articleMonth = articleTs.getMonth();
+      let articleDate = articleTs.getDate();
+
+      let months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+      if(currentTs.getDate()==articleDate && currentTs.getMonth()==articleMonth){
+        if(minutes<=0)
+          setArticleUploadedTime("Just now");
+        else if(minutes<60)
+          setArticleUploadedTime(minutes+" min ago");
+        else
+          setArticleUploadedTime(Math.floor(minutes/60)+" hours ago");
       }
       else{
-          uploadedTime=Math.floor(minutes); 
-          if(uploadedTime>=0 && uploadedTime<3)
-            uploadedTime="Just now";
-          else
-            uploadedTime+=" minutes ago";    
+        setArticleUploadedTime(months[articleMonth]+" "+articleDate);
       }
 
-
-      let uploader_info_style={
-        "border": "1px solid grey",
-        "borderRadius": "10px",
-        "padding": "5px",
-        "backgroundColor": "#aab3ad",
-        "float": "right"
-      }
-
-      return uploadedTime;
     }
 
-    let uploadedTime = calculateTimeForArticle();
+    useEffect(calculateTimeForArticle,[]);
 
-    // console.log(props.articleSaved);
 
     return (
       <div id="Article">
@@ -553,7 +537,7 @@ function Article(props){
                 &&
                 <p>{props.uploaderFirstName}</p>
               }
-              <p>{uploadedTime}</p>
+              <p>{articleUploadedTime}</p>
             </div>
           </Route>
           <div className="Article--right-align" id="Article__more-icon-div">
