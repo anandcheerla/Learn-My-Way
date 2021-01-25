@@ -47,6 +47,7 @@ function Login(props){
         appCtx.username.set(formData.username);
         appCtx.userDetails.set(res.data);
         ls.set("savedArticles",res.data.savedArticles);
+        console.log(ls.get("savedArticles"));
         history.push('/home');
         
       } else {
@@ -103,7 +104,11 @@ function Login(props){
             id="Login__password"
             name="password"
             placeholder="password"
-            onChange={(e)=>{setPassword(e.target.value)}}
+            onChange={(e)=>{setPassword(e.target.value);}}
+            onKeyDown={(e)=>{
+              if(e.which==13)
+                userLogin();
+            }}
             value = {password}
             required
           />
@@ -114,7 +119,7 @@ function Login(props){
         </div>
         
         <div className="Login__button">
-          <Button  onClick={userLogin} ref={loginButton_Ref} variant="outlined" color="primary">
+          <Button type="submit" onClick={userLogin} ref={loginButton_Ref} variant="outlined" color="primary">
             Log In
           </Button>
         </div>

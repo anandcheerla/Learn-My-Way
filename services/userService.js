@@ -78,6 +78,21 @@ class userService{
         }
     }
 
+    async getSavedArticles(queryObject){
+
+        try{
+            const db_user = await userModel.findOne({username:queryObject.userFromSession});
+            const articleIds = [...db_user.savedArticles.keys()];
+            const db_articles = await articleService.getArticlesByIds(articleIds);
+            return db_articles;
+        }
+        catch(err){
+            console.log(err);
+            return false;
+        }
+
+    }
+
 
     async getUserProfile(queryObject){
 
@@ -278,7 +293,8 @@ class userService{
     async unsaveArticle(queryObject){
 
         try{
-            const db_user = await userModel.findOne({_id:queryObject.userFromSession});
+            const db_user = await userModel.findOne({username:queryObject.userFromSession});
+            console.log(db_user.savedArticles);
             if(db_user.savedArticles){
                 db_user.savedArticles.delete(queryObject.articleId);
                 await db_user.save();

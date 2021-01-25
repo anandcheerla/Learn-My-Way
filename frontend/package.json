@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://read-my-way.herokuapp.com",
+  "homepage": "http://localhost:5000",
   "dependencies": {
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.9.1",
@@ -12,6 +12,8 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.5",
     "jquery": "^3.5.0",
     "local-storage": "^2.0.0",
     "popper.js": "^1.16.1",
@@ -42,5 +44,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://read-my-way.herokuapp.com"
+  "proxy": "http://localhost:5000"
 }

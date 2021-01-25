@@ -91,8 +91,26 @@ export default (app)=>{
         }
         catch(err){
             console.log(false);
+            res.send(false);
         }
     
+    });
+
+    router.get("/saved-articles",userMiddlewares.isLoggedIn,async function(req,res){
+        let userFromSession = req.session.passport.user;
+
+        let queryObject = {
+            "userFromSession": userFromSession
+        }
+
+        try{
+            let saved_articles = await userService.getSavedArticles(queryObject);
+            res.send(saved_articles);
+        }
+        catch(err){
+            console.log(err);
+            res.send(false);
+        }
     });
 
     router.post("/new-article",userMiddlewares.isLoggedIn,async function(req,res){
@@ -108,7 +126,7 @@ export default (app)=>{
         try{
             let new_article = await userService.createNewArticle(queryObject);
             if(new_article==false)
-                res.send("Error in creating new Article");
+                res.send(false);
             else
                 res.send(new_article);
 

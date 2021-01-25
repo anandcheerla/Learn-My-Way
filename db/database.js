@@ -8,7 +8,6 @@
 import mongoose from 'mongoose';
 // import user from './models/userModel.js';
 
-
 // import generateTags from './seedDatabase/generateTags.js';
 // generateTags();
 

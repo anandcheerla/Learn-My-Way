@@ -223,6 +223,10 @@ function Register(props){
             name="contactNumber"
             placeholder="Contact Number"
             onChange={(e)=>{setContactNumber(e.target.value)}}
+            onKeyDown={(e)=>{
+              if(e.which==13)
+                userRegistration(e);
+            }}
             required
           />
           <label className="Register__input-validation-message">{contactNumberMessage}</label>

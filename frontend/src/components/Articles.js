@@ -32,7 +32,7 @@ function Articles(props){
     // };
 
     // debugger;
-    let user_saved_articles = ls.get("savedArticles");
+    
     
 
     return (
@@ -54,7 +54,6 @@ function Articles(props){
             visibility={element.visibility}
             articleIndex={ele_ind}
             likes={element.likes}
-            articleSaved={user_saved_articles[element._id]==true || false}
           >
           </Article>))
         }

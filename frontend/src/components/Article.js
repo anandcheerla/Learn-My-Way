@@ -28,6 +28,9 @@ import {AppContext} from '../AppContext.js';
 function Article(props){
 
     let appCtx = useContext(AppContext);
+    let user_saved_articles_db = ls.get("savedArticles");
+    let user_liked_articles_db = ls.get("likedArticles");
+
     let history=useHistory();
     let {path,url,isExact} = useRouteMatch();
 
@@ -45,18 +48,26 @@ function Article(props){
     const [articleUploadedTime,setArticleUploadedTime] = useState("Just now");
 
     const [likes,setLikes] = useState(props.likes);
-    const [articleSaved,setArticleSaved] = useState(props.articleSaved);
+
+    
+    let sd = ls.get(`${props.dbId}_sd`);
+
+    const [articleSaved,setArticleSaved] = useState(sd || sd== null && user_saved_articles_db && user_saved_articles_db[props.dbId]==true || false);
+    const [articleLiked,setArticleLiked] = useState(ls.get(`${props.dbId}_ld`) || user_liked_articles_db && user_liked_articles_db[props.dbId]==true || false);
+
 
     const [buttonColor,setButtonColor] = useState("default");
     const [showUnitCreationForm,setShowUnitCreationForm] = useState(false);
+    const [moreClicked,setMoreClicked] = useState(false);
 
     const [filteredUnits,setFilteredUnits] = useState(props.units || []);
 
     const difficulty_filter = useRef(null);
     const importance_filter = useRef(null);
 
-
     
+
+
     const unitHeadingInputHandler = (e) => {
       e.preventDefault();
       setUnitHeading(e.target.value);
@@ -83,31 +94,6 @@ function Article(props){
     };
 
 
-    // this.state = {
-    //   dbId: this.props.dbId,
-    //   heading:
-    //     (ls.get(this.props.dbId) && ls.get(this.props.dbId).heading) ||
-    //     this.props.heading,
-    //   description:
-    //     (ls.get(this.props.dbId) && ls.get(this.props.dbId).description) ||
-    //     this.props.description,
-    //   units:
-    //     (ls.get(this.props.dbId) && ls.get(this.props.dbId).units) ||
-    //     this.props.units,
-    //   filteredUnits:
-    //     (ls.get(this.props.dbId) && ls.get(this.props.dbId).filteredUnits) ||
-    //     this.props.units,
-    //   showArticleCreationForm: false,
-    //   showUnitCreationForm: false,
-    //   articleClicked: false,
-    //   articleDeleted:
-    //     (ls.get(this.props.dbId) && ls.get(this.props.dbId).articleDeleted) ||
-    //     false,
-    //   articleDeleteButtonClicked: true,
-
-
-
-  
 
   //add unit api call to /add-unit route and append the unit to units property of state
   const createUnit = (event) => {
@@ -255,12 +241,10 @@ function Article(props){
   };
 
 
-  const articleMoreSelectHandler = (event) => {
+  const articleMoreSelectHandler = (event,option) => {
     event.preventDefault();
     event.persist();
 
-    let option = event.target.value;
-    // debugger;
     if (option === "delete_article") {
       if(areYouSureModal())
       {
@@ -268,26 +252,33 @@ function Article(props){
           let articles_from_context = [...appCtx.articles.get];
           articles_from_context[props.articleIndex]=null;
           appCtx.articles.set(articles_from_context);
+          setMoreClicked(false);
       }
     } 
     else if (option === "save_article") {
           saveArticleHandler();
+          setMoreClicked(false);
     } 
+    else if (option === "remove_article") {
+          removeArticleHandler();
+          setMoreClicked(false);
+    }
     else if (option === "change_visibility") {
+      setMoreClicked(false);
       if (props.visibility==="private") {
         axios
           .get(`/user/${props.dbId}/make-article-public`)
           .then((res) => {
-            if (res.data === true)
-              event.target.selectedOptions[0].label = "Make public";
+            // if (res.data === true)
+              // event.target.selectedOptions[0].label = "Make public";
           });
       }
        else {
         axios
           .get(`/user/${props.dbId}/make-article-private`)
           .then((res) => {
-            if (res.data === false)
-              event.target.selectedOptions[0].label = "Make private";
+            // if (res.data === false)
+              // event.target.selectedOptions[0].label = "Make private";
           });
       }
     }
@@ -371,18 +362,35 @@ function Article(props){
   };
 
   const more = ()=>{
+    
     return (
-      <div onClick={(e)=>e.stopPropagation()} className="Article__more_dropdown">
-        <select name="more" id="Article__more_dropdown_id" onChange={(e)=>articleMoreSelectHandler(e)}>
-          <option value="more">More</option>
-          <option value="change_visibility">Make {props.visibility==="private"?"public":"private"}</option>
-          <option value="delete_article">Delete Article</option>
+      <div onClick={(e)=>e.stopPropagation()} id="Article__more_dropdown">
+          <div onClick={(e)=>{setMoreClicked(!moreClicked)}}>More</div>
           {
-            !props.articleSaved
+            moreClicked
             &&
-            <option value="save_article">Save</option>
+            props.type==="myArticle"
+            &&
+            <div onClick={(e)=>articleMoreSelectHandler(e,"change_visibility")}>Make {props.visibility==="private"?"public":"private"}</div>
           }
-        </select>
+          {
+            moreClicked
+            &&
+            props.type==="myArticle"
+            &&
+            <div onClick={(e)=>articleMoreSelectHandler(e,"delete_article")}>Delete Article</div>
+          }
+          {
+            moreClicked
+            &&
+            (
+            !articleSaved
+            ?
+            <div onClick={(e)=>articleMoreSelectHandler(e,"save_article")}>Save</div>
+            :      
+            <div onClick={(e)=>articleMoreSelectHandler(e,"remove_article")}>Remove</div>
+            )
+          }
       </div>
     );
   }
@@ -464,9 +472,8 @@ function Article(props){
       try{
         axios.post(`/user/save-article/${props.dbId}`).then((res)=>{
           if(res.data==true){
-            console.log("saved");
+            ls.set(`${props.dbId}_sd`,true);
             setArticleSaved(true);
-            ls.set(props.dbId,true);
           }
         });
       }
@@ -476,13 +483,14 @@ function Article(props){
 
     }
 
-    const unsaveArticleHandler = ()=>{
+    
+    const removeArticleHandler = ()=>{
       try{
         axios.post(`/user/unsave-article/${props.dbId}`).then((res)=>{
           if(res.data==true){
             console.log("removed from saved articles");
+            ls.set(`${props.dbId}_sd`,false);
             setArticleSaved(false);
-            ls.set(props.dbId,false);
           }
         });
       }
@@ -491,6 +499,8 @@ function Article(props){
       }
 
     }
+
+
 
     const calculateTimeForArticle=()=>{
       if(props.lastUpdatedTime==undefined || props.lastUpdatedTime==null)

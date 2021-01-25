@@ -71,3 +71,20 @@
 #Article__likes-div div{
 	margin-right: 10px;
 }
+
+
+#Article__more_dropdown{
+	position: absolute;
+}
+
+#Article__more_dropdown div:hover
+{
+	background: grey;
+	cursor: pointer;
+}
+
+#Article__more_dropdown div{
+	background: #edf5ef;
+	padding: 4px;
+	text-align: left;
+}

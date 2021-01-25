@@ -33,6 +33,19 @@ class articleService{
         }
     }
 
+    async getArticlesByIds(articleIdArray){
+
+        try{
+            const db_articles = await articleModel.find({_id:{"$in":articleIdArray}});
+            console.log(db_articles);
+            return db_articles;
+        }
+        catch(err){
+            console.log(err);
+            return false;
+        }
+    }
+
     async getArticleById(articleId){
         try{
             const db_article = await articleModel.findOne({_id:articleId});
