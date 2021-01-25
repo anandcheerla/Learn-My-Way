@@ -1,43 +1,46 @@
 import React from 'react';
 
+// css
+import './About.css';
+
 function About(props){
 
 	return (
       <div className="About">
-        <h5>
+        <h3>
           Have you ever scared of reading an article/material that you just come
           across when you are browsing.... Title is catchy, but the article is
           too big
-        </h5>
+        </h3>
         <br />
-        <h5>
+        <h3>
           Have you ever thought that you want to glance at an article inorder to
           get an overview, but tired of reading the entire thing...
-        </h5>
+        </h3>
         <br />
-        <h5>
-          Have you ever tired of reading boring paragraphs which spans some
-          pages and the massive size where the probability to overlook is
+        <h3>
+          Have you ever tired of reading boring paragraphs which spans few
+          pages and stumped by the massive size where the probability to overlook is
           high...
-        </h5>
+        </h3>
         <br />
-        <h5>
-          Have you ever thought while you are reading, it would be better if we
-          know where to focus/stress more, or which part is complex or easy to
+        <h3>
+          Have you ever thought while you were reading, it would be better if we
+          know where to focus/stress more and which part is complex or which part is easy to
           understand...!!!
-        </h5>
+        </h3>
         <br />
-        <h5>
+        <h3>
           Have you ever overlooked things/information that is required the most
-          in understanding or learning the further details...
-        </h5>
+          in understanding the essence of the entire article...
+        </h3>
 
         <br />
 
-        <h5>
+        <h3>
           Even if you didnot think none of these, you are welcome to check out
           this !!!
-        </h5>
+        </h3>
         <br />
         <p>
           This application is a learning platform.The main intention of the

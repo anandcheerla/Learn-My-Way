@@ -16,6 +16,7 @@ import Logout from '../components/Logout.js';
 //containers
 import About from './About.js';
 import Home from './Home.js';
+import StartUp from './StartUp.js';
 
 
 //context
@@ -33,6 +34,7 @@ function Main(props){
 				</Header>
 			</div>
 			<div id="Main__body">
+				
 				<Route path="/login">
 					<div id="Main__login">
 						<Login/>
@@ -55,7 +57,10 @@ function Main(props){
 						<Logout/>
 					</div>
 				</Route>
-				<Route path="/">
+				<Route exact path="/">
+					<StartUp/>
+				</Route>
+				<Route path="/:some_path">
 					<ProtectedRoute>
 						<div id="Main__home">
 							<Home/>

@@ -37,13 +37,13 @@ function App(props){
 
  
     return (
-    
+          <div id="App">
           <BrowserRouter>
             <AppContext.Provider value={appState}>
                 <Route path="/" component={Main}/>
             </AppContext.Provider>
           </BrowserRouter>
-
+          </div>
       );
   
 }

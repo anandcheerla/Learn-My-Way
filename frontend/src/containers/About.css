@@ -1,0 +1,25 @@
+.About{
+    margin: 5% 10%; 
+}
+
+.About h3{
+    border-radius: 10px;
+    background: #424b6e;
+    padding: 60px;
+    transform: rotate(-3deg);
+    margin-bottom:200px;
+    font-family:monospace;
+    font-size: 25px;
+    box-shadow: 30px 30px 15px grey;
+}
+
+.About p{
+    background: white;
+    padding: 20px;
+    font-size: 20px;
+    border-radius: 30px;
+    background: #424b6e;
+    font-family: monospace;
+    line-height: 35px;
+    
+}

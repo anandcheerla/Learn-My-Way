@@ -3,5 +3,10 @@
 	display: flex;
 	justify-content: space-between;
 	padding: 20px;
-	border: 1px solid grey;
+	/* border: 1px solid grey; */
+	/* background: #172459; */
+	/* background: #010e52; */
+	/* background:#222536; */
+	background: #f0f1f5;
+	box-shadow: 1px 1px grey;
 }

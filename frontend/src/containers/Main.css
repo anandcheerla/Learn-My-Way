@@ -1,9 +1,12 @@
 
-#Main{
-	
+#Main{	
 	width: 100%;
+	
 }
 
 #Main__body{
 	padding : 20px;
+	/* background: #172459; */
+	
 }
+
