@@ -9,6 +9,7 @@ import "./Header.css";
 
 //context
 import {AppContext} from '../AppContext.js';
+import { CssBaseline } from "@material-ui/core";
 
 function Header(props){
 	const appCtx = useContext(AppContext);
@@ -25,15 +26,27 @@ function Header(props){
 			!appCtx.login.get
 			?
 			<>
-				<Link to="/login">Login</Link>
-				<Link to="/about">About</Link>
-				<Link to="/register">Register</Link>	
+				<div className="Header__nav-bar-button">
+					<Link to="/login">Login</Link>
+				</div>
+				<div className="Header__nav-bar-button">
+					<Link to="/about">About</Link>
+				</div>
+				<div className="Header__nav-bar-button">
+					<Link to="/register">Register</Link>	
+				</div>
 			</>
 			:
 			<>
-				 <Link to="/my-articles">My Articles</Link>
-				 <Link to="/home">Home</Link>
-    	         <Link to="/logout">Logout</Link>
+				 <div className="Header__nav-bar-button">
+					 <Link to="/my-articles">My Articles</Link>
+				 </div>
+				 <div className="Header__nav-bar-button">
+					 <Link to="/home">Home</Link>
+				 </div>
+    	         <div className="Header__nav-bar-button">
+					 <Link to="/logout">Logout</Link>
+				 </div>
 			</>
 		}	
 		</div>
