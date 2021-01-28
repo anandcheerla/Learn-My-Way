@@ -1,21 +1,22 @@
 
-#SuggestedArticles{
+.SuggestedArticles{
     display: flex;
-    /* width: auto; */
+    width: auto;
     flex-wrap: wrap;
-    min-width: 600px;
 }
 
-#SuggestedArticles__tags{
+.SuggestedArticles__tags{
     display: flex;
     height: 100%;
-    /* min-width: 100%; */
-     width: 50%;
+    min-width: 40%;
+    max-width: 48%;
+    width: auto;
     flex-wrap: wrap;
 }
 
-#Suggested__articles-container{
-    width: 50%;
+.Suggested__articles-container{
+    max-width: 50%;
+    min-width: 50%;
 }
 
 

@@ -68,9 +68,9 @@ function SuggestedArticles(props){
 
     return (
 
-        <div id="SuggestedArticles">
+        <div className="SuggestedArticles">
           <Route path={`${path}`}>
-            <div id="SuggestedArticles__tags">
+            <div className="SuggestedArticles__tags">
             {
               tags.map(tag => (
                 <div onClick={(e)=>fetchArticlesByTag(e,tag.tagName)}>
@@ -79,11 +79,11 @@ function SuggestedArticles(props){
               ))
             }
             </div>
-            <Articles type="otherArticle" articles={suggestedArticles}/>
+            {/* <Articles type="otherArticle" articles={suggestedArticles}/> */}
           </Route>
 
           <Route path={`${path}/topic/:tagName`}>
-            <div id="Suggested__articles-container">
+            <div className="Suggested__articles-container">
               {
                 tagArticles.length==0
                 ?
