@@ -42,6 +42,9 @@ function Header(props){
 					 <Link to="/my-articles">My Articles</Link>
 				 </div>
 				 <div className="Header__nav-bar-button">
+					 <Link to="/saved">Saved</Link>
+				 </div>
+				 <div className="Header__nav-bar-button">
 					 <Link to="/home">Home</Link>
 				 </div>
     	         <div className="Header__nav-bar-button">
