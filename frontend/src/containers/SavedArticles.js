@@ -23,8 +23,14 @@ function SavedArticles(props){
     return (
 
         <div id="SavedArticles">
-            <h3>Saved</h3>
-            <Articles type="savedArticles" articles={savedArticles}/>
+            <h3>Saved Articles</h3>
+            {
+                savedArticles.length==0
+                ?
+                <h1>No saved Articles!!!</h1>
+                :
+                <Articles type="savedArticles" articles={savedArticles}/>
+            }
         </div>
 
     );
