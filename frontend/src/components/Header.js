@@ -46,7 +46,7 @@ function Header(props){
 					 <Link to="/home">Home</Link>
 				 </div>
 				 <div>
-				 	<Avatar>A</Avatar>
+				 	<Link to="/my-profile"><Avatar>A</Avatar></Link>
 				 </div>
     	         <div className="Header__nav-bar-button">
 					 <Link to="/logout">Logout</Link>
