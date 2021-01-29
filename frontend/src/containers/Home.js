@@ -15,9 +15,9 @@ import "./Home.css";
 //containers
 // import About from './About.js';
 import MyArticles from './MyArticles.js';
-import SavedArticles from "./SavedArticles";
+import SavedArticles from "../components/SavedArticles.js";
 import SuggestedArticles from './SuggestedArticles.js';
-
+import Profile from './Profile.js';
 
 
 function Home(props){
@@ -35,8 +35,8 @@ function Home(props){
                 <Route path="/my-articles">
                   <MyArticles/>                  
                 </Route>
-                <Route path="/saved">
-                  <SavedArticles/>                  
+                <Route path="/my-profile">
+                  <Profile/>                  
                 </Route>
             </Switch>
           </div>

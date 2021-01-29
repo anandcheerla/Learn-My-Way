@@ -1,5 +1,5 @@
 import React,{useState,useContext} from "react";
-import {Route,Link,Redirect} from "react-router-dom";
+import {Route,Link,Redirect,useRouteMatch} from "react-router-dom";
 // import axios from "axios";
 // import ls from "local-storage";
 
@@ -26,6 +26,7 @@ import {AppContext} from '../AppContext.js';
 function Main(props){
 
 	const appCtx = useContext(AppContext);
+	let { path, url } = useRouteMatch();
     
 	return (
 		<div id="Main">
@@ -34,40 +35,40 @@ function Main(props){
 				</Header>
 			</div>
 			<div id="Main__body">
-				
-				<Route path="/login">
-					<div id="Main__login">
-						<Login/>
-					</div>
-				</Route>
-				
-				<Route path="/register">
-					<div id="Main__register">
-						<Register/>
-					</div>
-				</Route>
-				
-				<Route path="/about">
-					<div id="Main__about">
-						<About/>
-					</div>
-				</Route>
-				<Route path="/logout">
-					<div id="Main__logout">
-						<Logout/>
-					</div>
-				</Route>
-				<Route exact path="/">
-					<StartUp/>
-				</Route>
-				<Route path="/:some_path">
-					<ProtectedRoute>
-						<div id="Main__home">
-							<Home/>
+				<switch>
+					<Route path="/login">
+						<div id="Main__login">
+							<Login/>
 						</div>
-					</ProtectedRoute>
-				</Route>
-
+					</Route>
+					
+					<Route path="/register">
+						<div id="Main__register">
+							<Register/>
+						</div>
+					</Route>
+					
+					<Route path="/about">
+						<div id="Main__about">
+							<About/>
+						</div>
+					</Route>
+					<Route path="/logout">
+						<div id="Main__logout">
+							<Logout/>
+						</div>
+					</Route>
+					<Route exact path="/">
+						<StartUp/>
+					</Route>
+					<Route path="/:some_path">
+						<ProtectedRoute>
+							<div id="Main__home">
+								<Home/>
+							</div>
+						</ProtectedRoute>
+					</Route>
+				</switch>
 			</div>
 			<div id="Main__footer">
 
