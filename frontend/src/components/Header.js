@@ -1,4 +1,5 @@
 import React,{useContext} from "react";
+import Avatar from '@material-ui/core/Avatar';
 // import axios from "axios";
 import {Route,Link,useRouteMatch} from "react-router-dom";
 
@@ -43,6 +44,9 @@ function Header(props){
 				 </div>
 				 <div className="Header__nav-bar-button">
 					 <Link to="/home">Home</Link>
+				 </div>
+				 <div>
+				 	<Avatar>A</Avatar>
 				 </div>
     	         <div className="Header__nav-bar-button">
 					 <Link to="/logout">Logout</Link>
