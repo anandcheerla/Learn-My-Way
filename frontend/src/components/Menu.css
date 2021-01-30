@@ -1,0 +1,12 @@
+
+.Menu__items-div{
+    /* padding: 10px; */
+    position: absolute;
+    /* border: 1px solid grey; */
+    background: #e6f2ef;
+    transform: translate(-40px, 5px);
+}
+
+.Menu__items-div div{
+    padding: 5px 10px;
+}

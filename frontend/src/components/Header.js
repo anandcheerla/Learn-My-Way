@@ -11,6 +11,7 @@ import "./Header.css";
 //context
 import {AppContext} from '../AppContext.js';
 import { CssBaseline } from "@material-ui/core";
+import Menu from "./Menu.js";
 
 function Header(props){
 	const appCtx = useContext(AppContext);
@@ -45,11 +46,15 @@ function Header(props){
 				 <div className="Header__nav-bar-button">
 					 <Link to="/home">Home</Link>
 				 </div>
-				 <div>
-				 	<Link to="/my-profile"><Avatar>A</Avatar></Link>
-				 </div>
-    	         <div className="Header__nav-bar-button">
-					 <Link to="/logout">Logout</Link>
+				 <div className="Header__nav-bar-div--right">
+					<div>
+						<Menu items={["Profile","Settings","Logout"]}>
+							<Avatar aria-controls="simple-menu" aria-haspopup="true"></Avatar>
+						</Menu>
+					</div>
+					{/* <div className="Header__nav-bar-button">
+						<Link to="/logout">Logout</Link>
+					</div> */}
 				 </div>
 			</>
 		}	

@@ -21,3 +21,7 @@
 	font-weight:bold;
 	text-decoration: none;
 }
+
+.Header__nav-bar-div--right{
+	display: flex;
+}

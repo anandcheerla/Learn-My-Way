@@ -21,7 +21,7 @@ export default function Profile(props){
         <div>
             <h1>My Profile</h1>
             <Link to={`${url}/saved`}>Saved</Link>
-            <Link to={`${url}/liked`}>Liked</Link>
+            {/* <Link to={`${url}/liked`}>Liked</Link> */}
 
             <Switch>
                 <Route path={`${path}/saved`}>
