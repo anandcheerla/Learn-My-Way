@@ -86,9 +86,9 @@ function UnitModal(props){
 					{
 					props.articleType==="myArticle"
 					&&
-					<div id="UnitModal__more">
+					<div className="UnitModal__more">
 						<div onClick={(e)=>{setMoreClicked(!moreClicked)}}>
-							More <ExpandMoreIcon/>
+							More{/* More <ExpandMoreIcon/> */}
 						</div>
 						{
 						moreClicked

@@ -37,21 +37,22 @@
 	width:70%;
 }
 
-#UnitModal__more{
+.UnitModal__more{
 	/* border: 1px solid grey; */
 	width: fit-content;
 	margin: 20px 0;
 	cursor: pointer;
+	background: #ddebe8;
 }
 
-#UnitModal__more div:hover
+.UnitModal__more div:hover
 {
 	background: grey;
 }
 
-#UnitModal__more div{
-	border: 1px solid grey;
-	padding: 4px;
+.UnitModal__more div{
+	/* border: 2px solid grey; */
+	padding: 5px 25px 5px 15px;
 }
 
 .UnitModal__star-icons svg{
@@ -60,8 +61,8 @@
 }
 
 .UnitModal__complexity{
-	font-size: 13px;
-	letter-spacing: 5px;
+	font-size: 10px;
+	text-align: center;
 }
 
 .UnitModal__close-icon{
