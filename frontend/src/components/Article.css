@@ -75,6 +75,8 @@
 
 #Article__more_dropdown{
 	position: absolute;
+	/* border-radius: 5px; */
+
 }
 
 #Article__more_dropdown div:hover
