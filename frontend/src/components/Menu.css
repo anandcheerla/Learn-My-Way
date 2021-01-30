@@ -5,10 +5,11 @@
     /* border: 1px solid grey; */
     background: #e6f2ef;
     transform: translate(-40px, 5px);
+    border-radius: 5px;
 }
 
 .Menu__items-div div{
-    padding: 8px 12px;
+    padding: 5px 25px 5px 15px;
 }
 a{
     text-decoration: none;
