@@ -80,7 +80,9 @@ function UnitModal(props){
 					}
 				</div>
 				<div>
-					<CloseIcon onClick={(e)=>closeButtonHandler(e)}/>
+					<div class="UnitModal__close-icon">
+						<CloseIcon onClick={(e)=>closeButtonHandler(e)}/>
+					</div>
 					{
 					props.articleType==="myArticle"
 					&&
@@ -104,14 +106,18 @@ function UnitModal(props){
 						}
 					</div>
 					}
-					<div className="">
-					{
-						Array(props.priority).fill(1).map(()=>(<StarIcon/>))
-					}
-					{
-						Array(5-props.priority).fill(1).map(()=>(<StarBorderIcon/>))
-					}
-					<h2>{props.complexity}</h2>
+					<div className="UnitModal__unit-type">
+						<div class="UnitModal__star-icons">
+						{
+							Array(props.priority).fill(1).map(()=>(<StarIcon/>))
+						}
+						{
+							Array(5-props.priority).fill(1).map(()=>(<StarBorderIcon/>))
+						}
+						</div>
+						<div class="UnitModal__complexity">
+							<h2>{props.complexity.toUpperCase()}</h2>
+						</div>
 					</div>
 				</div>
 			</div>

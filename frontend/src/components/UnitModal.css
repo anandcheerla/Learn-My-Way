@@ -54,3 +54,26 @@
 	padding: 4px;
 }
 
+.UnitModal__star-icons svg{
+	font-size: 0.8rem;
+	
+}
+
+.UnitModal__complexity{
+	font-size: 13px;
+	letter-spacing: 5px;
+}
+
+.UnitModal__close-icon{
+	cursor: pointer;
+}
+
+.UnitModal__close-icon svg{
+	border-radius: 50%;
+}
+
+.UnitModal__close-icon svg:hover{
+	background-color: grey;
+	opacity: 0.5;
+	padding: 8px;
+}
