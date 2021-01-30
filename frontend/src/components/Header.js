@@ -48,7 +48,11 @@ function Header(props){
 				 </div>
 				 <div className="Header__nav-bar-div--right">
 					<div>
-						<Menu items={["Profile","Settings","Logout"]}>
+						<Menu items={[
+							{itemName:"Profile",clickHandler:"",matchUrl:"my-profile"},
+							{itemName:"Settings",clickHandler:"",matchUrl:"settings"},
+							{itemName:"Logout",clickHandler:"",matchUrl:"logout"}
+						]}>
 							<Avatar aria-controls="simple-menu" aria-haspopup="true"></Avatar>
 						</Menu>
 					</div>

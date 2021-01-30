@@ -1,5 +1,7 @@
 import React,{useState} from 'react';
 
+import {Link} from "react-router-dom";
+
 import './Menu.css';
 
 export default function Menu(props){
@@ -15,7 +17,7 @@ export default function Menu(props){
             <div className="Menu__items-div">
             { 
                 props.items.map((item)=>(
-                    <div>{item}</div>
+                    <Link to={`/${item.matchUrl}`}><div>{item.itemName}</div></Link>
                 ))
             }
             </div>
