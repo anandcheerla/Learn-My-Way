@@ -13,8 +13,11 @@ import './Login.css';
 function Login(props){
    
   //login api call to /login route with username and password
-  const [username,setUsername] = useState("akc");
-  const [password,setPassword] = useState("anandcheerla");
+  // const [username,setUsername] = useState("akc");
+  // const [password,setPassword] = useState("anandcheerla");
+  
+  const [username,setUsername] = useState("");
+  const [password,setPassword] = useState("");
 
   const [usernameMessage,setUsernameMessage] = useState("");
   const [passwordMessage,setPasswordMessage] = useState("");
