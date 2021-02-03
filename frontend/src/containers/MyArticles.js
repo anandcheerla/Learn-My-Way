@@ -243,9 +243,9 @@ function MyArticles(props){
 
     return (
 
-        <div id="MyArticles">
-          <div id="MyArticles-article-creation-section">
-            <div id="MyArticles__create-article">
+        <div class="MyArticles">
+          <div class="MyArticles-article-creation-section">
+            <div class="MyArticles__create-article">
               <Route exact path={`${path}`}>
                 <Button
                     onClick={(e)=>createArticleButtonHandler(e)}
@@ -262,7 +262,7 @@ function MyArticles(props){
               {articleCreationForm()}
             </Route>
           </div>
-          <div id="MyArticles-my-articles-section">
+          <div class="MyArticles-my-articles-section">
             <Route path={`${path}`}>
               <Articles type="myArticle" articles={appCtx.articles.get}/>
             </Route>

@@ -1,9 +1,13 @@
 
-#MyArticles{
+.MyArticles{
     display: flex;
-    /* flex-wrap: wrap; */
 }
 
+@media only screen and (max-width: 600px) {
+    .MyArticles {
+        flex-wrap: wrap;
+    }
+}
 
 #MyArticles__article-creation-form{
     display: flex;
@@ -22,12 +26,12 @@
     flex-wrap: wrap;
 }
 
-#MyArticles-article-creation-section{
+.MyArticles-article-creation-section{
     width: 100%;
     padding: 20px;
 }
 
-#MyArticles-my-articles-section{
+.MyArticles-my-articles-section{
     width: 100%;
     padding: 15px;
 }
