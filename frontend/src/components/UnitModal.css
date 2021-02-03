@@ -1,4 +1,4 @@
-#UnitModal{
+.UnitModal{
 	position: fixed;
 	/* background: green; */
 	left: 0;
@@ -10,10 +10,7 @@
 	z-index: 1;
 }
 
-#UnitModal__inner-div{
-	position: relative;
-	display: flex;
-	justify-content: space-between;
+.UnitModal__inner-div{
 	padding: 2%;
 	margin: 10%;
 	background: white;
@@ -21,14 +18,27 @@
 	
 }
 
-
-@media only screen and (max-width: 600px) {
-    #UnitModal__inner-div {
-        flex-wrap: wrap;
-    }
+.UnitModal--top-align{
+	display: flex;
+	justify-content: space-between;
 }
 
-#UnitModal__unit-data--left-align{
+
+.UnitModal--middle-align{
+	display: flex;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .UnitModal--middle-align {
+        flex-wrap: wrap;
+	}
+	.UnitModal__inner-div{
+		margin: 3%;
+	}
+}
+
+.UnitModal__unit-data--left-align{
 	width: 100%;
 }
 
@@ -52,7 +62,7 @@
 	padding: 2px 15px;
 }
 
-#UnitModal__unit-data{
+.UnitModal__unit-data{
 	width:70%;
 }
 
@@ -74,21 +84,18 @@
 	padding: 5px 25px 5px 15px;
 }
 
-.UnitModal__star-icons svg{
-	font-size: 0.8rem;
-	
+
+.UnitModal__unit-type h2{
+	border: 1px solid grey;
+	border-radius: 30px;
+	font-size: 15px;
+	padding: 0px 5px;
+	background-color: #f5f0f0;
 }
 
-.UnitModal__complexity{
-	font-size: 10px;
-	text-align: center;
-}
 
 .UnitModal__close-icon{
-	position: absolute;
 	cursor: pointer;
-	top: 10px;
-	right: 10px;
 }
 
 .UnitModal__close-icon svg{

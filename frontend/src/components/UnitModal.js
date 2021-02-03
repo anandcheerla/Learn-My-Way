@@ -54,9 +54,18 @@ function UnitModal(props){
 
 
 	return (
-		<div id="UnitModal">
-			<div id="UnitModal__inner-div">
-				<div id="UnitModal__unit-data--left-align">
+		<div className="UnitModal">
+			<div className="UnitModal__inner-div">
+				<div className="UnitModal--top-align">
+					<div className="UnitModal__unit-type">
+							<h2>{`${props.complexity.toUpperCase()}-${props.priority}/5`}</h2>
+					</div>
+					<div class="UnitModal__close-icon">
+						<CloseIcon onClick={(e)=>closeButtonHandler(e)}/>
+					</div>
+				</div>
+				<div className="UnitModal--middle-align">
+				<div className="UnitModal__unit-data--left-align">
 					{
 					props.heading!=""
 					&&
@@ -80,9 +89,6 @@ function UnitModal(props){
 					}
 				</div>
 				<div className="UnitModal__unit-details--right-align">
-					<div class="UnitModal__close-icon">
-						<CloseIcon onClick={(e)=>closeButtonHandler(e)}/>
-					</div>
 					{
 					props.articleType==="myArticle"
 					&&
@@ -106,19 +112,8 @@ function UnitModal(props){
 						}
 					</div>
 					}
-					<div className="UnitModal__unit-type">
-						<div class="UnitModal__complexity">
-							<h2>{props.complexity.toUpperCase()}</h2>
-						</div>
-						<div class="UnitModal__star-icons">
-						{
-							Array(props.priority).fill(1).map(()=>(<StarIcon/>))
-						}
-						{
-							Array(5-props.priority).fill(1).map(()=>(<StarBorderIcon/>))
-						}
-						</div>
-					</div>
+					
+				</div>
 				</div>
 			</div>
 		</div>
