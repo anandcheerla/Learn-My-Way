@@ -56,7 +56,7 @@ function UnitModal(props){
 	return (
 		<div id="UnitModal">
 			<div id="UnitModal__inner-div">
-				<div id="UnitModal__unit-data">
+				<div id="UnitModal__unit-data--left-align">
 					{
 					props.heading!=""
 					&&
@@ -79,7 +79,7 @@ function UnitModal(props){
 					</div>
 					}
 				</div>
-				<div>
+				<div className="UnitModal__unit-details--right-align">
 					<div class="UnitModal__close-icon">
 						<CloseIcon onClick={(e)=>closeButtonHandler(e)}/>
 					</div>
