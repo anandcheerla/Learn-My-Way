@@ -107,6 +107,9 @@ function UnitModal(props){
 					</div>
 					}
 					<div className="UnitModal__unit-type">
+						<div class="UnitModal__complexity">
+							<h2>{props.complexity.toUpperCase()}</h2>
+						</div>
 						<div class="UnitModal__star-icons">
 						{
 							Array(props.priority).fill(1).map(()=>(<StarIcon/>))
@@ -114,9 +117,6 @@ function UnitModal(props){
 						{
 							Array(5-props.priority).fill(1).map(()=>(<StarBorderIcon/>))
 						}
-						</div>
-						<div class="UnitModal__complexity">
-							<h2>{props.complexity.toUpperCase()}</h2>
 						</div>
 					</div>
 				</div>
