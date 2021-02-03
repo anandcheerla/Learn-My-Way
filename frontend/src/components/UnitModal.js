@@ -58,7 +58,7 @@ function UnitModal(props){
 			<div className="UnitModal__inner-div">
 				<div className="UnitModal--top-align">
 					<div className="UnitModal__unit-type">
-							<h2>{`${props.complexity.toUpperCase()}-${props.priority}/5`}</h2>
+							<h2>{`${props.complexity.toUpperCase()} ${props.priority}/5`}</h2>
 					</div>
 					<div class="UnitModal__close-icon">
 						<CloseIcon onClick={(e)=>closeButtonHandler(e)}/>
