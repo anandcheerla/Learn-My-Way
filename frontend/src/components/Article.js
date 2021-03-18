@@ -537,8 +537,8 @@ function Article(props){
       <div id="Article">
         <div onClick={articleClickHanlder} >
           <div>
-            <h1>{props.heading}</h1>
-            <p>{props.description}</p>
+            <h1 data-test='Article__heading'>{props.heading}</h1>
+            <p data-test='Article__description'>{props.description}</p>
           </div>
           <Route exact path={`${path}`}>
             <div>

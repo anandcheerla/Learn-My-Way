@@ -88,6 +88,7 @@ function Login(props){
         <div className="Login__input-div">
           {/* <label htmlFor="username">Username</label> */}
           <input
+            data-test="Login__username-input"
             type="text"
             className="Login__input-field"
             id="Login__username"
@@ -97,11 +98,12 @@ function Login(props){
             value = {username}
             required
           />
-          <label className="Login__input-validation-message">{usernameMessage}</label>
+          <label data-test="Login__username-warning-label" className="Login__input-validation-message">{usernameMessage}</label>
         </div>
         <div className="Login__input-div">
           {/* <label htmlFor="password">Password</label> */}
           <input
+            data-test="Login__password-input"
             type="password"
             className="Login__input-field"
             id="Login__password"
@@ -115,14 +117,14 @@ function Login(props){
             value = {password}
             required
           />
-          <label className="Login__input-validation-message">{passwordMessage}</label>
+          <label data-test="Login__password-warning-label" className="Login__input-validation-message">{passwordMessage}</label>
         </div>
         <div className="Login__message">
-          <label id="Login__login-err-msg" className="Login__input-validation-message">{formMessage}</label>
+          <label data-test="Login__form-warning-label" id="Login__login-err-msg" className="Login__input-validation-message">{formMessage}</label>
         </div>
         
         <div className="Login__button">
-          <Button type="submit" onClick={userLogin} ref={loginButton_Ref} variant="outlined" color="primary">
+          <Button data-test="Login__login-button" type="submit" onClick={userLogin} ref={loginButton_Ref} variant="outlined" color="primary">
             Log In
           </Button>
         </div>

@@ -180,8 +180,8 @@ function Unit(props) {
   return (
       <div id="Unit">
         <div onClick={(e)=>unitClickHandler(e)}>
-          <h2>{props.heading}</h2>
-          <h3>{props.shortDescription}</h3>
+          <h2 data-test='Unit__heading'>{props.heading}</h2>
+          <h3 data-test='Unit__shortDescription'>{props.shortDescription}</h3>
         </div>
         { 
           <>

@@ -7,7 +7,7 @@ function Tag(props){
 
     return (
         <div className="Tag">
-            <h4 className="Tag__tag">{props.tagName}</h4>
+            <h4 data-test='Tag__tagName' className="Tag__tag">{props.tagName}</h4>
         </div>
     );
 }

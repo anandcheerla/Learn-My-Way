@@ -6,6 +6,7 @@
 */
 
 import mongoose from 'mongoose';
+import {db_uri,db_secret} from '../config/index.js';
 // import user from './models/userModel.js';
 
 // import generateTags from './seedDatabase/generateTags.js';
@@ -14,9 +15,8 @@ import mongoose from 'mongoose';
 
 export default async ()=>{
 	const db = {
-		// databaseConnectionUrl:'mongodb://127.0.0.1:27017/sampleDB1',
-		databaseConnectionUrl : "mongodb+srv://anand:anandcheerla@cluster0.x0oeh.mongodb.net/read_my_way_v2?retryWrites=true&w=majority",
-		secret:'iamakc'
+		databaseConnectionUrl: db_uri,
+		secret: db_secret
 	};
 
 	var dbUrl = db.databaseConnectionUrl;

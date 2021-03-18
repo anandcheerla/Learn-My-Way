@@ -58,7 +58,7 @@ function UnitModal(props){
 			<div className="UnitModal__inner-div">
 				<div className="UnitModal--top-align">
 					<div className="UnitModal__unit-type">
-							<h2>{`${props.complexity.toUpperCase()} ${props.priority}/5`}</h2>
+							<h2 data-test='UnitModal__unit-type'>{`${props.complexity.toUpperCase()} ${props.priority}/5`}</h2>
 					</div>
 					<div class="UnitModal__close-icon">
 						<CloseIcon onClick={(e)=>closeButtonHandler(e)}/>
@@ -70,21 +70,21 @@ function UnitModal(props){
 					props.heading!=""
 					&&
 					<div className="UnitModal__heading">
-						<h2>{props.heading}</h2>
+						<h2 data-test='UnitModal__heading'>{props.heading}</h2>
 					</div>
 					}
 					{
 					props.shortDescription!=""
 					&&
 					<div className="UnitModal--background-grey">      
-						<p>{props.shortDescription}</p>
+						<p data-test='UnitModal__shortDescription'>{props.shortDescription}</p>
 					</div>
 					}
 					{
 					props.longDescription!=""
 					&&
 					<div className="UnitModal--background-grey">
-						<p>{props.longDescription}</p>
+						<p data-test='UnitModal__longDescription'>{props.longDescription}</p>
 					</div>
 					}
 				</div>
