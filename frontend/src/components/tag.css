@@ -6,7 +6,7 @@
   width: fit-content;
   min-width: 60px;
   border: 1px solid grey;
-  border-radius: 5px;
+  border-radius: 4px;
   text-align: center;
   cursor:pointer;
 }
