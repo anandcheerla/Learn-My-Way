@@ -1,9 +1,13 @@
 #Article{
-	border: 1px solid grey;
+	/* border: 1px solid grey; */
 	margin-bottom: 30px;
 	padding: 20px;
 	border-radius: 8px;
 	width: auto;
+	background-color: #fafafa;
+}
+#Article:hover{
+	cursor: pointer;
 }
 
 #Article__unit-creation-form{

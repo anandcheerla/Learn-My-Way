@@ -1,11 +1,12 @@
-import React,{useState,useContext} from "react";
+import React,{useState} from "react";
 import axios from "axios";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import EditIcon from "@material-ui/icons/Edit";
-import CancelIcon from "@material-ui/icons/Cancel";
-import SaveIcon from "@material-ui/icons/Save";
-import ls from "local-storage";
+// import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+// import EditIcon from "@material-ui/icons/Edit";
+// import CancelIcon from "@material-ui/icons/Cancel";
+// import SaveIcon from "@material-ui/icons/Save";
+// import ls from "local-storage";
 import { Route, useHistory, useRouteMatch } from "react-router";
+import {connect} from 'react-redux';
 
 
 // components
@@ -13,17 +14,13 @@ import UnitModal from './UnitModal.js';
 
 //css
 import "./Unit.css";
-import { Link } from "react-router-dom";
-
-//context
-import {AppContext} from '../AppContext.js';
 
 
+import {setArticles} from '../redux/actions/app';
 
 
 function Unit(props) {
 
-    const appCtx = useContext(AppContext);
     const {path,url} = useRouteMatch();
     const history = useHistory();
 
@@ -80,9 +77,9 @@ function Unit(props) {
     axios
       .delete(`/user/${props.articleId}/delete-unit/${props.unitId}`)
       .then((res) => {
-        let articles_from_context = [...appCtx.articles.get];
+        let articles_from_context = [...props.articles];
         articles_from_context[props.articleIndex].units[props.unitIndex]=null;
-        appCtx.articles.set(articles_from_context);
+        props.setArticles(articles_from_context);
       });
   };
 
@@ -208,4 +205,10 @@ function Unit(props) {
      
 }
 
-export default Unit;
+function mapStateToProps(state){
+  return {
+    articles: state.app.articles
+  }
+}
+
+export default connect(mapStateToProps,{setArticles})(Unit);

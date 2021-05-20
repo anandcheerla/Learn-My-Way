@@ -28,7 +28,6 @@ class utilities{
 
         });
     }
-    
 
 }
 
@@ -49,7 +48,6 @@ class userService{
             savedArticles: new Map() 
         });
 
-        console.log(newUser);
         try{
             const temp = await userModel.register(newUser,queryObject.inputData.password);
             return true;
@@ -107,10 +105,11 @@ class userService{
     }
 
     async createNewArticle(queryObject){
-
         try{
             const db_user = await userModel.findOne({username:queryObject.userFromSession});
-            console.log(db_user.firstName);
+            if(db_user==null){
+                throw new Error('No such user');
+            }
             let size_of_articles = db_user.articles.length;
             let new_article = new articleModel();
             new_article.heading=queryObject.inputData.heading;
@@ -124,24 +123,17 @@ class userService{
                 const new_article_db = await new_article.save();
                 if(new_article.articleTags!=[])
                     utility.putArticleInTagsCollection(new_article_db._id,new_article.articleTags);
+                await db_user.articles.push(new_article_db._id);
                 return new_article_db;
             }
             catch(err){
                 console.log(err);
-                console.log("one");
-                return false;
-            }
-            try{
-                await db_user.articles.push(new_article_db._id);
-                
-            }
-            catch(err){
-                console.log("two");
                 return false;
             }
            
         }
         catch(err){
+            console.log(err);
             return false;
         }
 
@@ -149,26 +141,27 @@ class userService{
 
 
     async updateArticle(queryObject){
-
         try{
 
-            const db_article = await articleModel.findOne({_id:queryObject.articleId});
+            const db_article = await articleModel.findById(queryObject.articleId);
 
             //update others which are needed,add necessary conditions if required
             db_article.heading=queryObject.inputData.heading;
             db_article.description=queryObject.inputData.description;
-            db_article.lastUpdatedTime=Date.now;
+            db_article.lastUpdatedTime=Date.now();
 
             try{
-                await db_article.save();
-                return true;
+                let res=await db_article.save();
+                return res;
             }
             catch(err){
+                console.log(err);
                 return false;   
             }
 
         }
         catch(err){
+            console.log(err);
             return false;
         }
     }
@@ -176,7 +169,10 @@ class userService{
     async deleteArticle(queryObject){
         try{
             const db_article = await articleModel.deleteOne({_id:queryObject.articleId});
-
+            if(db_article.n==1 && db_article.deletedCount==1)
+                return true;
+            else
+                return false;
             //need to implement removal reference from the user also
          
         }

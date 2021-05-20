@@ -1,5 +1,6 @@
-import React,{useState,useContext} from "react";
-import {Route,Link,Redirect,useRouteMatch} from "react-router-dom";
+import React from "react";
+import {Route,Redirect,useRouteMatch} from "react-router-dom";
+import {connect} from 'react-redux';
 // import axios from "axios";
 // import ls from "local-storage";
 
@@ -19,14 +20,9 @@ import Home from './Home.js';
 import StartUp from './StartUp.js';
 
 
-//context
-import {AppContext} from '../AppContext.js';
-
-
 function Main(props){
 
-	const appCtx = useContext(AppContext);
-	let { path, url } = useRouteMatch();
+	// let { path, url } = useRouteMatch();
     
 	return (
 		<div id="Main">
@@ -62,7 +58,7 @@ function Main(props){
 						<StartUp/>
 					</Route>
 					<Route path="/:some_path">
-						<ProtectedRoute>
+						<ProtectedRoute login={props.login}>
 							<div id="Main__home">
 								<Home/>
 							</div>
@@ -81,12 +77,10 @@ function Main(props){
 } 
 
 function ProtectedRoute(props){
-		const appCtx = useContext(AppContext);
-
-		return (
+			return (
 			<>
 			{
-				appCtx.login.get
+				props.login
 				?
 				props.children
 				:
@@ -97,4 +91,9 @@ function ProtectedRoute(props){
 		);
 }
 
-export default Main;
+function mapStateToProps(state){
+	return {
+		login: state.app.login
+	}
+}
+export default connect(mapStateToProps)(Main);

@@ -1,4 +1,4 @@
-import React,{useContext, useState, useRef, useEffect} from "react";
+import React,{useState, useRef, useEffect} from "react";
 import axios from "axios";
 import ls from "local-storage";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
@@ -10,24 +10,22 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import AddIcon from '@material-ui/icons/Add';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { Route, useHistory, useRouteMatch } from "react-router";
+import {connect} from 'react-redux';
 
 
 
 //components
-import Unit from "./Unit.js";
+import Units from "./Units.js";
 
 //css
 import "./Article.css";
 
-//context
-import {AppContext} from '../AppContext.js';
-
+import {setArticles} from '../redux/actions/app';
 
 
 
 function Article(props){
 
-    let appCtx = useContext(AppContext);
     let user_saved_articles_db = ls.get("savedArticles");
     let user_liked_articles_db = ls.get("likedArticles");
 
@@ -131,11 +129,11 @@ function Article(props){
     let current_article_units = [...props.units];
     let updated_article_units = [...current_article_units, formData];
 
-    let articles_from_context = [...appCtx.articles.get];
+    let articles_from_context = [...props.articles];
     articles_from_context[props.articleIndex].units=updated_article_units;
 
     //updated context
-    appCtx.articles.set(articles_from_context);
+    props.setArticles(articles_from_context);
 
 
 
@@ -166,11 +164,11 @@ function Article(props){
       let updated_article_units = [...current_article_units, res.data];
 
       
-      let articles_from_context = [...appCtx.articles.get];
+      let articles_from_context = [...props.articles];
       articles_from_context[props.articleIndex].units=updated_article_units;
 
       //updated context
-      appCtx.articles.set(articles_from_context);
+      props.setArticles(articles_from_context);
 
       if (
         (complexity == "all" || formData.complexity == complexity) &&
@@ -249,9 +247,9 @@ function Article(props){
       if(areYouSureModal())
       {
           axios.delete("/user/article-delete/"+props.dbId).then(res=>{});
-          let articles_from_context = [...appCtx.articles.get];
+          let articles_from_context = [...props.articles];
           articles_from_context[props.articleIndex]=null;
-          appCtx.articles.set(articles_from_context);
+          props.setArticles(articles_from_context);
           setMoreClicked(false);
       }
     } 
@@ -545,7 +543,7 @@ function Article(props){
               {
                 props.type!="myArticle"
                 &&
-                <p>{props.uploaderFirstName}</p>
+                <p data-test='Article__uploader-first-name'>{props.uploaderFirstName}</p>
               }
               <p>{articleUploadedTime}</p>
             </div>
@@ -557,41 +555,22 @@ function Article(props){
         </div>
         <Route path={`${path}/${props.dbId}`}>
           {
-          props.units 
-          &&
-          props.units.length>0
-          &&
-          <div id="Article__filters">
-            {
-              unitComplexityFilter()
-            }
-            {
-              unitPriorityFilter()
-            }
-          </div>
+            props.units 
+            &&
+            props.units.length>0
+            &&
+            <div data-test='Article__filters' id="Article__filters">
+              {
+                unitComplexityFilter()
+              }
+              {
+                unitPriorityFilter()
+              }
+            </div>
           }
           
-          {
-          filteredUnits
-          &&
-          filteredUnits.map((unit)=>(
-            ls.get(unit._id)==null
-            &&
-            <Unit
-            articleType={props.type}
-            heading={unit.heading} 
-            shortDescription={unit.shortDescription} 
-            longDescription={unit.longDescription}
-            priority={unit.priority}
-            complexity={unit.complexity}
-            unitId={unit._id}
-            articleId={props.dbId}
-            uploaderUserName={props.uploaderUserName}
-            articleIndex={props.articleIndex}
-            unitIndex={unit.unitIndex}
-            />
-          ))
-          }
+          <Units units={filteredUnits}/>
+
           <div>
             <div className="Article--center-align">
               {
@@ -630,4 +609,10 @@ function Article(props){
 
 } 
 
-export default Article;
+function mapStateToProps(state){
+  return {
+    articles: state.app.articles
+  }
+}
+
+export default connect(mapStateToProps,{setArticles})(Article);

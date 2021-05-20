@@ -1,4 +1,4 @@
-import React,{useContext, useEffect, useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import axios from 'axios';
 import { Route, useHistory, useRouteMatch } from 'react-router';
 
@@ -11,8 +11,6 @@ import Tag from "../components/Tag.js";
 //css
 import './SuggestedArticles.css';
 
-//context
-import {AppContext} from '../AppContext.js';
 
 
 function SuggestedArticles(props){
@@ -20,7 +18,6 @@ function SuggestedArticles(props){
     const [suggestedArticles,setSuggestedArticles]=useState([]);
     let {path,url} = useRouteMatch();
     let history = useHistory();
-    const appCtx = useContext(AppContext);
 
     const [tags,setTags] = useState([]);
     const [tagArticles,setTagArticles] = useState([]);
@@ -32,7 +29,7 @@ function SuggestedArticles(props){
         axios.get("/articles/home").then((res) => {
             let articles_temp_var = [...res.data];
             // let fetchArticlesFromDb_temp_var = true;
-            // appCtx.articles.set(articles_temp_var);
+            // props.setArticles(articles_temp_var);
             setSuggestedArticles(articles_temp_var);
             // setFetchedMyArticlesFromDb(fetchArticlesFromDb_temp_var);
         });
@@ -103,7 +100,7 @@ function SuggestedArticles(props){
                     units={element.units}
                     lastUpdatedTime={element.lastUpdatedTime}
                     uploaderFirstName={element.uploaderFirstName}
-                    uploaderUserName={element.uploaderUserName || appCtx.username.get}
+                    uploaderUserName={element.uploaderUserName || props.username}
                     visibility={element.visibility}
                     likes={element.likes}
                   >

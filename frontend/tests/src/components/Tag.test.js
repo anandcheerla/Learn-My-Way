@@ -1,5 +1,5 @@
 import React from 'react';
-import Tag from './Tag.js';
+import Tag from '../../../src/components/Tag.js';
 import { shallow } from 'enzyme';
 
 const getElementByDataTag = (wrapper,tagName)=>{

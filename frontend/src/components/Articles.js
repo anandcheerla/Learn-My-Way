@@ -1,6 +1,7 @@
 import React,{useContext,useState} from "react";
 // import axios from "axios";
 import ls from "local-storage";
+import {connect} from 'react-redux';
 
 
 //components
@@ -9,13 +10,9 @@ import Article from "./Article.js";
 //css
 import "./Articles.css";
 
-//context
-import {AppContext} from '../AppContext.js';
-
 
 function Articles(props){
 
-    const appCtx = useContext(AppContext);
 
       // articles: [...this.props.articles],
 
@@ -50,7 +47,7 @@ function Articles(props){
             units={element.units}
             lastUpdatedTime={element.lastUpdatedTime}
             uploaderFirstName={element.uploaderFirstName}
-            uploaderUserName={element.uploaderUserName || appCtx.username.get}
+            uploaderUserName={element.uploaderUserName || props.username}
             visibility={element.visibility}
             articleIndex={ele_ind}
             likes={element.likes}
@@ -61,4 +58,10 @@ function Articles(props){
     );
 
 }
-export default Articles;
+
+function mapStateToProps(state){
+  return {
+    username: state.app.username
+  }
+}
+export default connect(mapStateToProps)(Articles);

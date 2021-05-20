@@ -1,16 +1,14 @@
-import React,{useContext} from 'react';
+import React from 'react';
 import axios from "axios";
 import ls from 'local-storage';
+import {connect} from 'react-redux';
+
+import {setLogin} from '../redux/actions/app';
 
 
-//context
-import {AppContext} from "../AppContext.js";
-
-function Logout(props){
-	let appCtx=useContext(AppContext);
-		
+function Logout(props){	
 	axios.get("/user/logout").then((res)=>{
-		appCtx.login.set(false);
+		props.setLogin(false);
 		ls.clear();
 	});
 
@@ -21,4 +19,5 @@ function Logout(props){
 
 }
 
-export default Logout;
+
+export default connect(null,{setLogin})(Logout);

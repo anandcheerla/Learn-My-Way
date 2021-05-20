@@ -13,9 +13,6 @@ import LikedArticles from '../components/LikedArticles.js';
 export default function Profile(props){
 
     let { path, url } = useRouteMatch();
-    
-    console.log(path);
-    console.log(url);
 
     return (
         <div>

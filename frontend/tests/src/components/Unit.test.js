@@ -1,5 +1,5 @@
 import React from 'react';
-import Unit from './Unit.js';
+import Unit from '../../../src/components/Unit.js';
 import { shallow } from 'enzyme';
 
 const getElementByDataTag = (wrapper,tagName)=>{

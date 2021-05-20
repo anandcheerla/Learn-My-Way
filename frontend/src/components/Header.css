@@ -2,7 +2,7 @@
 #Header{
 	display: flex;
 	justify-content: space-between;
-	padding: 20px;
+	padding: 10px;
 	/* border: 1px solid grey; */
 	/* background: #172459; */
 	/* background: #010e52; */
@@ -12,14 +12,18 @@
 }
 
 .Header__nav-bar-button{
-	border: 2px solid grey;
 	padding: 5px;
 	border-radius: 5px;
+}
+
+.Header__nav-bar-button a:hover{
+	color:darkgray;
 }
 
 .Header__nav-bar-button a{
 	font-weight:bold;
 	text-decoration: none;
+	color: black;
 }
 
 .Header__nav-bar-div--right{

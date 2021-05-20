@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import {connect} from 'react-redux';
 
 
 import ls from "local-storage";
@@ -16,17 +17,13 @@ import Tag from "../components/Tag.js";
 //css
 import './MyArticles.css';
 
-//context
-import {AppContext} from '../AppContext.js';
 
-
-
+import {setArticles,setTags} from '../redux/actions/app';
 
 function MyArticles(props){
 
   let history=useHistory();
 
-  const appCtx = useContext(AppContext);
   const [myArticles,setMyArticles] = useState([]);
   const [fetchedMyArticlesFromDb,setFetchedMyArticlesFromDb] = useState(ls.get("fetchedOtherArticlesFromDb") || false);
   const [articleCreation,setArticleCreation] = useState(false);
@@ -44,8 +41,7 @@ function MyArticles(props){
         if(res.data!=false){
           let articles_temp_var = [...res.data];
           let fetchArticlesFromDb_temp_var = true;
-  
-          appCtx.articles.set(articles_temp_var);
+          props.setArticles(articles_temp_var);
           setMyArticles(articles_temp_var);
           setFetchedMyArticlesFromDb(fetchArticlesFromDb_temp_var);
 
@@ -58,21 +54,15 @@ function MyArticles(props){
     const fetchTagsFromDb = () =>{
       axios.get("/topic/get-all-tags").then(res=>{
         const tags = [...res.data];
-        appCtx.tags.set(tags);
+        props.setTags(tags);
 
       }); 
 
     }
   
-  
 
    useEffect(fetchMyArticlesFromDb,[]);
    useEffect(fetchTagsFromDb,[]);
-
-  // only run when articles change
-  //  useEffect(fetchMyArticlesFromDb,[appCtx.articles.get]);
-   
- 
 
 
   const createArticle = (event) => {
@@ -93,10 +83,10 @@ function MyArticles(props){
       //goes wrong then we can handle that in the post method callback
 
       let newlyCreatedArticle = { ...formData };
-      let articles_temp_var = [...appCtx.articles.get, newlyCreatedArticle];
-      let cur_state = [...appCtx.articles.get];
+      let articles_temp_var = [...props.articles, newlyCreatedArticle];
+      let cur_state = [...props.articles];
 
-      appCtx.articles.set(articles_temp_var);
+      props.setArticles(articles_temp_var);
       setArticleCreation(false);
       history.goBack();
 
@@ -121,7 +111,7 @@ function MyArticles(props){
         history.push(`${path}/${newlyCreatedArticle._id}`);
 
         if (res.data._id) {
-            appCtx.articles.set(articles_temp_var)
+            props.setArticles(articles_temp_var)
             setArticleCreation(false);
             
           // ls.set("articles", articles_temp_var);
@@ -220,7 +210,7 @@ function MyArticles(props){
               autoHighlight='true'
               id="combo-box-demo"
               className="MyArticles__article-creation-form-input"
-              options={appCtx.tags.get}
+              options={props.tags}
               getOptionLabel={(option) => option.tagName}
               style={{ width: 300 }}
               renderInput={(params) => <TextField {...params} label="Tags" variant="outlined" />}
@@ -264,7 +254,7 @@ function MyArticles(props){
           </div>
           <div class="MyArticles-my-articles-section">
             <Route path={`${path}`}>
-              <Articles type="myArticle" articles={appCtx.articles.get}/>
+              <Articles type="myArticle" articles={props.articles}/>
             </Route>
           </div>
         </div>
@@ -275,4 +265,11 @@ function MyArticles(props){
 }
 
 
-export default MyArticles;
+function mapStateToProps(state){
+  return {
+    articles: state.app.articles,
+    tags: state.app.tags
+  }
+}
+
+export default connect(mapStateToProps,{setArticles,setTags})(MyArticles);

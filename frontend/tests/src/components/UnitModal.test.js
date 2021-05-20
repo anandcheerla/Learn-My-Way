@@ -1,5 +1,5 @@
 import React from 'react';
-import UnitModal from './UnitModal.js';
+import UnitModal from '../../../src/components/UnitModal.js';
 import { shallow } from 'enzyme';
 
 const getElementByDataTag = (wrapper,tagName)=>{

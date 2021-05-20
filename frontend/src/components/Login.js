@@ -3,8 +3,10 @@ import axios from "axios";
 import ls from "local-storage";
 import {useHistory} from "react-router-dom";
 import Button from '@material-ui/core/Button';
+import {connect} from 'react-redux';
 
-import {AppContext} from '../AppContext.js';
+//
+import {setLogin,setUserName,setUserDetails} from '../redux/actions/app';
 
 //css
 import './Login.css'; 
@@ -25,7 +27,6 @@ function Login(props){
 
   const loginButton_Ref = useRef(null);
 
-  const appCtx = useContext(AppContext);
   let history=useHistory();
 
   const userLogin = () => {
@@ -45,12 +46,11 @@ function Login(props){
 
     axios.post("/user/login", formData).then((res) => {
       if (res.data !== false) {
-        appCtx.login.set(true);
+        props.setLogin(true);
         ls.set("authSession",true);
-        appCtx.username.set(formData.username);
-        appCtx.userDetails.set(res.data);
+        props.setUserName(formData.username);
+        props.setUserDetails(res.data);
         ls.set("savedArticles",res.data.savedArticles);
-        console.log(ls.get("savedArticles"));
         history.push('/home');
         
       } else {
@@ -134,4 +134,10 @@ function Login(props){
 
 }
 
-export default Login;
+function mapStateToProps(state){
+  return {
+    
+  }
+}
+
+export default connect(mapStateToProps,{setLogin,setUserName,setUserDetails})(Login);

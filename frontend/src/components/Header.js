@@ -1,7 +1,8 @@
-import React,{useContext} from "react";
+import React from "react";
 import Avatar from '@material-ui/core/Avatar';
 // import axios from "axios";
 import {Route,Link,useRouteMatch} from "react-router-dom";
+import {connect} from 'react-redux';
 
 
 //css
@@ -9,12 +10,10 @@ import "./Header.css";
 
 
 //context
-import {AppContext} from '../AppContext.js';
 import { CssBaseline } from "@material-ui/core";
 import Menu from "./Menu.js";
 
 function Header(props){
-	const appCtx = useContext(AppContext);
 	// let { path, url } = useRouteMatch();
 	// console.log(url);
 	// console.log(path);
@@ -25,7 +24,7 @@ function Header(props){
 	return(
 		<div id="Header">
 		{
-			!appCtx.login.get
+			!props.login
 			?
 			<>
 				<div className="Header__nav-bar-button">
@@ -67,4 +66,9 @@ function Header(props){
 
 }
 
-export default Header;
+function mapStateToProps(state){
+	return {
+		login: state.app.login
+	}
+}
+export default connect(mapStateToProps)(Header);

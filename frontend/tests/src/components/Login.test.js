@@ -2,7 +2,7 @@ import React from 'react';
 import {mount,shallow} from 'enzyme';
 import ReactDOM from 'react-dom';
 
-import Login from './Login.js';
+import Login from '../../../src/components/Login.js';
 
 
 // check for username input field

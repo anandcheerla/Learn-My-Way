@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from 'enzyme';
 import ReactDOM from 'react-dom';
 
-import Register from './Register.js';
+import Register from '../../../src/components/Register.js';
 
 let wrapped;
 beforeEach(()=>{
