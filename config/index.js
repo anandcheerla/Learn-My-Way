@@ -1,3 +1,6 @@
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 const db_uri = process.env.PORT ? process.env.PROD_DB_URI : process.env.DEV_DB_URI;
 
