@@ -22,13 +22,12 @@ export default async ()=>{
 	var dbUrl = db.databaseConnectionUrl;
 
 	try{
-		console.log("connecting to database....");
+		console.log("connecting to database "+dbUrl);
 		await mongoose.connect(dbUrl,{ useNewUrlParser: true, useUnifiedTopology: true });
-		console.log(" database connection success"+dbUrl);
+		console.log("database connection succes");
 	}
 	catch(err){
 		console.log("database connection failed");
 	}
-	// console.log(temp);
 
 }
