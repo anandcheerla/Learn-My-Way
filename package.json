@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node -r config/index app.js",
+    "start": "node -r dotenv/config app.js",
     "test": "SET NODE_ENV=test && mocha 'test/**/*.js'"
   },
   "author": "AKC",
