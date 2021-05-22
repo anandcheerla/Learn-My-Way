@@ -8,13 +8,21 @@ export default function StartUp(props){
 
     return (
         <div id="StartUp">
-            <div className="StartUp__left-content">
-                <div><h3>Share Content</h3></div>
-                <div><h3>Compose Articles with emphasis one each part</h3></div>
-                <div><h3>Prepare Notes</h3></div>
-                <div><h3>Filter what you Need!!</h3></div>
+            <div className="StartUp__top-content-one">
+                <div>
+                    <div><h3>Create content in small units</h3></div>
+                    <div><h3>Emphasis one each and every unit</h3></div>
+                    <div><h3>Filter only the units you need!!</h3></div>
+                    <div><h3>Make the content public</h3></div>
+                </div>
+                <div>
+                    
+                </div>
             </div>
-            <div className="StartUp__right-content">
+            <div className="StartUp_middle-content-one">
+            
+            </div>
+            <div className="StartUp_middle-content-two">
                 <div>
                     Read My Way enhances the Readabilty and focusses on increasing the effectiveness of Reading or understanding a article/content.It has the ability to filter out the parts that are required  based on the complexity and priority.
                 </div>

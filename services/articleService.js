@@ -73,7 +73,8 @@ class articleService{
     }
 
     async likeArticle(articleId){
-
+        console.log("--------");
+        console.log(articleId);
         try{
             articleModel.findOne({_id:articleId},function(err,article){
                 article.likes=article.likes+1;

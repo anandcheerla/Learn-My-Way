@@ -46,12 +46,13 @@ function Article(props){
     const [articleUploadedTime,setArticleUploadedTime] = useState("Just now");
 
     const [likes,setLikes] = useState(props.likes);
+    const [articleLiked,setArticleLiked] = useState(0);
 
     
     let sd = ls.get(`${props.dbId}_sd`);
 
     const [articleSaved,setArticleSaved] = useState(sd || sd== null && user_saved_articles_db && user_saved_articles_db[props.dbId]==true || false);
-    const [articleLiked,setArticleLiked] = useState(ls.get(`${props.dbId}_ld`) || user_liked_articles_db && user_liked_articles_db[props.dbId]==true || false);
+    // const [articleLiked,setArticleLiked] = useState(ls.get(`${props.dbId}_ld`) || user_liked_articles_db && user_liked_articles_db[props.dbId]==true || false);
 
 
     const [buttonColor,setButtonColor] = useState("default");
@@ -451,13 +452,24 @@ function Article(props){
     }
 
     const likeHandler=()=>{
+      setArticleLiked(!articleLiked);
       try{
-        axios.post(`/user/like-article/${props.dbId}`).then((res)=>{
-          if(res.data=="liked"){
-            setLikes(likes+1);
+        
+        articleLiked && axios.post(`/article/unlike-article/${props.dbId}`).then((res)=>{
+          if(res.data==true){    
+            console.log("true unliked");
           }
-          else if(res.data=="unliked"){
-            setLikes(likes-1);
+          else if(res.data==false){
+            console.log("false");
+          }
+        });
+
+        articleLiked && axios.post(`/article/like-article/${props.dbId}`).then((res)=>{
+          if(res.data==true){    
+            console.log("true liked");
+          }
+          else if(res.data==false){
+            console.log("false");
           }
         });
       }
@@ -599,7 +611,7 @@ function Article(props){
               <ThumbUpAltOutlinedIcon onClick={likeHandler}/>
             </div>
             <div>
-              <label>{likes}</label>
+              <label>{likes+articleLiked}</label>
             </div>
           </div>
        </div>
