@@ -1,6 +1,5 @@
-import React,{useContext,useState} from "react";
+import React from "react";
 // import axios from "axios";
-import ls from "local-storage";
 import {connect} from 'react-redux';
 
 
@@ -12,26 +11,7 @@ import "./Articles.css";
 
 
 function Articles(props){
-
-
-      // articles: [...this.props.articles],
-
-    //inline properties or variables
-    // let reverseDirectionForArticlesArray = {
-    //   display: "flex",
-    //   flexDirection: "column-reverse",
-    // };
-
-    // let newArticleButtonStyle = {
-    //   position: "fixed",
-    //   top: "30",
-    //   right: "0",
-    // };
-
-    // debugger;
     
-    
-
     return (
       <div id="Articles__articles-container">
         {

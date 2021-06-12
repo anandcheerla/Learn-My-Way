@@ -9,15 +9,27 @@ export default function StartUp(props){
     return (
         <div id="StartUp">
             <div className="StartUp__top-content-one">
-                <div>
-                    <div><h3>Create content in small units</h3></div>
-                    <div><h3>Emphasis one each and every unit</h3></div>
-                    <div><h3>Filter only the units you need!!</h3></div>
-                    <div><h3>Make the content public</h3></div>
-                </div>
-                <div>
-                    
-                </div>
+                    <div>
+                        <div className="StartUp__top-content-tags" id="StartUp__top-content-tag1">
+                            <h3>Create</h3>
+                        </div>
+                        <div className="StartUp__top-content-tags" id="StartUp__top-content-tag2">
+                            <h3>Filter</h3>
+                        </div>
+                    </div>
+                    <div>
+                        <div id="StartUp_top-content-middle">
+                            <h1>CONTENT/</h1>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="StartUp__top-content-tags" id="StartUp__top-content-tag3">
+                            <h3>Learn!</h3>
+                        </div>
+                        <div className="StartUp__top-content-tags" id="StartUp__top-content-tag4">
+                            <h3>Share!</h3>
+                        </div>
+                    </div>
             </div>
             <div className="StartUp_middle-content-one">
             

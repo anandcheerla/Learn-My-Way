@@ -16,7 +16,7 @@ import UnitModal from './UnitModal.js';
 import "./Unit.css";
 
 
-import {setArticles} from '../redux/actions/app';
+import {setMyArticles} from '../redux/reducers/app';
 
 
 function Unit(props) {
@@ -24,54 +24,13 @@ function Unit(props) {
     const {path,url} = useRouteMatch();
     const history = useHistory();
 
-      // debugger;
-      // modalDisplay: false,
-      // let heading=
-      //   (ls.get(props.unitId) && ls.get(props.unitId).heading) ||
-      //   props.heading
-      // let shortDescription=
-      //   (ls.get(props.unitId) &&
-      //     ls.get(props.unitId).shortDescription) ||
-      //   props.shortDescription
-      // let longDescription=
-      //   (ls.get(props.unitId) &&
-      //     ls.get(props.unitId).longDescription) ||
-      //   props.longDescription
-      // let priority=
-      //   (ls.get(props.unitId) && ls.get(props.unitId).priority) ||
-      //   props.priority
-      // let complexity=
-      //   (ls.get(props.unitId) && ls.get(props.unitId).complexity) ||
-      //   props.complexity
-      // unitDeleted:
-      //   (ls.get(this.props.unitId) && ls.get(this.props.unitId).unitDeleted) ||
-      //   false,
-      // editUnitMode: false,
-      const [headingInput,setHeadingInput] = useState("");
-      const [shortDescriptionInput,setShortDescriptionInput] = useState("");
-      const [longDescriptionInput,setLongDescriptionInput] = useState("");
-      const [priorityInput,setPriorityInput] = useState("");
-      const [complexityInput,setComplexityInput] = useState("");
-      const [unitClicked,setUnitClicked] = useState(false);
-      // headingEdit: false,
-      // sdEdit: false,
-      // ldEdit: false,
-      // priorityEdit: false,
-      // complexityEdit: false,
-  
+    const [headingInput,setHeadingInput] = useState("");
+    const [shortDescriptionInput,setShortDescriptionInput] = useState("");
+    const [longDescriptionInput,setLongDescriptionInput] = useState("");
+    const [priorityInput,setPriorityInput] = useState("");
+    const [complexityInput,setComplexityInput] = useState("");
+    const [unitClicked,setUnitClicked] = useState(false);
 
-
-  // const onClickHandler = (event) => {
-  //   this.setState({
-  //     modalDisplay: !modalDisplay,
-  //   });
-  // }; //onClickHandler method end
-
-  // const closeButtonHandler = () => {
-  //   this.setState({
-  //     modalDisplay: !modalDisplay,
-  //   });
-  // }; //closeButtonHandler method end
 
   const deleteUnitButtonHandler = () => {
     axios
@@ -79,15 +38,12 @@ function Unit(props) {
       .then((res) => {
         let articles_from_context = [...props.articles];
         articles_from_context[props.articleIndex].units[props.unitIndex]=null;
-        props.setArticles(articles_from_context);
+        props.setMyArticles(articles_from_context);
       });
   };
 
   const updateUnit = (event, input_name) => {
     event.preventDefault();
-
-    // let cub = document.getElementById("Create-unit-button");
-    // cub.style.opacity = 0.7;
 
     let formData = {
       heading: headingInput,
@@ -157,16 +113,6 @@ function Unit(props) {
     );
   }; 
 
-  // let unitBorderColor = {
-  //   basic: "#cfc10a",
-  //   easy: "#7dd943",
-  //   medium: "#f07f1d",
-  //   hard: "#f50525",
-  // };
-
-  // let border_color = {
-  //   border: "1.1px solid " + unitBorderColor[complexity],
-  // };
 
   const unitClickHandler=(e)=>{
     e.preventDefault();
@@ -211,4 +157,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps,{setArticles})(Unit);
+export default connect(mapStateToProps,{setMyArticles})(Unit);

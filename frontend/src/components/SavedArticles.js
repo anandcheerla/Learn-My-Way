@@ -13,7 +13,7 @@ function SavedArticles(props){
     const fetchSavedArticles = ()=>{
         
         axios.get('/user/saved-articles').then((res)=>{
-            if(res.data!=false){
+            if(res.data!==false){
                 setsavedArticles(res.data);
             }
             else{
@@ -29,7 +29,7 @@ function SavedArticles(props){
         <div id="SavedArticles">
             <h3>Saved Articles</h3>
             {
-                savedArticles.length==0
+                savedArticles.length===0
                 ?
                 <h1>{fetchFailMessage}</h1>
                 :

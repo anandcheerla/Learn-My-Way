@@ -1,11 +1,9 @@
 //Author: Anand Kumar Cheerla
 
-import React,{useState} from 'react';
-import axios from "axios";
-import {BrowserRouter,Route,Link,Redirect,Switch} from 'react-router-dom';
+import React from 'react';
+import {BrowserRouter,Route} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import ls from "local-storage";
-import {connect} from 'react-redux';
+
 
 //store
 import store from './redux/store';
@@ -15,9 +13,6 @@ import "./App.css";
 
 //containers
 import Main from './containers/Main.js';
-import Home from './containers/Home.js';
-
-
 
 
 function App(props){

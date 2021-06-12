@@ -3,12 +3,8 @@ import axios from "axios";
 import ls from "local-storage";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import Button from '@material-ui/core/Button';
-import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
-import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
 import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
 import AddIcon from '@material-ui/icons/Add';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { Route, useHistory, useRouteMatch } from "react-router";
 import {connect} from 'react-redux';
 
@@ -20,7 +16,7 @@ import Units from "./Units.js";
 //css
 import "./Article.css";
 
-import {setArticles} from '../redux/actions/app';
+import {setMyArticles,setUnits} from '../redux/reducers/app';
 
 
 
@@ -51,8 +47,8 @@ function Article(props){
     
     let sd = ls.get(`${props.dbId}_sd`);
 
-    const [articleSaved,setArticleSaved] = useState(sd || sd== null && user_saved_articles_db && user_saved_articles_db[props.dbId]==true || false);
-    // const [articleLiked,setArticleLiked] = useState(ls.get(`${props.dbId}_ld`) || user_liked_articles_db && user_liked_articles_db[props.dbId]==true || false);
+    const [articleSaved,setArticleSaved] = useState(sd || sd=== null && user_saved_articles_db && user_saved_articles_db[props.dbId]===true || false);
+    // const [articleLiked,setArticleLiked] = useState(ls.get(`${props.dbId}_ld`) || user_liked_articles_db && user_liked_articles_db[props.dbId]===true || false);
 
 
     const [buttonColor,setButtonColor] = useState("default");
@@ -99,9 +95,6 @@ function Article(props){
     //to prevent the default behaviour of the event
     event.preventDefault();
 
-    // let acub = document.getElementById("article-create-unit-button");
-    // acub.style.opacity = 0.7;
-
     if(unitShortDescription==="" && unitHeading==="" ){
       alert("please fill the mandatory fields");
       return;
@@ -125,19 +118,12 @@ function Article(props){
     };
 
     
-    // debugger;
+
     let current_filtered_units = [...filteredUnits];
     let current_article_units = [...props.units];
     let updated_article_units = [...current_article_units, formData];
 
-    let articles_from_context = [...props.articles];
-    articles_from_context[props.articleIndex].units=updated_article_units;
-
-    //updated context
-    props.setArticles(articles_from_context);
-
-
-
+  
     let complexity = difficulty_filter.current && difficulty_filter.current.value || "all";
     let importance = importance_filter.current && importance_filter.current.value || "all";
 
@@ -145,12 +131,10 @@ function Article(props){
       (complexity === "all" || formData.complexity === complexity) &&
       (importance === "all" || formData.priority === Number(importance))
     ) {
-
       let updated_filtered_units = [...current_filtered_units,formData];
       setFilteredUnits(updated_filtered_units);
 
     } 
-
 
     //clear the inputs
     setUnitHeading("");
@@ -158,31 +142,22 @@ function Article(props){
     setUnitLongDescription("");
     setUnitPriority("");
     setUnitComplexity("");
-
-    axios.post(`/user/${props.dbId}/add-unit`, formData).then((res) => {
-
-     
+    
+    axios.post(`/user/${props.dbId}/add-unit`, formData).then((res) => {      
       let updated_article_units = [...current_article_units, res.data];
-
       
-      let articles_from_context = [...props.articles];
-      articles_from_context[props.articleIndex].units=updated_article_units;
-
-      //updated context
-      props.setArticles(articles_from_context);
+      props.setUnits({articleIndex:props.articleIndex,units:updated_article_units});
 
       if (
-        (complexity == "all" || formData.complexity == complexity) &&
-        (importance == "all" || formData.priority == Number(importance))
+        (complexity === "all" || formData.complexity === complexity) &&
+        (importance === "all" || formData.priority === Number(importance))
       ) {
-
+        
         let updated_filtered_units = [...current_filtered_units,res.data];
         setFilteredUnits(updated_filtered_units);
 
       } 
-
-      // }
-      // acub.style.opacity = 1;
+      
     });
   }; //createUnit method end
 
@@ -198,14 +173,14 @@ function Article(props){
 
     for (let i = 0; i < units.length; i++) {
       if (
-        (complexity == "all" || units[i].complexity.toLowerCase() == complexity) &&
-        (importance == "all" || units[i].priority == Number(importance))
+        (complexity === "all" || units[i].complexity.toLowerCase() === complexity) &&
+        (importance === "all" || units[i].priority === Number(importance))
       ){
     
         required_units.push(units[i]);
       }
     }
-    // debugger;
+    // 
     setFilteredUnits(required_units);
     
   };
@@ -223,12 +198,12 @@ function Article(props){
 
     for (let i = 0; i < units.length; i++) {
       if (
-        (importance == "all" || units[i].priority == Number(importance)) &&
-        (complexity == "all" || units[i].complexity.toLowerCase() == complexity)
+        (importance === "all" || units[i].priority === Number(importance)) &&
+        (complexity === "all" || units[i].complexity.toLowerCase() === complexity)
       )
         required_units.push(units[i]);
     }
-    // debugger;
+    // 
     setFilteredUnits(required_units);
   };
 
@@ -250,7 +225,7 @@ function Article(props){
           axios.delete("/user/article-delete/"+props.dbId).then(res=>{});
           let articles_from_context = [...props.articles];
           articles_from_context[props.articleIndex]=null;
-          props.setArticles(articles_from_context);
+          props.setMyArticles(articles_from_context);
           setMoreClicked(false);
       }
     } 
@@ -456,19 +431,19 @@ function Article(props){
       try{
         
         articleLiked && axios.post(`/article/unlike-article/${props.dbId}`).then((res)=>{
-          if(res.data==true){    
+          if(res.data===true){    
             console.log("true unliked");
           }
-          else if(res.data==false){
+          else if(res.data===false){
             console.log("false");
           }
         });
 
         articleLiked && axios.post(`/article/like-article/${props.dbId}`).then((res)=>{
-          if(res.data==true){    
+          if(res.data===true){    
             console.log("true liked");
           }
-          else if(res.data==false){
+          else if(res.data===false){
             console.log("false");
           }
         });
@@ -481,7 +456,7 @@ function Article(props){
     const saveArticleHandler = ()=>{
       try{
         axios.post(`/user/save-article/${props.dbId}`).then((res)=>{
-          if(res.data==true){
+          if(res.data===true){
             ls.set(`${props.dbId}_sd`,true);
             setArticleSaved(true);
           }
@@ -497,7 +472,7 @@ function Article(props){
     const removeArticleHandler = ()=>{
       try{
         axios.post(`/user/unsave-article/${props.dbId}`).then((res)=>{
-          if(res.data==true){
+          if(res.data===true){
             console.log("removed from saved articles");
             ls.set(`${props.dbId}_sd`,false);
             setArticleSaved(false);
@@ -513,7 +488,7 @@ function Article(props){
 
 
     const calculateTimeForArticle=()=>{
-      if(props.lastUpdatedTime==undefined || props.lastUpdatedTime==null)
+      if(props.lastUpdatedTime===undefined || props.lastUpdatedTime===null)
         return;
       let currentTs=new Date();
       let articleTs=new Date(props.lastUpdatedTime);
@@ -526,7 +501,7 @@ function Article(props){
 
       let months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
-      if(currentTs.getDate()==articleDate && currentTs.getMonth()==articleMonth){
+      if(currentTs.getDate()===articleDate && currentTs.getMonth()===articleMonth){
         if(minutes<=0)
           setArticleUploadedTime("Just now");
         else if(minutes<60)
@@ -627,4 +602,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps,{setArticles})(Article);
+export default connect(mapStateToProps,{setMyArticles,setUnits})(Article);

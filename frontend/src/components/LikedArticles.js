@@ -12,7 +12,7 @@ function LikedArticles(props){
     const fetchLikedArticles = ()=>{
         
         axios.get('/user/liked-articles').then((res)=>{
-            if(res.data!=false){
+            if(res.data!==false){
                 setLikedArticles(res.data);
             }
         });
@@ -25,7 +25,7 @@ function LikedArticles(props){
         <div id="LikedArticles">
             <h3>Liked Articles</h3>
             {
-                likedArticles.length==0
+                likedArticles.length===0
                 ?
                 <h1>No Liked Articles!!!</h1>
                 :

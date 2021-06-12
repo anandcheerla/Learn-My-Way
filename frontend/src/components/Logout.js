@@ -3,7 +3,7 @@ import axios from "axios";
 import ls from 'local-storage';
 import {connect} from 'react-redux';
 
-import {setLogin} from '../redux/actions/app';
+import {setLogin} from '../redux/reducers/app';
 
 
 function Logout(props){	

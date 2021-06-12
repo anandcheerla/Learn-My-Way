@@ -1,48 +1,39 @@
 
 import ls from "local-storage";
-import * as actions from '../actionTypes';
+import {createSlice} from '@reduxjs/toolkit';
 
-const appState = {
-    login: false || ls.get("authSession"),
-    articles: [],
-    username: null,
-    tags: [],
-    userDetails: {} 
-};
 
-export default function(state=appState,action){
-    switch(action.type){
-        case actions.SET_LOGIN:{
-            return {
-                ...state,
-                login: action.payload.login
-            }
+export const app = createSlice({
+    name: 'app',
+    initialState:{
+        login: false || ls.get("authSession"),
+        articles: [],
+        username: null,
+        tags: [],
+        userDetails: {} 
+    },
+    reducers:{
+        setLogin: (state,action)=>{
+            state.login = action.payload;
+        },
+        setUserName: (state,action)=>{
+            state.username = action.payload;    
+        },
+        setMyArticles: (state,action)=>{
+            state.articles = action.payload;
+        },
+        setUnits: (state,action)=>{
+            
+            state.articles[action.payload.articleIndex].units = action.payload.units;
+        },
+        setTags: (state,action)=>{
+            state.tags = action.payload;
+        },
+        setUserDetails: (state,action)=>{
+            state.userDetails = action.payload;
         }
-        case actions.SET_USER_NAME:{
-            return {
-                ...state,
-                username: action.payload.username
-            }
-        }
-        case actions.SET_MY_ARTICLES:{
-            return {
-                ...state,
-                articles: action.payload.articles
-            }
-        }
-        case actions.SET_TAGS:{
-            return {
-                ...state,
-                tags: action.payload.tags
-            }
-        }
-        case actions.SET_USER_DETAILS:{
-            return {
-                ...state,
-                userDetails: action.payload.user_details
-            }
-        }
-        default:
-            return state;
     }
-}
+});
+
+export const {setLogin,setUserName,setMyArticles,setUnits,setTags,setUserDetails} = app.actions;
+export default app.reducer;

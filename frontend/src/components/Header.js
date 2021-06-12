@@ -14,13 +14,7 @@ import { CssBaseline } from "@material-ui/core";
 import Menu from "./Menu.js";
 
 function Header(props){
-	// let { path, url } = useRouteMatch();
-	// console.log(url);
-	// console.log(path);
-	// console.log("coming");
-	// console.log(`${url}/my-articles`);
-	// debugger;
-	// let url="/home";
+
 	return(
 		<div id="Header">
 		{

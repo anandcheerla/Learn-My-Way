@@ -1,5 +1,5 @@
 import React from "react";
-import {Route,Redirect,useRouteMatch} from "react-router-dom";
+import {Route,Redirect,Switch} from "react-router-dom";
 import {connect} from 'react-redux';
 // import axios from "axios";
 // import ls from "local-storage";
@@ -22,8 +22,7 @@ import StartUp from './StartUp.js';
 
 function Main(props){
 
-	// let { path, url } = useRouteMatch();
-    
+
 	return (
 		<div id="Main">
 			<div id="Main__header">
@@ -31,7 +30,7 @@ function Main(props){
 				</Header>
 			</div>
 			<div id="Main__body">
-				<switch>
+				<Switch>
 					<Route path="/login">
 						<div id="Main__login">
 							<Login/>
@@ -64,7 +63,7 @@ function Main(props){
 							</div>
 						</ProtectedRoute>
 					</Route>
-				</switch>
+				</Switch>
 			</div>
 			<div id="Main__footer">
 

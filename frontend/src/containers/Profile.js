@@ -8,7 +8,7 @@ import './Profile.css';
 
 
 import SavedArticles from '../components/SavedArticles.js';
-import LikedArticles from '../components/LikedArticles.js';
+// import LikedArticles from '../components/LikedArticles.js';
 
 export default function Profile(props){
 

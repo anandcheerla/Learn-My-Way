@@ -1,6 +1,5 @@
 import React,{useState} from 'react';
 import axios from "axios";
-import ls from "local-storage";
 import { useHistory } from 'react-router';
 import Button from '@material-ui/core/Button';
 
@@ -52,7 +51,7 @@ function Register(props){
 	    };
 
 	    axios.post("/user/register", formData).then((res) => {
-	      if (res.data!=true) {
+	      if (res.data!==true) {
           console.log("coming");
 	        setFormMessage(res.data);
 	        signup_button.innerHTML = "Register";
@@ -70,14 +69,14 @@ function Register(props){
       let flag=true;
 
       //empty check
-      if(firstName==''){
+      if(firstName===''){
         setFirstNameMessage("Please Fill in this field");
         flag=false;
       }
       else{
         setFirstNameMessage("");
       }
-      if(lastName==''){
+      if(lastName===''){
         setLastNameMessage("Please Fill in this field");
         flag=false;
       }
@@ -85,7 +84,7 @@ function Register(props){
         setLastNameMessage("");
       }
 
-      if(username==''){
+      if(username===''){
         setUsernameMessage("Please Fill in this field");
         flag=false;
       }
@@ -95,7 +94,7 @@ function Register(props){
       
       
       
-      if(password==''){
+      if(password===''){
         setPasswordMessage("Please Fill in this field");
         flag=false;
       }
@@ -111,7 +110,7 @@ function Register(props){
 
       //custom validity, @ and dot are mandatory for this
       let isEmail = /^.*@.*\..+/.test(email);
-      if(email==''){
+      if(email===''){
         setEmailMessage("Please Fill in this field");
         flag=false;
       }
@@ -126,7 +125,7 @@ function Register(props){
       
       let isContactNumber = /^[0-9]+$/.test(contactNumber);
 
-      if(contactNumber==''){
+      if(contactNumber===''){
         setContactNumberMessage("Please Fill in this field");
         flag=false;
       }
@@ -224,7 +223,7 @@ function Register(props){
             placeholder="Contact Number"
             onChange={(e)=>{setContactNumber(e.target.value)}}
             onKeyDown={(e)=>{
-              if(e.which==13)
+              if(e.which===13)
                 userRegistration(e);
             }}
             required

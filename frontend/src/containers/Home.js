@@ -1,7 +1,7 @@
 //Page displays after login
-import React,{useState} from "react";
+import React from "react";
 // import axios from "axios";
-import {Route,Link,useRouteMatch,Switch} from "react-router-dom";
+import {Route,Switch} from "react-router-dom";
 // import ls from "local-storage";
 
 
@@ -15,14 +15,11 @@ import "./Home.css";
 //containers
 // import About from './About.js';
 import MyArticles from './MyArticles.js';
-import SavedArticles from "../components/SavedArticles.js";
 import SuggestedArticles from './SuggestedArticles.js';
 import Profile from './Profile.js';
 
 
 function Home(props){
-
-    let { path, url } = useRouteMatch();
 
     return (
 

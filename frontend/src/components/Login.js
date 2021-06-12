@@ -1,4 +1,4 @@
-import React,{useState,useRef,useContext} from 'react';
+import React,{useState,useRef} from 'react';
 import axios from "axios";
 import ls from "local-storage";
 import {useHistory} from "react-router-dom";
@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import {connect} from 'react-redux';
 
 //
-import {setLogin,setUserName,setUserDetails} from '../redux/actions/app';
+import {setLogin,setUserName,setUserDetails} from '../redux/reducers/app';
 
 //css
 import './Login.css'; 
@@ -63,7 +63,7 @@ function Login(props){
 
   const inputValidation = ()=>{
     let flag=true;
-    if(username==''){
+    if(username===''){
       setUsernameMessage("Please Fill in this field");
       flag=false;
     }
@@ -71,7 +71,7 @@ function Login(props){
       setUsernameMessage("");
     }
     
-    if(password==''){
+    if(password===''){
       setPasswordMessage("Please Fill in this field");
       flag=false;
     }
@@ -111,7 +111,7 @@ function Login(props){
             placeholder="password"
             onChange={(e)=>{setPassword(e.target.value);}}
             onKeyDown={(e)=>{
-              if(e.which==13)
+              if(e.which===13)
                 userLogin();
             }}
             value = {password}
