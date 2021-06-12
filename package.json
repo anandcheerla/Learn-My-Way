@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
+    "heroku-postbuild": "cd frontend && npm install && npm run build",
     "test": "SET NODE_ENV=test && mocha 'test/**/*.js'"
   },
   "author": "AKC",
