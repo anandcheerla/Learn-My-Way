@@ -19,11 +19,11 @@ function App(props){
  
     return (
           <div id="App">
-          <Provider store={store}>
-            <BrowserRouter>
-                <Route path="/" component={Main}/>
-            </BrowserRouter>
-          </Provider>
+            <Provider store={store}>
+              <BrowserRouter>
+                  <Route path="/" component={Main}/>
+              </BrowserRouter>
+            </Provider>
           </div>
       );
   

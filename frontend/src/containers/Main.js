@@ -1,8 +1,6 @@
 import React from "react";
 import {Route,Redirect,Switch} from "react-router-dom";
 import {connect} from 'react-redux';
-// import axios from "axios";
-// import ls from "local-storage";
 
 //css
 import "./Main.css";
@@ -53,10 +51,11 @@ function Main(props){
 							<Logout/>
 						</div>
 					</Route>
-					<Route exact path="/">
+					<Route path="/">
 						<StartUp/>
 					</Route>
-					<Route path="/:some_path">
+				
+					<Route path={["/home","/my-articles","/my-profile","/settings"]}>
 						<ProtectedRoute login={props.login}>
 							<div id="Main__home">
 								<Home/>
