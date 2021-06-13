@@ -51,10 +51,6 @@ function Main(props){
 							<Logout/>
 						</div>
 					</Route>
-					<Route path="/">
-						<StartUp/>
-					</Route>
-				
 					<Route path={["/home","/my-articles","/my-profile","/settings"]}>
 						<ProtectedRoute login={props.login}>
 							<div id="Main__home">
@@ -62,6 +58,11 @@ function Main(props){
 							</div>
 						</ProtectedRoute>
 					</Route>
+
+					<Route path="/">
+						<StartUp/>
+					</Route>
+					
 				</Switch>
 			</div>
 			<div id="Main__footer">
