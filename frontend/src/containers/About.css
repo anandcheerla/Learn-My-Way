@@ -1,5 +1,5 @@
 .About{
-    /* margin: 5% 10%;  */
+    
 }
 
 .About h3{
@@ -7,10 +7,10 @@
     background: #424b6e;
     padding: 60px;
     transform: rotate(-3deg);
-    margin-bottom:200px;
+    margin-bottom:70px;
     font-family:monospace;
     font-size: 25px;
-    box-shadow: 30px 30px 15px grey;
+    color: grey;
 }
 
 .About p{
@@ -21,5 +21,5 @@
     background: #424b6e;
     font-family: monospace;
     line-height: 35px;
-    
+
 }

@@ -16,6 +16,7 @@
     "enzyme-adapter-react-16": "^1.15.5",
     "jquery": "^3.5.0",
     "local-storage": "^2.0.0",
+    "node-sass": "^4.12.0",
     "popper.js": "^1.16.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -24,6 +25,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1"
   },
+  "devDependencies": {},
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

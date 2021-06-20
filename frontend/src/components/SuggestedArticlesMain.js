@@ -40,6 +40,9 @@ function SuggestedArticlesMain(props){
       axios.get("/topic/get-all-tags").then(res=>{
         const tags = [...res.data];
         setTags(tags);
+        setTimeout(()=>{
+          fetchArticlesByTag(null,"Web development");
+        },500);
 
       }); 
 

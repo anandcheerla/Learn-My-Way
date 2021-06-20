@@ -12,36 +12,36 @@ function About(props){
           across when you are browsing.... Title is catchy, but the article is
           too big
         </h3>
-        <br />
+        
         <h3>
           Have you ever thought that you want to glance at an article inorder to
           get an overview, but tired of reading the entire thing...
         </h3>
-        <br />
+       
         <h3>
           Have you ever tired of reading boring paragraphs which spans few
           pages and stumped by the massive size where the probability to overlook is
           high...
         </h3>
-        <br />
+        
         <h3>
           Have you ever thought while you were reading, it would be better if we
           know where to focus/stress more and which part is complex or which part is easy to
           understand...!!!
         </h3>
-        <br />
+        
         <h3>
           Have you ever overlooked things/information that is required the most
           in understanding the essence of the entire article...
         </h3>
 
-        <br />
+        
 
         <h3>
           Even if you didnot think none of these, you are welcome to check out
           this !!!
         </h3>
-        <br />
+    
         <p>
           This application is a learning platform.The main intention of the
           application is to make the reading/learning effective in terms of
@@ -56,7 +56,6 @@ function About(props){
           want to in whatever pace they are able to... combination of these two
           things makes the learning effective...
         </p>
-        <br />
         <p>
           This application could be used in two ways. one way, people can track
           their learnings that they have learned somewhere else. Preparing an

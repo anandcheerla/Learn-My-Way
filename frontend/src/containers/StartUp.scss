@@ -1,3 +1,5 @@
+$thirtydeg: 42deg;
+
 #StartUp{
     display: flex;
     flex-direction: column;
@@ -27,7 +29,6 @@
     font-family:monospace;
     font-size: 25px;
     justify-content: space-between;
-    /* margin-bottom: 50px; */
     box-shadow: 10px 15px 10px black;
     width: fit-content;
     margin-bottom: 45px;
@@ -41,16 +42,16 @@
 }
 
 #StartUp__top-content-tag1{
-    transform: rotate(-30deg);
+    transform: rotate(-$thirtydeg);
 }
 #StartUp__top-content-tag2{
-    transform: rotate(30deg);
+    transform: rotate($thirtydeg);
 }
 #StartUp__top-content-tag3{
-    transform: rotate(30deg);
+    transform: rotate($thirtydeg);
 }
 #StartUp__top-content-tag4{
-    transform: rotate(-30deg);
+    transform: rotate(-$thirtydeg);
 }
 
 
@@ -71,25 +72,26 @@
     padding : 30px;
 }
 
-
-@media only screen and (max-width: 800px){
-    .StartUp__top-content-one div div{
-        font-size: 10px;
-        margin-bottom: 20px;
-        margin-right: 5px;
-    }
-    
-    #StartUp_top-content-middle{
-        font-size: 15px;
-    }
-    .StartUp_middle-content-two div{
-        font-size: 25px;
-    }
-    .StartUp_about{
-        /* font-size: 5px; */
-        flex-wrap: wrap;
-        justify-content: center;
+$screen-width: 500px,600px,700px,800px,900px,1000px;
+@each $width in $screen-width{    
+    @media only screen and (max-width: $width){
+        .StartUp__top-content-one div div{
+            font-size: 10px;
+            margin-bottom: 20px;
+            margin-right: 5px;
+        }
+        
+        #StartUp_top-content-middle{
+            font-size: 15px;
+        }
+        .StartUp_middle-content-two div{
+            font-size: 25px;
+        }
+        .StartUp_about{
+            /* font-size: 5px; */
+            flex-wrap: wrap;
+            justify-content: center;
+        }
     }
 }
-
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, useHistory, useRouteMatch } from 'react-router';
 
 // css
-import './StartUp.css';
+import './StartUp.scss';
 
 import SuggestedArticlesMain from '../components/SuggestedArticlesMain.js';
 
